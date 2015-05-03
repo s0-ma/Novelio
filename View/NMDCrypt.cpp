@@ -17,8 +17,8 @@ cocos2d::Image* NMDCrypt::getImage(string zipPath, string imgPath, string passwo
     unsigned long size = 0;
     unsigned char* buf = cocos2d::FileUtils::getInstance()->getFileDataFromZip(zipFile.c_str() ,
                                                                       imgFile.c_str(),
-                                                                      (ssize_t*)&size,
-                                                                      password);
+                                                                      (ssize_t*)&size/*,
+                                                                      password*/);
     auto img = new cocos2d::Image();
     img->autorelease();
     
