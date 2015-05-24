@@ -35,10 +35,10 @@ bool TextLayer::init(){
 
 void TextLayer::initializeLayer(){
     //nameLabel
-    nameFontPath = "res/fonts/ipamp.ttf";
+    nameFontPath = "nvRes/fonts/ipamp.ttf";
     nameFontSize = 25;
     
-    textFontPath = "res/fonts/ipamp.ttf";
+    textFontPath = "nvRes/fonts/ipamp.ttf";
     textFontSize = 30;
     
     name="";
