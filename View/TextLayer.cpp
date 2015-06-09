@@ -191,4 +191,8 @@ void TextLayer::onParaEnds(){
     //        CCLOG("onParaEnds");
 };
 
+Sprite* TextLayer::getTextBox(){
+    return textBox;
+}
+
 NS_NV_END

@@ -71,6 +71,8 @@ public:
     void pauseText();
     void showAllText();
     
+    Sprite* getTextBox();
+    
 private:
     Sprite* textBox;
     
