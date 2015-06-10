@@ -59,8 +59,6 @@ inline cocos2d::Point PointFromTopRight(float x, float y)
                           + Director::getInstance()->getWinSize().height);
 };
 
-NS_NV_END
-
 
 //Cocos2d-xのCREATE_FUNCをマシな実装にした より
 //("http://melpon.org/blog/cocos2dx-create-func")
@@ -78,6 +76,9 @@ struct create_func {
         }
     }
 };
+
+NS_NV_END
+
 
 
 #endif

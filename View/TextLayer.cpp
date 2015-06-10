@@ -35,10 +35,10 @@ bool TextLayer::init(){
 
 void TextLayer::initializeLayer(){
     //nameLabel
-    nameFontPath = "res/fonts/ipamp.ttf";
+    nameFontPath = "nvRes/fonts/ipamp.ttf";
     nameFontSize = 25;
     
-    textFontPath = "res/fonts/ipamp.ttf";
+    textFontPath = "nvRes/fonts/ipamp.ttf";
     textFontSize = 30;
     
     name="";
@@ -190,5 +190,9 @@ void TextLayer::onParaEnds(){
     this->state = COMPLETED;
     //        CCLOG("onParaEnds");
 };
+
+Sprite* TextLayer::getTextBox(){
+    return textBox;
+}
 
 NS_NV_END
