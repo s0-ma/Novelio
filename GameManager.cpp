@@ -6,6 +6,9 @@
 //
 //
 
+#include "novelio_lua/novelio.hpp"
+#include "CCLuaEngine.h"
+
 #include "GameManager.h"
 #include "NovelControler.h"
 
@@ -22,6 +25,13 @@ GameManager* GameManager::getInstance() {
 
 GameManager::GameManager()
 {
+    auto engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    //    lua_module_register(L);
+    register_all_novelio(L);
+    engine->executeScriptFile("nvRes/plugin/init.lua");
+
 }
 
 GameManager::~GameManager()

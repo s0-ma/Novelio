@@ -10,7 +10,7 @@
 #define __Novelium__TextLayer__
 
 #include "cocos2d.h"
-#include "Novelio.h"
+#include "../Novelio.h"
 #include "GameTextLabel.h"
 
 NS_NV_BEGIN

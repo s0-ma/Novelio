@@ -115,6 +115,7 @@ public:
     static void jumpToNewFile(string filename, string label);
 
     //その他
+    static void exit();//Novelio関連のレイヤーを消去。
 //    static void printToTextbox(string txt);
 };
 

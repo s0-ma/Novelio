@@ -9,7 +9,7 @@
 #include "PortraitLayer.h"
 #include "Portrait.h"
 
-#include "Split.h"
+#include "../Utils/Split.h"
 
 #include "GameModel.h"
 #include "GameManager.h"

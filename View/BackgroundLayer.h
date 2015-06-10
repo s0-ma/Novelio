@@ -9,7 +9,7 @@
 #ifndef __Novelium__BackgroundLayer__
 #define __Novelium__BackgroundLayer__
 
-#include "Novelio.h"
+#include "../Novelio.h"
 
 NS_NV_BEGIN
 /** @brief Background画像表示用のレイヤ

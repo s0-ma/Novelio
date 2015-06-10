@@ -9,7 +9,7 @@
 #ifndef __Novelio__ConfigLayer__
 #define __Novelio__ConfigLayer__
 
-#include "Novelio.h"
+#include "../Novelio.h"
 
 NS_NV_BEGIN
 

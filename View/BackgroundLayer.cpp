@@ -9,10 +9,10 @@
 #include "BackgroundLayer.h"
 #include "BackgroundLayerModel.h"
 #include "SimpleAudioEngine.h"
-#include "Model.h"
-#include "GameManager.h"
+#include "../Model/Model.h"
+#include "../GameManager.h"
 #include "NMDAudioEngine.h"
-#include "GameModel.h"
+#include "../Model/GameModel.h"
 
 NS_NV_BEGIN
 

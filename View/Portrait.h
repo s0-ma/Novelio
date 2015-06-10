@@ -10,7 +10,7 @@
 #define __Novelio__Portrait__
 
 #include "cocos2d.h"
-#include "Novelio.h"
+#include "../Novelio.h"
 
 NS_NV_BEGIN
 

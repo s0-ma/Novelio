@@ -8,7 +8,7 @@
 
 #include "Portrait.h"
 
-#include "Split.h"
+#include "../Utils/Split.h"
 
 NS_NV_BEGIN
 

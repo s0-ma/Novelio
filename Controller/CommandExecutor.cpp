@@ -10,10 +10,10 @@
 #include "NovelControler.h"
 
 
-#include "GameModel.h"
-#include "GameManager.h"
+#include "../Model/GameModel.h"
+#include "../GameManager.h"
 
-#include "Split.h"
+#include "../Utils/Split.h"
 
 #include "CCLuaEngine.h"
 #include "NMDAudioEngine.h"
@@ -452,6 +452,20 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
     
 }
 
+void ScriptCommand::exit(){
+    auto action = [](){
+//        auto bLayer = GameManager::getInstance()->getBackgroundLayer();
+//        bLayer->removeFromParent();
+        auto pLayer = GameManager::getInstance()->getPortraitLayer();
+        pLayer->removeFromParent();
+        auto tLayer = GameManager::getInstance()->getTextLayer();
+        tLayer->removeFromParent();
+        auto uLayer = GameManager::getInstance()->getUILayer();
+        uLayer->removeFromParent();
+    };
+    execInstantCommand(action);
+    
+}
 
 
 NS_NV_END

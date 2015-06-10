@@ -10,7 +10,7 @@
 #define __Novelio__SimpleNovelioScene__
 
 #include "cocos2d.h"
-#include "Novelio.h"
+#include "../Novelio.h"
 
 USING_NS_CC;
 

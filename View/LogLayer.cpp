@@ -7,9 +7,9 @@
 //
 
 #include "LogLayer.h"
-#include "GameManager.h"
+#include "../GameManager.h"
 
-#include "GameModel.h"
+#include "../Model/GameModel.h"
 
 #include "RubyLabel.h"
 

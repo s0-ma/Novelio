@@ -9,8 +9,8 @@
 #ifndef __Novelio__LogLayer__
 #define __Novelio__LogLayer__
 
-#include "Novelio.h"
-#include "extensions/cocos-ext.h"
+#include "../Novelio.h"
+#include "../extensions/cocos-ext.h"
 
 NS_NV_BEGIN
 
