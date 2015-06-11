@@ -172,6 +172,15 @@ void ScriptCommand::clearText(){
 void ScriptCommand::setTextSpeed(){
     
 }
+void ScriptCommand::changeTextBox(string filename){
+    auto action = [filename](){
+        auto tLayer = GameManager::getInstance()->getTextLayer();
+        tLayer->getTextBox()->setTexture(filename);
+    };
+    
+    execInstantCommand(action);
+}
+
 
 //PortraitLayer
 void ScriptCommand::showPortraitLayer(float fade_sec /*= 0*/){

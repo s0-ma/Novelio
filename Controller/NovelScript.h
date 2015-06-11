@@ -13,7 +13,7 @@
 #include <map>
 #include "cocos2d.h"
 #include "../View/View.h"
-#include "Novelio.h"
+#include "../Novelio.h"
 
 NS_NV_BEGIN
 

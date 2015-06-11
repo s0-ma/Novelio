@@ -11,7 +11,7 @@
 #include "Model.h"
 #include "GameModel.h"
 
-#include "NovelControler.h"
+#include "../Controller/NovelControler.h"
 #include "CCLuaEngine.h"
 
 NS_NV_BEGIN
@@ -55,4 +55,13 @@ bool SimpleScenarioScene::init(){
     
     return true;
 }
+
+Layer* NvLayer::create(){
+    auto ret = Layer::create();
+    
+    
+    
+    return ret;
+}
+
 NS_NV_END

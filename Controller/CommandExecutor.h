@@ -65,6 +65,7 @@ public:
     static void hideTextLayer();
     static void clearText();
     static void setTextSpeed();
+    static void changeTextBox(string filename);
     
     //PortraitLayer(add,clear: メモリ上の話。 show,hide: 見た目の話。)
     static void addPortrait(string id, string path, int x=0, int y=0, int alpha=255);

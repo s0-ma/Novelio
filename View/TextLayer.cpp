@@ -8,7 +8,7 @@
 
 #include "cocos2d.h"
 #include "TextLayer.h"
-#include "NovelControler.h"
+#include "../Controller/NovelControler.h"
 #include "GameModel.h"
 #include "GameManager.h"
 

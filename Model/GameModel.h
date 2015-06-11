@@ -11,7 +11,7 @@
 
 #include "Novelio.h"
 #include "View.h"
-#include "NovelScript.h"
+#include "../Controller/NovelScript.h"
 
 #include "Model.h"
 #include "ControlledData.h"

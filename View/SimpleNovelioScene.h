@@ -43,6 +43,13 @@ public:
     
 };
 
+class NvLayer : public Layer{
+public:
+    static Layer* create();
+    
+};
+
+
 NS_NV_END
 
 #endif /* defined(__Novelio__SimpleNovelioScene__) */

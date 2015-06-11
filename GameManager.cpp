@@ -10,7 +10,7 @@
 #include "CCLuaEngine.h"
 
 #include "GameManager.h"
-#include "NovelControler.h"
+#include "Controller/NovelControler.h"
 
 NS_NV_BEGIN
 

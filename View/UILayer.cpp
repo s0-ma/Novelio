@@ -7,7 +7,7 @@
 //
 
 #include "UILayer.h"
-#include "NovelControler.h"
+#include "../Controller/NovelControler.h"
 #include "GameModel.h"
 #include "GameManager.h"
 #include "CCLuaEngine.h"

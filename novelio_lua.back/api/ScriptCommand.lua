@@ -79,18 +79,7 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] changeTextBox 
--- @param self
--- @param #string filename
-        
---------------------------------
--- 
 -- @function [parent=#ScriptCommand] hideAllPortrait 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] exit 
 -- @param self
         
 --------------------------------
