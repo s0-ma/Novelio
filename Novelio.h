@@ -9,75 +9,48 @@
 #ifndef Novelium_Novelium_h
 #define Novelium_Novelium_h
 
-#include <utility>
-#include <vector>
-#include <string>
-#include <map>
+#include "GameManager.h"
 
-#include "cocos2d.h"
+//Controller
+#include "Controller/CommandExecutor.h"
+#include "Controller/NovelControler.h"
+#include "Controller/NovelScript.h"
+#include "Controller/ScriptParser.h"
 
-#define NS_NV_BEGIN                     namespace nv {
-#define NS_NV_END                       }
-#define USING_NS_NV                     using namespace nv;
+//Model
+#include "Model/BackgroundLayerModel.h"
+#include "Model/ControlledData.h"
+#include "Model/Data.h"
+#include "Model/GameModel.h"
+#include "Model/GlobalData.h"
+#include "Model/LocalData.h"
+#include "Model/LogLayerModel.h"
+#include "Model/PortraitLayerModel.h"
+#include "Model/Preservable.h"
+#include "Model/TextLayerModel.h"
 
-#define SAVEDIR ".tenclaps"
+//Utils
+#include "Utils/Split.h"
 
-#pragma execution_character_set("utf-8")
-USING_NS_CC;
-using namespace std;
-
-NS_NV_BEGIN
-
-//位置指定用の関数群
-inline cocos2d::Point PointFromCenter(float x, float y)
-{
-    return cocos2d::Point(x + Director::getInstance()->getWinSize().width /2,
-                          y + Director::getInstance()->getWinSize().height /2);
-};
-inline cocos2d::Point PointFromBottomLeft(float x, float y)
-{
-    return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x,
-                          y + Director::getInstance()->getVisibleOrigin().y);
-};
-inline cocos2d::Point PointFromBottomRight(float x, float y)
-{
-    return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x
-                          + Director::getInstance()->getWinSize().width,
-                          y + Director::getInstance()->getVisibleOrigin().y);
-};
-inline cocos2d::Point PointFromTopLeft(float x, float y)
-{
-    return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x,
-                          y + Director::getInstance()->getVisibleOrigin().y
-                          + Director::getInstance()->getWinSize().height);
-};
-inline cocos2d::Point PointFromTopRight(float x, float y)
-{
-    return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x
-                          + Director::getInstance()->getWinSize().width,
-                          y + Director::getInstance()->getVisibleOrigin().y
-                          + Director::getInstance()->getWinSize().height);
-};
-
-
-//Cocos2d-xのCREATE_FUNCをマシな実装にした より
-//("http://melpon.org/blog/cocos2dx-create-func")
-template<class Derived>
-struct create_func {
-    template<class... Args>
-    static Derived* create(Args&&... args) {
-        auto p = new Derived();
-        if (p->init(std::forward<Args>(args)...)) {
-            p->autorelease();
-            return p;
-        } else {
-            delete p;
-            return nullptr;
-        }
-    }
-};
-
-NS_NV_END
+//View
+#include "View/BackgroundLayer.h"
+#include "View/ConfigLayer.h"
+#include "View/GameLabelProtocol.h"
+#include "View/GameTextLabel.h"
+#include "View/LetterAnimationLabel.h"
+#include "View/LoadLayer.h"
+#include "View/LogLayer.h"
+#include "View/ModalLayerDecorator.h"
+#include "View/MusicFade.h"
+#include "View/NMDAudioEngine.h"
+#include "View/NMDCrypt.h"
+#include "View/Portrait.h"
+#include "View/PortraitLayer.h"
+#include "View/RubyLabel.h"
+#include "View/SaveLayer.h"
+#include "View/SimpleNovelioScene.h"
+#include "View/TextLayer.h"
+#include "View/UILayer.h"
 
 
 

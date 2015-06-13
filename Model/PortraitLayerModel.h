@@ -9,7 +9,7 @@
 #ifndef __Novelio__PortraitLayerModel__
 #define __Novelio__PortraitLayerModel__
 
-#include "Novelio.h"
+#include "Macros.h"
 
 struct PortraitModel{
     string id;

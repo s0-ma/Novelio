@@ -12,8 +12,7 @@
 #include <vector>
 #include <map>
 #include "cocos2d.h"
-#include "../View/View.h"
-#include "../Novelio.h"
+#include "../Macros.h"
 
 NS_NV_BEGIN
 

@@ -9,7 +9,7 @@
 #ifndef __Novelio__LogLayerModel__
 #define __Novelio__LogLayerModel__
 
-#include "Novelio.h"
+#include "Macros.h"
 
 class LogLayerModel {
 public:

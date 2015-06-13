@@ -10,7 +10,12 @@
 #define __Novelium__GameManager__
 
 #include "cocos2d.h"
-#include "View.h"
+
+#include "View/BackgroundLayer.h"
+#include "View/PortraitLayer.h"
+#include "View/TextLayer.h"
+#include "View/UILayer.h"
+#include "View/LogLayer.h"
 
 NS_NV_BEGIN
 
@@ -24,11 +29,11 @@ private:
     GameManager(const GameManager& rhs);
     GameManager& operator=(const GameManager& rhs);
     
-    BackgroundLayer* bLayer;
-    PortraitLayer* pLayer;
-    TextLayer* tLayer;
-    UILayer* uiLayer;
-    LogLayer* logLayer;
+    BackgroundLayer* bLayer = nullptr;
+    PortraitLayer* pLayer = nullptr;
+    TextLayer* tLayer = nullptr;
+    UILayer* uiLayer = nullptr;
+    LogLayer* logLayer = nullptr;
 
 public:
     ~GameManager();
@@ -47,6 +52,9 @@ public:
     UILayer* getUILayer(void);
     void setLogLayer(LogLayer* logLayer);
     LogLayer* getLogLayer(void);
+  
+    void setOnExitFunction(std::function<void(void)> f);
+    std::function<void(void)> onExitScript = nullptr;
     
 };
 

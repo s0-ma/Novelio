@@ -9,7 +9,6 @@
 #ifndef __Novelio__ControlledData__
 #define __Novelio__ControlledData__
 
-#include "Novelio.h"
 #include "Data.h"
 
 class ControlledData : public NvData {

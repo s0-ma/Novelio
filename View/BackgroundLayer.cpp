@@ -9,7 +9,6 @@
 #include "BackgroundLayer.h"
 #include "BackgroundLayerModel.h"
 #include "SimpleAudioEngine.h"
-#include "../Model/Model.h"
 #include "../GameManager.h"
 #include "NMDAudioEngine.h"
 #include "../Model/GameModel.h"

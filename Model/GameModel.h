@@ -9,11 +9,9 @@
 #ifndef __Novelium__GameModel__
 #define __Novelium__GameModel__
 
-#include "Novelio.h"
-#include "View.h"
+#include "Macros.h"
 #include "../Controller/NovelScript.h"
 
-#include "Model.h"
 #include "ControlledData.h"
 #include "BackgroundLayerModel.h"
 #include "TextLayerModel.h"

@@ -10,7 +10,7 @@
 #define __Novelium__UILayer__
 
 #include "cocos2d.h"
-#include "../Novelio.h"
+#include "../Macros.h"
 
 NS_NV_BEGIN
 

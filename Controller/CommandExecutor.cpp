@@ -463,15 +463,29 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
 
 void ScriptCommand::exit(){
     auto action = [](){
-//        auto bLayer = GameManager::getInstance()->getBackgroundLayer();
-//        bLayer->removeFromParent();
+
+        auto bLayer = GameManager::getInstance()->getBackgroundLayer();
+        if(bLayer != nullptr)
+            bLayer->removeFromParent();
+        
         auto pLayer = GameManager::getInstance()->getPortraitLayer();
-        pLayer->removeFromParent();
+        if(pLayer != nullptr)
+            pLayer->removeFromParent();
+        
         auto tLayer = GameManager::getInstance()->getTextLayer();
-        tLayer->removeFromParent();
+        if(tLayer != nullptr)
+            tLayer->removeFromParent();
+        
         auto uLayer = GameManager::getInstance()->getUILayer();
-        uLayer->removeFromParent();
+        if (uLayer != nullptr)
+            uLayer->removeFromParent();
+    
+        auto f = GameManager::getInstance()->onExitScript;
+        if(f != nullptr){
+            f();
+        }
     };
+    
     execInstantCommand(action);
     
 }

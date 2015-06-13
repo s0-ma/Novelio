@@ -78,4 +78,8 @@ LogLayer* GameManager::getLogLayer(void){
     return logLayer;
 };
 
+void GameManager::setOnExitFunction(std::function<void(void)> f){
+    this->onExitScript = f;
+};
+    
 NS_NV_END

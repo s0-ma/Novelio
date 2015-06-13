@@ -7,12 +7,12 @@
 //
 
 #include "SimpleNovelioScene.h"
-#include "View.h"
-#include "Model.h"
 #include "GameModel.h"
 
 #include "../Controller/NovelControler.h"
 #include "CCLuaEngine.h"
+
+#include "../Macros.h"
 
 NS_NV_BEGIN
 

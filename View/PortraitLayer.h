@@ -10,7 +10,7 @@
 #define __Novelium__PortraitLayer__
 
 #include "cocos2d.h"
-#include "../Novelio.h"
+#include "../Macros.h"
 
 #include "Portrait.h"
 

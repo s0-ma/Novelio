@@ -9,7 +9,6 @@
 #ifndef __Novelio__BackgroundLayerModel__
 #define __Novelio__BackgroundLayerModel__
 
-#include "Novelio.h"
 #include "Preservable.h"
 
 class BackgroundLayerModel : public nv::Preservable{
