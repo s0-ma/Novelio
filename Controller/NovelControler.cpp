@@ -104,10 +104,11 @@ void NovelControler::_execNextLine(){
     auto n = GameModel::getInstance()->getLine();
     auto line = script->lines.at(n);
 
-    CCLOG("**%d** %d ,%s",n, line->getLineType(), line->getVal().c_str());
+//    CCLOG("**%d** %d ,%s",n, line->getLineType(), line->getVal().c_str());
     
     if(line->getLineType() == NovelioScriptLine::COMMENT){
-        //コメント。何もしないで次の行実行。
+        //コメント。何か構造化された情報を埋め込むことを見込んで、変数に格納
+        GameModel::getInstance()->addComment(line->getVal());
         _execNextLine();
         return;
         

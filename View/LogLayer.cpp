@@ -7,12 +7,12 @@
 //
 
 #include "LogLayer.h"
+
+#include "../extensions/cocos-ext.h"
+
 #include "../GameManager.h"
-
 #include "../Model/GameModel.h"
-
 #include "RubyLabel.h"
-
 #include "ModalLayerDecorator.h"
 
 NS_NV_BEGIN
@@ -90,4 +90,9 @@ void LogLayer::setBackground(string path){
     background->setPosition(PointFromCenter(0,0));
     addChild(background);
 }
+
+void LogLayer::showLog(){
+    
+}
+
 NS_NV_END

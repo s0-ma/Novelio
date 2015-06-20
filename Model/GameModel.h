@@ -70,6 +70,8 @@ public:
     DEFINE_INT_DATA(Paragraph);
     DEFINE_INT_DATA(Sentence);
     
+    vector<string> comments;
+    
     //各レイヤーのモデル
 //    BackgroundLayerModel* backgroundLayerModel;
 public:
@@ -77,7 +79,9 @@ public:
     TextLayerModel* textLayerModel;
     LogLayerModel* logLayerModel;
     
-
+    void addComment(string text);
+    vector<string> getComments();
+    
 };
 
 NS_NV_END

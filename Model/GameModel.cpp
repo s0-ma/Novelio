@@ -7,9 +7,11 @@
 //
 
 #include "GameModel.h"
-#include "View.h"
 #include "GameManager.h"
 #include "BackgroundLayer.h"
+
+#include "GlobalData.h"
+#include "LocalData.h"
 
 #define SHOW_FADEIN_TIME 0.5
 #define SHOW_FADEOUT_TIME 0.5
@@ -93,5 +95,17 @@ void GameModel::setScript(NovelScript *script){
 void GameModel::goNextLine(){
     setLine(getLine()+1);
 }
+
+void GameModel::addComment(string text){
+    CCLOG("Comment: %s", text.c_str());
+    comments.push_back(text);
+}
+
+vector<string> GameModel::getComments(){
+    auto ret = comments;
+    comments.clear();
+    return ret;
+}
+
 
 NS_NV_END
