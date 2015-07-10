@@ -108,7 +108,7 @@ void NovelControler::_execNextLine(){
     
     if(line->getLineType() == NovelioScriptLine::COMMENT){
         //コメント。何か構造化された情報を埋め込むことを見込んで、変数に格納
-        GameModel::getInstance()->addComment(line->getVal());
+        GameModel::getInstance()->addComment(line);
         _execNextLine();
         return;
         

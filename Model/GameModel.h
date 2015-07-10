@@ -70,7 +70,7 @@ public:
     DEFINE_INT_DATA(Paragraph);
     DEFINE_INT_DATA(Sentence);
     
-    vector<string> comments;
+    vector<NovelioScriptLine*> comments;
     
     //各レイヤーのモデル
 //    BackgroundLayerModel* backgroundLayerModel;
@@ -79,8 +79,8 @@ public:
     TextLayerModel* textLayerModel;
     LogLayerModel* logLayerModel;
     
-    void addComment(string text);
-    vector<string> getComments();
+    void addComment(NovelioScriptLine* line);
+    vector<NovelioScriptLine*> getComments();
     
 };
 

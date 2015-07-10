@@ -96,12 +96,12 @@ void GameModel::goNextLine(){
     setLine(getLine()+1);
 }
 
-void GameModel::addComment(string text){
-    CCLOG("Comment: %s", text.c_str());
+void GameModel::addComment(NovelioScriptLine* text){
+//    CCLOG("Comment: %s", text->getVal().c_str());
     comments.push_back(text);
 }
 
-vector<string> GameModel::getComments(){
+vector<NovelioScriptLine*> GameModel::getComments(){
     auto ret = comments;
     comments.clear();
     return ret;

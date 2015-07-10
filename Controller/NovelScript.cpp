@@ -77,6 +77,10 @@ bool NovelioScriptLine::initEOF(int n){
     return true;
 }
 
+int NovelioScriptLine::getNum(){
+    return num;
+}
+
 NovelioScriptLine::LineType NovelioScriptLine::getLineType(){
     return type;
 }
