@@ -31,6 +31,7 @@ bool UILayer::init(){
     listener->onTouchEnded = CC_CALLBACK_2(UILayer::onTouchEnded, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+    /*
     //ボタン
     //LOG
     auto logBtn = MenuItemImage::create("nvRes/system/button_back.png",
@@ -63,6 +64,7 @@ bool UILayer::init(){
     
     auto menu = Menu::create(logBtn, skipBtn, autoBtn, NULL);
     addChild(menu);
+    */
     
     return true;
 }
