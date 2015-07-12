@@ -200,5 +200,4 @@ void NovelControler::loadScript(NovelScript *script){
     GameModel::getInstance()->setScript(script);
 }
 
-
 NS_NV_END

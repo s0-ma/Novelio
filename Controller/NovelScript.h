@@ -113,6 +113,8 @@ public:
 
     cocos2d::Vector<NovelioScriptLine*> lines;
 
+    vector<string> getCommentsByTag(string tag);
+    
 };
 
 NS_NV_END

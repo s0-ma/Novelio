@@ -107,5 +107,4 @@ vector<NovelioScriptLine*> GameModel::getComments(){
     return ret;
 }
 
-
 NS_NV_END

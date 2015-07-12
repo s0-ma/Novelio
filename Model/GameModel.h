@@ -81,7 +81,6 @@ public:
     
     void addComment(NovelioScriptLine* line);
     vector<NovelioScriptLine*> getComments();
-    
 };
 
 NS_NV_END

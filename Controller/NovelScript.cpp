@@ -186,4 +186,20 @@ void NovelScript::setTag(string tag, int para){
 //    this->paragraphs.push_back(para);
 //}
 
+
+vector<string> NovelScript::getCommentsByTag(string tag){
+    int n_label = tags[tag];
+    vector<string> ret;
+    for(int i=n_label; i<lines.size(); i++){
+        if(lines.at(i)->getVal().find_first_of(":") == 0){
+            break;
+        }
+        if(lines.at(i)->getLineType() == NovelioScriptLine::COMMENT){
+            ret.push_back(lines.at(i)->getVal());
+        }
+    }
+    return ret;
+};
+
+
 NS_NV_END
