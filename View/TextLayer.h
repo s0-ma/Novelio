@@ -59,6 +59,7 @@ public:
     void setTextFontSize(int size);
     void setTextColor(const Color3B& color);
     void setTextSpeed(double speed);
+    void setLineHeight(float lineHeight);
     
     void setText();
     void setTexts();

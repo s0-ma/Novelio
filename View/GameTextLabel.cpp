@@ -90,6 +90,10 @@ void GameTextLabel::addText(std::string text){
     this->eachTextLengths.push_back(text.length());
 }
 
+void GameTextLabel::setLineHeight(float lineHeight){
+    this->lineHeight = lineHeight;
+}
+
 void GameTextLabel::setOriginalPosition(cocos2d::Point originalPoint){
     this->originalPoint = originalPoint;
     this->setPosition(this->originalPoint);
@@ -174,6 +178,7 @@ void GameTextLabel::run()
                 
                 std::string s(this->fullLabelText, 0, presentLabelLength);
                 this->setString(s);
+                Label::setLineHeight(lineHeight);
                 this->setPosition(Point(originalPoint.x + this->getSystemFontSize() / 2 + this->getContentSize().width / 2, originalPoint.y - this->getContentSize().height/2  - this->getSystemFontSize() ));
                 
             }

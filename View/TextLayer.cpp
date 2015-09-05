@@ -60,6 +60,7 @@ void TextLayer::initializeLayer(){
     textLabel->setVerticalAlignment(cocos2d::TextVAlignment::TOP);
     textLabel->setHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
     setTextSpeed(20);
+    setLineHeight(textFontSize);
     this->addChild(textLabel,20);
     
     //textBox
@@ -146,6 +147,10 @@ void TextLayer::addText(){
 
 void TextLayer::setTextSpeed(double speed){
     textSpeed = speed;
+};
+
+void TextLayer::setLineHeight(float lineHeight){
+    textLabel->setLineHeight(lineHeight);
 };
 
 void TextLayer::showNoText(){

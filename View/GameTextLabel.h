@@ -25,6 +25,8 @@ public:
     void setTexts(std::vector<std::string> texts);
     void addText(std::string text);
     
+    void setLineHeight(float lineHeight);
+    
     void setOriginalPosition(cocos2d::Point originalPoint);
     
     void showNoText();
@@ -42,6 +44,8 @@ public:
 private:
     float interval = 0.01;
     int delaySchedulingCounter = 0;
+    
+    float lineHeight;
     
     int presentLabelLength;
     int offsetLabelLength;
