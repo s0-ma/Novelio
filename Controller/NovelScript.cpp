@@ -190,8 +190,7 @@ void NovelScript::setTag(string tag, int para){
 vector<string> NovelScript::getCommentsByTag(string tag){
     int n_label = tags[tag];
     vector<string> ret;
-    for(int i=n_label; i<lines.size(); i++){
-//        if(lines.at(i)->getVal().find(":") == 0){
+    for(int i=n_label+1; i<lines.size(); i++){
         if(lines.at(i)->getLineType() == NovelioScriptLine::LineType::TAG){
             break;
         }
