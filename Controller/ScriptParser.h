@@ -10,15 +10,28 @@
 #define __Novelium__ScriptParser__
 
 #include <string>
-#include "Novelio.h"
+#include "../Macros.h"
+#include <fstream>
 using namespace std;
 
 NS_NV_BEGIN
 
 class ScriptParser{
+private:
+    ifstream ifs;
+    std::string lastLetter = " ";
+    bool isspace(string);
+    
 public:
-    static std::string Novelio(std::string string);
+    ScriptParser();
+    std::string Novelio(std::string string);
+    void mainLoop(string filename);
+    std::string getNextLetter();
+    std::string getNextToken();
 };
+
+
+
 
 NS_NV_END
 
