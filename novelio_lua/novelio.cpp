@@ -2,10 +2,10 @@
 #include "cocos2d.h"
 #include "CCProtectedNode.h"
 #include "Novelio.h"
+#include "NovelScript.h"
 #include "CommandExecutor.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
-
 
 
 int lua_novelio_ScriptCommand_playSE(lua_State* tolua_S)

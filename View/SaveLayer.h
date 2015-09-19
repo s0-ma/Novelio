@@ -9,7 +9,7 @@
 #ifndef __Novelio__SaveLayer__
 #define __Novelio__SaveLayer__
 
-#include "Novelio.h"
+#include "../Macros.h"
 
 NS_NV_BEGIN
 

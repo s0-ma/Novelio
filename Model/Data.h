@@ -9,7 +9,7 @@
 #ifndef __Novelio__Data__
 #define __Novelio__Data__
 
-#include "Macros.h"
+#include "../Macros.h"
 
 class NvData : public Ref {
 public:

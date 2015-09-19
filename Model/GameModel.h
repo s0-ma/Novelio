@@ -9,7 +9,7 @@
 #ifndef __Novelium__GameModel__
 #define __Novelium__GameModel__
 
-#include "Macros.h"
+#include "../Macros.h"
 #include "../Controller/NovelScript.h"
 
 #include "ControlledData.h"
@@ -17,7 +17,7 @@
 #include "TextLayerModel.h"
 #include "PortraitLayerModel.h"
 #include "LogLayerModel.h"
-#include "Portrait.h"
+#include "../View/Portrait.h"
 
 #include "Preservable.h"
 

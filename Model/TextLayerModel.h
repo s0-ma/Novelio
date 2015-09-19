@@ -9,7 +9,7 @@
 #ifndef __Novelio__TextLayerModel__
 #define __Novelio__TextLayerModel__
 
-#include "Macros.h"
+#include "../Macros.h"
 
 class TextLayerModel {
 private:
