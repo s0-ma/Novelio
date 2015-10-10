@@ -6,6 +6,14 @@
 //
 //
 
+/*!
+ @file      NovelScript.h
+ @ingroup   Controller
+ @brief
+ @date      2014/10/09
+ @author    Tatsuya Soma
+ */
+
 #ifndef __Novelium__NovelScript__
 #define __Novelium__NovelScript__
 
@@ -16,48 +24,20 @@
 
 NS_NV_BEGIN
 
+//! スクリプト一行に相当
 class NovelioScriptLine : public cocos2d::Ref{
+    
 public:
-    /**
-     @enum 行のタイプ
-     */
     enum LineType{
-        /**
-         *  初期化用ダミー
-         */
-        NONE,
-        /**
-         *  コメント行
-         */
-        COMMENT,
-        /**
-         *  クリックで実行されるLUAコマンド
-         */
-        LUA_CLICK,
-        /**
-         *  直前行と同時タイミングで実行
-         */
-        LUA_SYNC,
-        /**
-         *  直前が終わったタイミングで自動実行
-         */
-        LUA_NEXT,
-        /**
-         *  (空白文字+)改行文字のみ
-         */
-        BREAK,
-        /**
-         *  平文
-         */
-        TEXT,
-        /**
-         *  ジャンプ用タグ
-         */
-        TAG,
-        /**
-         *  ファイル終端. EOFはマクロ登録されていて使えなかった。
-         */
-        END
+        NONE,       //!< 初期化用ダミー
+        COMMENT,    //!< コメント行
+        LUA_CLICK,  //!< クリックで実行されるLUAコマンド
+        LUA_SYNC,   //!<  直前行と同時タイミングで実行
+        LUA_NEXT,   //!<  直前が終わったタイミングで自動実行
+        BREAK,      //!< (空白文字+)改行文字のみ
+        TEXT,       //!< 平文
+        TAG,        //!< ジャンプ用タグ
+        END         //!< ファイル終端. EOFはマクロ登録されていて使えなかった。
     };
     
 public:
@@ -68,26 +48,11 @@ public:
     bool initEOF(int n);
     
 private:
-    /**
-     *  スクリプトファイルの行番号
-     */
-    int num;
-    /**
-     *  この行のタイプ
-     */
-    LineType type;
-    /**
-     *  次の行のタイプ。
-     */
-    LineType nextLineType;
-    /**
-     *  内容
-     */
-    string val;
+    int num;                //!< スクリプトファイルの行番号
+    LineType type;          //!< この行のタイプ
+    LineType nextLineType;  //!< 次の行のタイプ
+    string val;             //!< 内容
     
-    std::vector<std::string> lines;
-    std::string getLine(int i);
-    std::vector<std::string> getSentences();
 public:
     int getNum();
     LineType getLineType();
@@ -95,7 +60,7 @@ public:
     string getVal();
 };
 
-
+//! スクリプトファイル１つに相当
 class NovelScript : public cocos2d::Node
 {
 public:
@@ -106,13 +71,10 @@ public:
     bool initWithNovelioFile(string filename);
     
     std::string filename;
+    cocos2d::Vector<NovelioScriptLine*> lines;
+    std::map<std::string, int> tags;
     
     void setTag(string tag, int nPara);
-    
-    std::map<std::string, int> tags;
-
-    cocos2d::Vector<NovelioScriptLine*> lines;
-
     vector<string> getCommentsByTag(string tag);
     
 };

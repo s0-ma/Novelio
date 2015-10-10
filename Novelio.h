@@ -6,18 +6,26 @@
 //
 //
 
+/*!
+ @mainpage
+ Welcome to Novelio.
+ This project aims to make novel game easily on multi-platform by using cocos2d-x.
+ */
+
 #ifndef Novelium_Novelium_h
 #define Novelium_Novelium_h
 
 #include "GameManager.h"
 
 //Controller
+//! @addtogroup Controller
 #include "Controller/CommandExecutor.h"
-#include "Controller/NovelControler.h"
+#include "Controller/NovelController.h"
 #include "Controller/NovelScript.h"
 #include "Controller/ScriptParser.h"
 
 //Model
+//! @addtogroup Model
 #include "Model/BackgroundLayerModel.h"
 #include "Model/ControlledData.h"
 #include "Model/Data.h"
@@ -30,15 +38,15 @@
 #include "Model/TextLayerModel.h"
 
 //Utils
+//! @addtogroup Utils
 #include "Utils/Split.h"
 
 //View
+//! @addtogroup View
 #include "View/BackgroundLayer.h"
-#include "View/ConfigLayer.h"
 #include "View/GameLabelProtocol.h"
 #include "View/GameTextLabel.h"
 #include "View/LetterAnimationLabel.h"
-#include "View/LoadLayer.h"
 #include "View/LogLayer.h"
 #include "View/ModalLayerDecorator.h"
 #include "View/MusicFade.h"
@@ -47,11 +55,8 @@
 #include "View/Portrait.h"
 #include "View/PortraitLayer.h"
 #include "View/RubyLabel.h"
-#include "View/SaveLayer.h"
 #include "View/SimpleNovelioScene.h"
 #include "View/TextLayer.h"
 #include "View/UILayer.h"
-
-
 
 #endif

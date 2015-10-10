@@ -198,9 +198,13 @@ void Portrait::changeFace(std::string facePath){
 };
 
 void Portrait::addEmoticon(string path, int x, int y){
+    auto emoticon = Sprite::create(path);
+    emoticon->setPosition(Vec2(this->getContentSize().width/2 + x, this->getContentSize().height/2 + y));
+    this->addChild(emoticon);
     CCLOG("Portrait::addEmoticon not coded yet.");
 };
 void Portrait::removeEmoticon(){
+    this->removeAllChildren();
     CCLOG("Portrait::removeEmoticon not coded yet.");
 };
 

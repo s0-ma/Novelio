@@ -29,8 +29,12 @@ bool PortraitLayer::init(){
 }
 
 Portrait* PortraitLayer::getPortrait(string id){
-    return portraits[id];
-};
+    if(portraits.count(id) == 0){
+        return nullptr;
+    }else{
+        return portraits[id];
+    }
+    };
 
 
 void PortraitLayer::addPortrait(string id){
@@ -53,7 +57,12 @@ void PortraitLayer::movePortrait(std::string id, int t_sec){
 };
 
 void PortraitLayer::cutinPortrait(std::string id){
-    portraits[id]->setOpacity(255);
+    if(portraits.count(id) != 0){
+        portraits[id]->setOpacity(255);
+    }else{
+        CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
+                        GameModel::getInstance()->getLine(), id.c_str());
+    }
 };
 
 void PortraitLayer::fadeinPortrait(std::string id, int t_sec){
@@ -61,7 +70,12 @@ void PortraitLayer::fadeinPortrait(std::string id, int t_sec){
 }
 
 void PortraitLayer::cutoutPortrait(std::string id){
-    portraits[id]->setOpacity(0);
+    if(portraits.count(id) != 0){
+        portraits[id]->setOpacity(0);
+    }else{
+        CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
+                        GameModel::getInstance()->getLine(), id.c_str());
+    }
 };
 
 void PortraitLayer::fadeoutPortrait(std::string id, int t_sec){
@@ -72,10 +86,17 @@ void PortraitLayer::cutinFace(std::string id, string faceId){
     auto facePath = GameModel::getInstance()->portraitLayerModel->portraits[id].facePool[faceId];
     auto FaceKey = facePath;
     if (faceId != "" && facePath == ""){
-        CCLOG("face not found. %s : %s",id.c_str(), faceId.c_str() );
+        CCLOG("l:%d, face not found. %s : %s",GameModel::getInstance()->getLine(),id.c_str(), faceId.c_str() );
+        return;
     }
-//    portraits[id]->addFace(FaceKey, facePath);
-    portraits[id]->changeFace(facePath);
+    
+    if(portraits.count(id) != 0){
+        portraits[id]->setOpacity(255);
+        portraits[id]->changeFace(facePath);
+    }else{
+        CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
+                        GameModel::getInstance()->getLine(), id.c_str());
+    }
 };
 
 void PortraitLayer::fadeinFace(std::string id, string faceId){

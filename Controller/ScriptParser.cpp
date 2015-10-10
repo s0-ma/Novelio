@@ -5,6 +5,15 @@
 //  Created by Tatsuya Soma on 2014/10/12.
 //
 //
+
+/*!
+ @file      ScriptParser.cpp
+ @ingroup   Controller
+ @brief
+ @date      2014/10/12
+ @author    Tatsuya Soma
+ */
+
 #include <iostream>
 #include <regex>
 #include <string>
@@ -49,7 +58,7 @@ void ScriptParser::mainLoop(string string){
     while(1){
         std::string str = getNextToken();
         if(!ifs.eof()){
-            CCLOG("%s", str.c_str());
+            CCLOG("*%s", str.c_str());
         }else{
             break;
         }
@@ -84,8 +93,48 @@ bool ScriptParser::isspace(string str){
     }
     
 }
+bool ScriptParser::isNewline(string str){
+    if(str == "\n"){
+        return true;
+    }else{
+        return false;
+    }
+    
+}
 
 string ScriptParser::getNextToken(){
+    if(inScript){
+        return getNextScriptToken();
+    }else{
+        return getNextTextToken();
+    }
+    
+}
+
+string ScriptParser::getNextTextToken(){
+    string idStr;
+    
+    if(isNewline(lastLetter)){
+        lastLetter = getNextLetter();
+    }
+    
+    idStr = lastLetter;
+    while(1){
+        lastLetter = getNextLetter();
+        if(lastLetter[0] != EOF && lastLetter != "\n" && lastLetter != "\r"){
+            if(lastLetter == "["){
+                inScript = true;
+                break;
+            }
+            idStr += lastLetter;
+        }else{
+            break;
+        }
+    }
+    return idStr;
+}
+
+string ScriptParser::getNextScriptToken(){
     string idStr;
     //空白文字の無視
     while (isspace(lastLetter)){
@@ -167,6 +216,9 @@ string ScriptParser::getNextToken(){
         }
     }
     
+    if(lastLetter == "]"){
+        inScript = false;
+    }
     
     //その他(アルファベット、数値以外のもの)
     string thisLetter = lastLetter;

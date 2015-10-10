@@ -59,6 +59,7 @@ public:
  *  Portrait用のエモティコンアニメーション
  */
 class PortraitEmotion : public ActionInterval{
+public:
     PortraitEmotion();
     
     static PortraitEmotion* create(string path, float d);
@@ -72,6 +73,7 @@ class PortraitEmotion : public ActionInterval{
 };
 
 class PortraitEmotionForever : public RepeatForever{
+public:
     PortraitEmotionForever();
     
     static PortraitEmotionForever* create(string path, float d);

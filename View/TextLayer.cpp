@@ -8,7 +8,7 @@
 
 #include "cocos2d.h"
 #include "TextLayer.h"
-#include "../Controller/NovelControler.h"
+#include "../Controller/NovelController.h"
 #include "GameModel.h"
 #include "GameManager.h"
 
@@ -91,7 +91,8 @@ void TextLayer::setNameFontSize(int size){
     nameLabel->setTTFConfig(nameConf);
 }
 
-void TextLayer::setName(std::string name){
+void TextLayer::setName(){
+    std::string name = GameModel::getInstance()->textLayerModel->getName();
     this->name = name;
     nameLabel->setString(name);
 };

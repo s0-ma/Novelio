@@ -1,23 +1,33 @@
 //
-//  NovelControler.cpp
+//  NovelController.cpp
 //  Novelium
 //
 //  Created by Tatsuya Soma on 2014/10/06.
 //
 //
 
+/*!
+ @file      NovelController.cpp
+ @ingroup   Controller
+ @brief
+ @date      2014/10/06
+ @author    Tatsuya Soma
+ */
+
 #include <fstream>
 #include <vector>
 
-#include "NovelControler.h"
 #include "GameManager.h"
-#include "GameModel.h"
 
+#include "NovelController.h"
 #include "ScriptParser.h"
 #include "CommandExecutor.h"
 #include "NovelScript.h"
 
-#include "Split.h"
+#include "Model/GameModel.h"
+#include "Model/TextLayerModel.h"
+
+#include "Utils/Split.h"
 
 #define COMMENT_PREFIX ".//"
 #define COMMAND_PREFIX "."
@@ -139,10 +149,20 @@ void NovelControler::_execNextLine(){
         //ログに追加
         GameModel::getInstance()->logLayerModel->appendLog(_text);
         
+        //名前表示部分の分離
+            if(_text.substr(0,1) == "%"){
+                setNameToModel(split(_text, ' ')[0].substr(1,-1));
+                _text = split(_text, ' ')[1];
+            }else{
+                setNameToModel("");
+            }
+        
+        //モデルへのセットと表示要求
         auto model = GameModel::getInstance()->textLayerModel;
         auto tLayer = GameManager::getInstance()->getTextLayer();
         model->addText(_text);
         tLayer->addText();
+        tLayer->setName();
         if(line->getNextLineType() != NovelioScriptLine::TEXT){
             tLayer->startText();
         }else{
@@ -193,11 +213,15 @@ NovelScript* NovelControler::getScript(){
     return script;
 };
 
-
-
 void NovelControler::loadScript(NovelScript *script){
     this->script = script;
     GameModel::getInstance()->setScript(script);
+}
+
+void NovelControler::setNameToModel(string name){
+    GameModel::getInstance()->textLayerModel->setName(name);
+    
+    return;
 }
 
 NS_NV_END

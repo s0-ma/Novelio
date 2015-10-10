@@ -6,8 +6,16 @@
 //
 //
 
+/*!
+ @file      CommandExecutor.cpp
+ @ingroup   Controller
+ @brief
+ @date      2014/10/13
+ @author    Tatsuya Soma
+ */
+
 #include "CommandExecutor.h"
-#include "NovelControler.h"
+#include "NovelController.h"
 
 
 #include "../Model/GameModel.h"
@@ -19,14 +27,19 @@
 #include "NMDAudioEngine.h"
 #include "MusicFade.h"
 
-#include "Portrait.h"
+#include "../View/Portrait.h"
+#include "../View/Shake.h"
 
 NS_NV_BEGIN
 
 void CommandExecutor::execute(std::string cmd, NovelioScriptLine::LineType type){
     
     ScriptCommand::setType(type);
-    LuaEngine::getInstance()->executeString(cmd.c_str());
+    int a = LuaEngine::getInstance()->executeString(cmd.c_str());
+    if(a != 0){
+        CCLOG("l:%d, LUA ERR.", GameModel::getInstance()->getLine());
+        NovelControler::getInstance()->_execNextLine();
+    }
     return;
 }
 
@@ -190,6 +203,8 @@ void ScriptCommand::hidePortraitLayer(float fade_sec /*= 0*/){
     
 }
 void ScriptCommand::addPortrait(string id, string path, int x/*=0*/, int y/*=0*/, int alpha/*=255*/){
+    GameManager::getInstance()->portraitPool[id] = GameManager::portraitMap(id, path);
+    
     auto action = [id,path,x,y,alpha](){
         auto model = GameModel::getInstance()->portraitLayerModel;
         model->addPortrait(id, path);
@@ -206,6 +221,8 @@ void ScriptCommand::addPortrait(string id, string path, int x/*=0*/, int y/*=0*/
 }
 
 void ScriptCommand::addPortraitFace(string id, string face_id, string path, int x/*=0*/, int y/*=0*/, int alpha/*=255*/){
+    GameManager::getInstance()->portraitPool[id].facePath[face_id] = path;
+    
     auto action = [id,face_id,path](){
         auto model = GameModel::getInstance()->portraitLayerModel;
         model->addPortraitFace(id, face_id, path);
@@ -236,6 +253,10 @@ void ScriptCommand::showPortrait(string id, float fade_sec/* = 0*/, int alpha/*=
 }
 
 void ScriptCommand::changePortraitFace(string id, string face_id, float fade_sec){
+    if(GameModel::getInstance()->portraitLayerModel->portraits.count(id) == 0){
+        addPortrait(id, GameManager::getInstance()->portraitPool[id].facePath[face_id]);
+    }
+    
     if(fade_sec == 0){
         auto action = [id, face_id](){
             auto model = GameModel::getInstance()->portraitLayerModel;
@@ -259,8 +280,13 @@ void ScriptCommand::changePortraitFace(string id, string face_id, float fade_sec
         auto action = PortraitFaceFade::create(fade_sec, facePath);
         
         auto interrupt = [subject, facePath](){
-            subject->changeFace(facePath);
-            subject->removeAllChildren();
+            if(subject != nullptr){
+                subject->changeFace(facePath);
+                subject->removeAllChildren();
+            }else{
+                CCLOG("l:%d, PortraitSprite: %s not found on pLayer.",
+                            GameModel::getInstance()->getLine(), facePath.c_str());
+            }
         };
         
         execIntervalCommand(key, subject, action, interrupt);
@@ -330,6 +356,47 @@ void ScriptCommand::movePortrait(string id, int x, int y, int effect /*= 0*/, in
     
 }
 
+void ScriptCommand::registerEmoticonPath(string id, string path1, string path2 /*=""*/){
+    if (GameManager::getInstance()->emoticonPool.count(id) == 0){
+        GameManager::getInstance()->emoticonPool[id].push_back(path1);
+        if(path2 != ""){
+            GameManager::getInstance()->emoticonPool[id].push_back(path1);
+        }
+    }else{
+        GameManager::getInstance()->emoticonPool[id][0] = path1;
+        if(path2 != ""){
+            GameManager::getInstance()->emoticonPool[id][1] = path1;
+        }
+    }
+}
+
+void ScriptCommand::setEmoticonDefaultPosition(string id, int x, int y){
+    auto action = [id, x, y](){
+        GameModel::getInstance()->portraitLayerModel->portraits[id].emo_x = x;
+        GameModel::getInstance()->portraitLayerModel->portraits[id].emo_y = y;
+    };
+    
+    execInstantCommand(action);
+}
+void ScriptCommand::setEmoticon(string id, string emo){
+    auto action = [id, emo](){
+        auto p = GameModel::getInstance()->portraitLayerModel->portraits[id];
+        p.emoticon_path = GameManager::getInstance()->emoticonPool[emo][0];
+        GameManager::getInstance()->getPortraitLayer()->getPortrait(id)->addEmoticon(p.emoticon_path, p.emo_x, p.emo_y);
+    };
+    
+    execInstantCommand(action);
+}
+
+void ScriptCommand::hideEmoticon(string id){
+    auto action = [id](){
+        auto p = GameModel::getInstance()->portraitLayerModel->portraits[id];
+        GameManager::getInstance()->getPortraitLayer()->getPortrait(id)->removeEmoticon();
+    };
+    
+    execInstantCommand(action);
+}
+
 //BackgroundLayer
 void ScriptCommand::preloadBackground(string path){
     
@@ -361,7 +428,13 @@ void ScriptCommand::BG_CutOut(string color /*= "#000000"*/){
 
 //Scene全体にかかる可能性のあるエフェクト
 void ScriptCommand::Quake(int x, int y, float time /*= 1*/){
-    
+        auto key = "Quake";
+        auto subject = GameManager::getInstance()->getBackgroundLayer();
+        //TODO tune the strength of Shake action.
+        auto action = Shake::actionWithDuration(time/1000, 10);
+        auto interrupt = [subject](){
+        };
+        execIntervalCommand(key, subject, action, interrupt);
 }
 void ScriptCommand::SpriteSheetAnimation(string path, bool loop /*= false*/){
     
@@ -425,7 +498,11 @@ void ScriptCommand::fadeoutBGM(float time){
     
 }
 void ScriptCommand::stopBGM(){
+    auto action = [](){
+        NMDAudioEngine::getInstance()->stopBackgroundMusic();
+    };
     
+    execInstantCommand(action);
 }
 void ScriptCommand::playSE(string path, bool loop /*= false*/){
     auto action = [path, loop](){

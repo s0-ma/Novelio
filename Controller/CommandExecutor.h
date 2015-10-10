@@ -6,6 +6,14 @@
 //
 //
 
+/*!
+ @file      CommandExecutor.h
+ @ingroup   Controller
+ @brief
+ @date      2014/10/13
+ @author    Tatsuya Soma
+ */
+
 #ifndef __Novelium__CommandExecutor__
 #define __Novelium__CommandExecutor__
 
@@ -86,6 +94,11 @@ public:
 
     static void movePortrait(string id, int x, int y, int effect = 0, int param = 1);
     static void changePortraitFace(string id, string face_id, float fade_sec = 0);
+    
+    static void registerEmoticonPath(string id, string path1, string path2 = "");
+    static void setEmoticonDefaultPosition(string id, int x, int y);
+    static void setEmoticon(string id, string emo);
+    static void hideEmoticon(string id);
     
     //BackgroundLayer
     static void preloadBackground(string path);

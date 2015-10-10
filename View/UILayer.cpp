@@ -7,10 +7,11 @@
 //
 
 #include "UILayer.h"
-#include "../Controller/NovelControler.h"
+#include "../Controller/NovelController.h"
 #include "GameModel.h"
 #include "GameManager.h"
 #include "CCLuaEngine.h"
+#include "ViewFunctions.h"
 
 
 NS_NV_BEGIN
@@ -31,7 +32,6 @@ bool UILayer::init(){
     listener->onTouchEnded = CC_CALLBACK_2(UILayer::onTouchEnded, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-    /*
     //ボタン
     //LOG
     auto logBtn = MenuItemImage::create("nvRes/system/button_back.png",
@@ -47,8 +47,7 @@ bool UILayer::init(){
     auto skipBtn = MenuItemImage::create("nvRes/system/button_skip.png",
                                         "nvRes/system/button_skip_on.png",
                                         [](Ref* sender){
-                                            GameModel::getInstance()->setScenarioMode(GameModel::SKIP);
-                                            NovelControler::getInstance()->_execNextLine();
+                                            ViewFunctions::setSkipMode();
                                         });
     skipBtn->setPosition(Vec2(320,-250));
 
@@ -56,15 +55,12 @@ bool UILayer::init(){
     auto autoBtn = MenuItemImage::create("nvRes/system/button_auto.png",
                                          "nvRes/system/button_auto_on.png",
                                          [](Ref* sender){
-//                                             GameModel::getInstance()->setScenarioMode(GameModel::AUTO);
-//                                             NovelControler::getInstance()->_execNextLine();
-                                             GameModel::getInstance()->save();
+                                             ViewFunctions::setAutoMode();  
                                          });
     autoBtn->setPosition(Vec2(390,-250));
     
     auto menu = Menu::create(logBtn, skipBtn, autoBtn, NULL);
     addChild(menu);
-    */
     
     return true;
 }

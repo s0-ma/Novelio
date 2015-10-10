@@ -20,6 +20,9 @@ struct PortraitModel{
     map<string, string> facePool;
     int x;
     int y;
+    int emo_x;
+    int emo_y;
+    string emoticon_path;
     double scale;
     bool grayout;
 };

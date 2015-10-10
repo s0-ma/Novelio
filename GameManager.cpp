@@ -10,7 +10,7 @@
 #include "CCLuaEngine.h"
 
 #include "GameManager.h"
-#include "Controller/NovelControler.h"
+#include "Controller/NovelController.h"
 
 NS_NV_BEGIN
 
@@ -81,5 +81,12 @@ LogLayer* GameManager::getLogLayer(void){
 void GameManager::setOnExitFunction(std::function<void(void)> f){
     this->onExitScript = f;
 };
+
+GameManager::portraitMap::portraitMap(){
+}
+GameManager::portraitMap::portraitMap(string name, string path){
+    name = name;
+    imgPath = path;
+}
     
 NS_NV_END

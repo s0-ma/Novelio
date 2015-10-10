@@ -10,6 +10,8 @@
 #define __Novelium__GameManager__
 
 #include "cocos2d.h"
+#include <string>
+#include <map>
 
 #include "View/BackgroundLayer.h"
 #include "View/PortraitLayer.h"
@@ -55,6 +57,18 @@ public:
   
     void setOnExitFunction(std::function<void(void)> f);
     std::function<void(void)> onExitScript = nullptr;
+    
+    //一度登録、使用した画像のキャッシュ
+    class portraitMap{
+    public:
+        portraitMap();
+        portraitMap(string name, string path);
+        string name;
+        string imgPath;
+        map<string, string> facePath;
+    };
+    std::map<std::string, portraitMap> portraitPool;
+    std::map<std::string, vector<string>> emoticonPool;
     
 };
 
