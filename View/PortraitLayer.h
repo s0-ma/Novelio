@@ -29,17 +29,25 @@ private:
 public:
     Portrait* getPortrait(string id);
     
+    //!画面にOpacity0で追加
     void addPortrait(string id);
+    //!位置設定
     void setPortraitPosition(std::string id);
+    //!移動(action)
     void movePortrait(std::string id, int t_sec);
     
+    //!Opacityの変化のみ
     void cutinPortrait(std::string id);
     void fadeinPortrait(std::string id, int t_sec);
     void cutoutPortrait(std::string id);
     void fadeoutPortrait(std::string id, int t_sec);
 
+    //!表情関係
     void cutinFace(std::string id, string faceId);
     void fadeinFace(std::string id, string faceId);
+    
+    //!
+    void removePortrait(std::string id);
     
     void clear();
     

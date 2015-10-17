@@ -70,7 +70,7 @@ bool UILayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event){
 }
 
 void UILayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event){
-    NovelControler::getInstance()->onDisplayTouched();    
+    NovelController::getInstance()->onDisplayTouched();    
 }
 
 NS_NV_END

@@ -24,23 +24,23 @@ NS_NV_BEGIN
 
 /*! @brief スクリプトファイルの実行を司る
 */
-class NovelControler
+class NovelController
 {
 private:
     //唯一のinstance
-    static NovelControler* instance;
+    static NovelController* instance;
     // 生成やコピーを禁止する
-    NovelControler();
-    NovelControler(const NovelControler& rhs);
-    NovelControler& operator=(const NovelControler& rhs);
+    NovelController();
+    NovelController(const NovelController& rhs);
+    NovelController& operator=(const NovelController& rhs);
     
     NovelScript* script;
     void onParagraphEnds();
     
 public:
-    ~NovelControler();
+    ~NovelController();
     //唯一のアクセス手段
-    static NovelControler* getInstance();
+    static NovelController* getInstance();
     
     /**
      *  基本的に一行一行読み込んで実行しているが、テキスト表示の場合だけ例外的に連続した行を読み込んでから実行している。

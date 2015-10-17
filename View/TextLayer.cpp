@@ -179,11 +179,11 @@ void TextLayer::showAllText(){
 void TextLayer::onTextEnds(){
     auto gm = GameModel::getInstance();
     if(gm->getScenarioMode() == GameModel::AUTO){
-        auto nc = NovelControler::getInstance();
+        auto nc = NovelController::getInstance();
         nc->_execNextLine();
     }else if(gm->getScenarioMode() == GameModel::SKIP){
         this->runAction(Sequence::create(DelayTime::create(SKIP_SPEED),CallFunc::create([this](){
-            auto nc = NovelControler::getInstance();
+            auto nc = NovelController::getInstance();
             nc->_execNextLine();
         }), NULL));
     }

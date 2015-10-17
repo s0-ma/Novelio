@@ -25,7 +25,7 @@ void ViewFunctions::HideText(){
 }
 void ViewFunctions::setAutoMode(){
     GameModel::getInstance()->setScenarioMode(GameModel::AUTO);
-    NovelControler::getInstance()->_execNextLine();
+    NovelController::getInstance()->_execNextLine();
 //    GameModel::getInstance()->save();
 }
 void ViewFunctions::setAutoModeSpeed(int speed){
@@ -33,7 +33,7 @@ void ViewFunctions::setAutoModeSpeed(int speed){
 }
 void ViewFunctions::setSkipMode(){
     GameModel::getInstance()->setScenarioMode(GameModel::SKIP);
-    NovelControler::getInstance()->_execNextLine();
+    NovelController::getInstance()->_execNextLine();
 }
 void ViewFunctions::setBGMVol(int vol){
     

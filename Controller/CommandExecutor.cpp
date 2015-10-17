@@ -33,12 +33,13 @@
 NS_NV_BEGIN
 
 void CommandExecutor::execute(std::string cmd, NovelioScriptLine::LineType type){
+    CCLOG("%s", cmd.c_str());
     
     ScriptCommand::setType(type);
     int a = LuaEngine::getInstance()->executeString(cmd.c_str());
     if(a != 0){
         CCLOG("l:%d, LUA ERR.", GameModel::getInstance()->getLine());
-        NovelControler::getInstance()->_execNextLine();
+        NovelController::getInstance()->_execNextLine();
     }
     return;
 }
@@ -62,11 +63,11 @@ void ScriptCommand::execInstantCommand(function<void(void)> action){
     auto gmodel = GameModel::getInstance();
     if(gmodel->getScenarioMode() == GameModel::NORMAL){
         if(nextLineType == NovelioScriptLine::LUA_SYNC || nextLineType == NovelioScriptLine::LUA_NEXT){
-            NovelControler::getInstance()->_execNextLine();
+            NovelController::getInstance()->_execNextLine();
         }
     }else{
         if(!GameModel::getInstance()->isAnyCmdWorking()){
-            NovelControler::getInstance()->_execNextLine();
+            NovelController::getInstance()->_execNextLine();
         }
     }
 
@@ -81,21 +82,21 @@ void ScriptCommand::execIntervalCommand(string key,
         GameModel::getInstance()->removeWorkingCmd(key);
         if(nextLineType == NovelioScriptLine::LUA_CLICK){
             if(scenarioMode == GameModel::AUTO){
-                NovelControler::getInstance()->_execNextLine();
+                NovelController::getInstance()->_execNextLine();
             }else{
                 //Do nothing
             }
         }else if(nextLineType == NovelioScriptLine::LUA_SYNC){
             //Do nothing
         }else if(nextLineType == NovelioScriptLine::LUA_NEXT){
-            NovelControler::getInstance()->_execNextLine();
+            NovelController::getInstance()->_execNextLine();
         }else{
             if(scenarioMode == GameModel::AUTO){
                 if(!GameModel::getInstance()->isAnyCmdWorking()){
-                    NovelControler::getInstance()->_execNextLine();
+                    NovelController::getInstance()->_execNextLine();
                 }
             }else if(scenarioMode != GameModel::NORMAL){
-                NovelControler::getInstance()->_execNextLine();
+                NovelController::getInstance()->_execNextLine();
             }
         }
     });
@@ -104,16 +105,16 @@ void ScriptCommand::execIntervalCommand(string key,
         auto scenarioMode = GameModel::getInstance()->getScenarioMode();
         if(nextLineType == NovelioScriptLine::LUA_CLICK){
             if(scenarioMode == GameModel::SKIP){
-                NovelControler::getInstance()->_execNextLine();
+                NovelController::getInstance()->_execNextLine();
             }else{
                 //Do nothing
             }
         }else if(nextLineType == NovelioScriptLine::LUA_SYNC){
-            NovelControler::getInstance()->_execNextLine();
+            NovelController::getInstance()->_execNextLine();
 
         }else if(nextLineType == NovelioScriptLine::LUA_NEXT){
             if(scenarioMode == GameModel::SKIP){
-                NovelControler::getInstance()->_execNextLine();
+                NovelController::getInstance()->_execNextLine();
             }else{
                 //Do nothing
             }
@@ -133,7 +134,7 @@ void ScriptCommand::execIntervalCommand(string key,
         subject->runAction(_action);
     }else{
         interrupt();
-        NovelControler::getInstance()->_execNextLine();
+        NovelController::getInstance()->_execNextLine();
     }
     
 }
@@ -328,8 +329,16 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
         execInstantCommand(action);
     }else{
         auto key = "hideAllPortrait";
+        //TODO レイヤーではなく、Portrait SpriteにFadeoutを掛けること。この状態はバグ。
         auto subject = GameManager::getInstance()->getPortraitLayer();
-        auto action = FadeOut::create(fade_sec);
+        auto action = Sequence::create(FadeOut::create(fade_sec),
+                                       CallFunc::create([subject](){
+                                            subject->setCascadeOpacityEnabled(false);
+                                            subject->setOpacity(255);
+                                            subject->setCascadeOpacityEnabled(true);
+                                        })
+                                       ,NULL);
+        
         auto interrupt = [subject](){
             auto manager = GameManager::getInstance()->getPortraitLayer();
             auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
@@ -353,6 +362,12 @@ void ScriptCommand::clearUnusedPortrate(){
     
 }
 void ScriptCommand::movePortrait(string id, int x, int y, int effect /*= 0*/, int param /*= 1*/){
+        auto action = [id, x, y](){
+            GameModel::getInstance()->portraitLayerModel->portraits[id].x = x;
+            GameModel::getInstance()->portraitLayerModel->portraits[id].y = y;
+            GameManager::getInstance()->getPortraitLayer()->setPortraitPosition(id);
+        };
+        execInstantCommand(action);
     
 }
 
@@ -530,7 +545,7 @@ void ScriptCommand::select(){
 }//未定。選択肢に関する何か
 void ScriptCommand::jump(string label){
     auto action = [label](){
-        GameModel::getInstance()->setLine(NovelControler::getInstance()->getScript()->tags[label]);
+        GameModel::getInstance()->setLine(NovelController::getInstance()->getScript()->tags[label]);
     };
     execInstantCommand(action);
 }

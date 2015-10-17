@@ -12,6 +12,7 @@
 #include "../Macros.h"
 
 struct PortraitModel{
+public:
     string id;
     string basePath;
     string faceId;

@@ -57,6 +57,9 @@ void PortraitLayer::movePortrait(std::string id, int t_sec){
 };
 
 void PortraitLayer::cutinPortrait(std::string id){
+    if(getOpacity() == 0){
+        setOpacity(255);
+    }
     if(portraits.count(id) != 0){
         portraits[id]->setOpacity(255);
     }else{
@@ -66,10 +69,16 @@ void PortraitLayer::cutinPortrait(std::string id){
 };
 
 void PortraitLayer::fadeinPortrait(std::string id, int t_sec){
+    if(getOpacity() == 0){
+        setOpacity(255);
+    }
     portraits[id]->runAction(FadeIn::create(t_sec));
 }
 
 void PortraitLayer::cutoutPortrait(std::string id){
+    if(getOpacity() == 0){
+        setOpacity(255);
+    }
     if(portraits.count(id) != 0){
         portraits[id]->setOpacity(0);
     }else{
@@ -83,6 +92,9 @@ void PortraitLayer::fadeoutPortrait(std::string id, int t_sec){
 };
 
 void PortraitLayer::cutinFace(std::string id, string faceId){
+    if(getOpacity() == 0){
+        setOpacity(255);
+    }
     auto facePath = GameModel::getInstance()->portraitLayerModel->portraits[id].facePool[faceId];
     auto FaceKey = facePath;
     if (faceId != "" && facePath == ""){
@@ -100,7 +112,16 @@ void PortraitLayer::cutinFace(std::string id, string faceId){
 };
 
 void PortraitLayer::fadeinFace(std::string id, string faceId){
+    if(getOpacity() == 0){
+        setOpacity(255);
+    }
     
+};
+
+void PortraitLayer::removePortrait(std::string id){
+    auto basePath = GameModel::getInstance()->portraitLayerModel->portraits[id].basePath;
+    portraits[id] = Portrait::create(basePath);
+    removeChild(portraits[id]);
 };
 
 void PortraitLayer::clear(){
