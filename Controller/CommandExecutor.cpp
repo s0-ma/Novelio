@@ -311,6 +311,7 @@ void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
         auto action = FadeOut::create(fade_sec);
         auto interrupt = [subject](){
             subject->setOpacity(0);
+            subject->removeEmoticon();
         };
         execIntervalCommand(key, subject, action, interrupt);
     }
@@ -329,10 +330,10 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
         execInstantCommand(action);
     }else{
         auto key = "hideAllPortrait";
-        //TODO レイヤーではなく、Portrait SpriteにFadeoutを掛けること。この状態はバグ。
         auto subject = GameManager::getInstance()->getPortraitLayer();
         auto action = Sequence::create(FadeOut::create(fade_sec),
                                        CallFunc::create([subject](){
+                                            //常にLayerを表示させるための苦肉の策
                                             subject->setCascadeOpacityEnabled(false);
                                             subject->setOpacity(255);
                                             subject->setCascadeOpacityEnabled(true);

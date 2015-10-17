@@ -81,6 +81,7 @@ void PortraitLayer::cutoutPortrait(std::string id){
     }
     if(portraits.count(id) != 0){
         portraits[id]->setOpacity(0);
+        portraits[id]->removeEmoticon();
     }else{
         CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
                         GameModel::getInstance()->getLine(), id.c_str());
@@ -88,7 +89,11 @@ void PortraitLayer::cutoutPortrait(std::string id){
 };
 
 void PortraitLayer::fadeoutPortrait(std::string id, int t_sec){
-    portraits[id]->runAction(FadeOut::create(t_sec));
+    portraits[id]->runAction(Spawn::create(FadeOut::create(t_sec),
+                                           CallFunc::create([this, id](){
+                                                portraits[id]->removeEmoticon();
+                                           }),
+                                           NULL));
 };
 
 void PortraitLayer::cutinFace(std::string id, string faceId){

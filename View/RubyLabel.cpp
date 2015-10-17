@@ -125,17 +125,17 @@ void RubyLabel::setString(const std::string& text)
             rubyIndex.push_back(RubyIndex());
             auto prev_index = it-text.begin();
             parentText += text.substr(prev_index, sm.position(0));
-            CCLOG("base text: %s", sm.str(1).c_str());
-            CCLOG("base index:%d", countString(parentText));
+//            CCLOG("base text: %s", sm.str(1).c_str());
+//            CCLOG("base index:%d", countString(parentText));
             rubyIndex[i].parentStart = countString(parentText);
-            CCLOG("base len : %d", countString(sm.str(1)));
+//            CCLOG("base len : %d", countString(sm.str(1)));
             rubyIndex[i].parentEnd = countString(parentText)+countString(sm.str(1))-1;
             
             parentText += text.substr(prev_index+sm.position(1), sm.length(1));
-            CCLOG("ruby text: %s", sm.str(2).c_str());
+//            CCLOG("ruby text: %s", sm.str(2).c_str());
             rubyIndex[i].rubyStart = countString(rubyText);
             rubyText += sm.str(2);
-            CCLOG("ruby len : %d", countString(sm.str(2)));
+//            CCLOG("ruby len : %d", countString(sm.str(2)));
             rubyIndex[i].rubyEnd = countString(rubyText);
             
             i++;
@@ -172,7 +172,7 @@ void RubyLabel::adjustRubyPosition(){
         rubyIndex[i].parentEnd += n_lb;
         
         //ルビ位置の計算
-        CCLOG("%d, %d", rubyIndex[i].parentStart,rubyIndex[i].parentEnd);
+//        CCLOG("%d, %d", rubyIndex[i].parentStart,rubyIndex[i].parentEnd);
         auto widthl = parentLetters->getLetter(rubyIndex[i].parentStart)->getContentSize().width;
         auto widthr = parentLetters->getLetter(rubyIndex[i].parentEnd)->getContentSize().width;
         auto pXl = parentLetters->getLetter(rubyIndex[i].parentStart)->getPositionX() - widthl/2;
