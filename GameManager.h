@@ -54,6 +54,7 @@ public:
     LogLayer* getLogLayer(void);
   
     void setOnExitFunction(std::function<void(void)> f);
+    void unsetOnExitFunction();
     std::function<void(void)> onExitScript = nullptr;
     
 };
