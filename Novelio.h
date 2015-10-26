@@ -10,6 +10,8 @@
  @mainpage
  Welcome to Novelio.
  This project aims to make novel game easily on multi-platform by using cocos2d-x.
+ 
+ @image html MVC.jpg
  */
 
 #ifndef Novelium_Novelium_h
@@ -40,6 +42,7 @@
 //Utils
 //! @addtogroup Utils
 #include "Utils/Split.h"
+#include "Utils/MouseOverMenuItem.h"
 
 //View
 //! @addtogroup View

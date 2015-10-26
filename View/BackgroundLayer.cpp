@@ -7,7 +7,7 @@
 //
 
 #include "BackgroundLayer.h"
-#include "BackgroundLayerModel.h"
+#include "../Model/BackgroundLayerModel.h"
 #include "SimpleAudioEngine.h"
 #include "../GameManager.h"
 #include "NMDAudioEngine.h"
