@@ -5,6 +5,15 @@
 //  Created by Tatsuya Soma on 2014/10/09.
 //
 //
+
+/*!
+ @file      NovelScript.cpp
+ @ingroup   Controller
+ @brief
+ @date      2014/10/09
+ @author    Tatsuya Soma
+ */
+
 #include <fstream>
 #include "NovelScript.h"
 

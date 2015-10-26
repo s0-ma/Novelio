@@ -8,7 +8,7 @@
 
 #include "cocos2d.h"
 #include "TextLayer.h"
-#include "../Controller/NovelControler.h"
+#include "../Controller/NovelController.h"
 #include "GameModel.h"
 #include "GameManager.h"
 
@@ -91,7 +91,8 @@ void TextLayer::setNameFontSize(int size){
     nameLabel->setTTFConfig(nameConf);
 }
 
-void TextLayer::setName(std::string name){
+void TextLayer::setName(){
+    std::string name = GameModel::getInstance()->textLayerModel->getName();
     this->name = name;
     nameLabel->setString(name);
 };
@@ -178,11 +179,11 @@ void TextLayer::showAllText(){
 void TextLayer::onTextEnds(){
     auto gm = GameModel::getInstance();
     if(gm->getScenarioMode() == GameModel::AUTO){
-        auto nc = NovelControler::getInstance();
+        auto nc = NovelController::getInstance();
         nc->_execNextLine();
     }else if(gm->getScenarioMode() == GameModel::SKIP){
         this->runAction(Sequence::create(DelayTime::create(SKIP_SPEED),CallFunc::create([this](){
-            auto nc = NovelControler::getInstance();
+            auto nc = NovelController::getInstance();
             nc->_execNextLine();
         }), NULL));
     }

@@ -106,36 +106,6 @@ Portrait::Portrait(){
 Portrait::~Portrait(){
     
 }
-/*
-void ExpressivePortrait::blinkWithFace(std::string face){
-    
-    auto seq = Sequence::create(makeBlinkAnimation(face),
-                                CallFunc::create([this,face](){
-        blinkWithFace(face);
-    }),
-                                NULL);
-    this->runAction(seq);
-    
-}
-
-FiniteTimeAction* ExpressivePortrait::makeBlinkAnimation(std::string face){
-    auto prev_face = presentFace;
-    
-    //TODO: EDIT THIS VAL.
-    auto d = 2. + (arc4random() % 10);
-    
-    auto delay1= DelayTime::create(d);
-    auto blink1 = CallFunc::create([this,face](){
-        _changeFace(face);
-    });
-    auto keep1 = DelayTime::create(0.1);
-    auto back1 = CallFunc::create([this,prev_face](){
-        _changeFace(prev_face);
-    });
-    
-    return Sequence::create(delay1, blink1, keep1, back1, NULL);
-}
- */
 
 Portrait* Portrait::create(std::string basePath, string facePath, int x, int y){
     auto ret = new (std::nothrow) Portrait();
@@ -143,6 +113,7 @@ Portrait* Portrait::create(std::string basePath, string facePath, int x, int y){
     if (ret && ret->init(basePath, facePath, x, y))
     {
         ret->setOpacity(0);
+        ret->setCascadeOpacityEnabled(true);
         ret->autorelease();
         return ret;
     }
@@ -198,10 +169,12 @@ void Portrait::changeFace(std::string facePath){
 };
 
 void Portrait::addEmoticon(string path, int x, int y){
-    CCLOG("Portrait::addEmoticon not coded yet.");
+    auto emoticon = Sprite::create(path);
+    emoticon->setPosition(Vec2(this->getContentSize().width/2 + x, this->getContentSize().height/2 + y));
+    this->addChild(emoticon);
 };
 void Portrait::removeEmoticon(){
-    CCLOG("Portrait::removeEmoticon not coded yet.");
+    this->removeAllChildren();
 };
 
 

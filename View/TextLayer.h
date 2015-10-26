@@ -64,7 +64,7 @@ public:
     void setText();
     void setTexts();
     void addText();
-    void setName(std::string name);
+    void setName();
     void showName();
     
     void showNoText();

@@ -9,7 +9,7 @@
 #include "SimpleNovelioScene.h"
 #include "GameModel.h"
 
-#include "../Controller/NovelControler.h"
+#include "../Controller/NovelController.h"
 #include "CCLuaEngine.h"
 
 #include "../Macros.h"
@@ -36,7 +36,7 @@ void SimpleScenarioScene::onEnter(){
     engine->executeString("init()");
 
     
-    NovelControler::getInstance()->_execNextLine();
+    NovelController::getInstance()->_execNextLine();
 }
 
 bool SimpleScenarioScene::init(){
@@ -49,7 +49,7 @@ bool SimpleScenarioScene::init(){
     //スクリプトの読み込み
 //    auto script = NovelControler::getInstance()->makeScript("nvRes/scenario/Chapter1_Introduction.nv", NovelScript::NOVELIO);
     auto script = NovelScript::create("nvRes/scenario/Chapter1_Introduction.nv", NovelScript::NOVELIO);
-    NovelControler::getInstance()->loadScript(script);
+    NovelController::getInstance()->loadScript(script);
     GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
 
     

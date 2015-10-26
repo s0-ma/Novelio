@@ -12,6 +12,14 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ScriptCommand] setEmoticonDefaultPosition 
+-- @param self
+-- @param #string id
+-- @param #int x
+-- @param #int y
+        
+--------------------------------
+-- 
 -- @function [parent=#ScriptCommand] showAllPortrait 
 -- @param self
         
@@ -28,6 +36,12 @@
 -- @param #int x
 -- @param #int y
 -- @param #float time
+        
+--------------------------------
+-- 
+-- @function [parent=#ScriptCommand] hideEmoticon 
+-- @param self
+-- @param #string id
         
 --------------------------------
 -- 
@@ -177,6 +191,21 @@
 -- @param self
 -- @param #string path
 -- @param #bool loop
+        
+--------------------------------
+-- 
+-- @function [parent=#ScriptCommand] registerEmoticonPath 
+-- @param self
+-- @param #string id
+-- @param #string path1
+-- @param #string path2
+        
+--------------------------------
+-- 
+-- @function [parent=#ScriptCommand] setEmoticon 
+-- @param self
+-- @param #string id
+-- @param #string emo
         
 --------------------------------
 -- 

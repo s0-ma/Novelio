@@ -1,23 +1,33 @@
 //
-//  NovelControler.cpp
+//  NovelController.cpp
 //  Novelium
 //
 //  Created by Tatsuya Soma on 2014/10/06.
 //
 //
 
+/*!
+ @file      NovelController.cpp
+ @ingroup   Controller
+ @brief
+ @date      2014/10/06
+ @author    Tatsuya Soma
+ */
+
 #include <fstream>
 #include <vector>
 
-#include "NovelControler.h"
 #include "GameManager.h"
-#include "GameModel.h"
 
+#include "NovelController.h"
 #include "ScriptParser.h"
 #include "CommandExecutor.h"
 #include "NovelScript.h"
 
-#include "Split.h"
+#include "../Model/GameModel.h"
+#include "../Model/TextLayerModel.h"
+
+#include "../Utils/Split.h"
 
 #define COMMENT_PREFIX ".//"
 #define COMMAND_PREFIX "."
@@ -25,27 +35,27 @@
 
 NS_NV_BEGIN
 
-NovelControler* NovelControler::instance = 0;
+NovelController* NovelController::instance = 0;
 
-NovelControler* NovelControler::getInstance() {
+NovelController* NovelController::getInstance() {
     if(instance == 0){
-        instance = new NovelControler();
+        instance = new NovelController();
     }
     return instance;
 };
 
- NovelControler::NovelControler()
+ NovelController::NovelController()
 {
 }
 
-NovelControler::~NovelControler()
+NovelController::~NovelController()
 {
 }
 
 /**
  *  @abstruct スクリプトファイルの実行順を組み立てている関数。割と肝。
  */
-bool NovelControler::onDisplayTouched(void){
+bool NovelController::onDisplayTouched(void){
 //    CCLOG("NovelControler::onDisplayTouched");
     
     //Auto,SkipならNormalに
@@ -80,7 +90,7 @@ bool NovelControler::onDisplayTouched(void){
  *
  *  @return true: 割り込んで止めた場合 false: 何もしなかった場合
  */
-bool NovelControler::_stopRunningCommand(){
+bool NovelController::_stopRunningCommand(){
     auto gm = GameModel::getInstance();
 
     //実行途中のエフェクトがある場合は割り込み
@@ -97,7 +107,7 @@ bool NovelControler::_stopRunningCommand(){
     return false;
 }
 
-void NovelControler::_execNextLine(){
+void NovelController::_execNextLine(){
     
     GameModel::getInstance()->goNextLine();
     
@@ -139,10 +149,21 @@ void NovelControler::_execNextLine(){
         //ログに追加
         GameModel::getInstance()->logLayerModel->appendLog(_text);
         
+        //名前表示部分の分離
+            if(_text.substr(0,1) == "%"){
+                setNameToModel(split(_text, ' ')[0].substr(1,-1));
+                _text = split(_text, ' ')[1];
+            }else{
+                setNameToModel("");
+            }
+        
+        //モデルへのセットと表示要求
         auto model = GameModel::getInstance()->textLayerModel;
         auto tLayer = GameManager::getInstance()->getTextLayer();
         model->addText(_text);
         tLayer->addText();
+        tLayer->setName();
+        //TODO テキスト直後のコマンドに関しても、CLICK/SYNC/NEXTの動作を実装すること。
         if(line->getNextLineType() != NovelioScriptLine::TEXT){
             tLayer->startText();
         }else{
@@ -161,7 +182,7 @@ void NovelControler::_execNextLine(){
 }
 
 
-void NovelControler::onParagraphEnds(){
+void NovelController::onParagraphEnds(){
     auto gm = GameModel::getInstance();
     gm->setParagraph(gm->getParagraph() +1);
 }
@@ -174,7 +195,7 @@ void NovelControler::onParagraphEnds(){
  *  @return <#return value description#>
  *  @todo 行頭に¥nでクラッシュ。
  */
-string NovelControler::_preProcessText(string str){
+string NovelController::_preProcessText(string str){
     //改行文字の処理
     string from = "\\n";
     string to = "\n";
@@ -189,15 +210,19 @@ string NovelControler::_preProcessText(string str){
     return str;
 }
 
-NovelScript* NovelControler::getScript(){
+NovelScript* NovelController::getScript(){
     return script;
 };
 
-
-
-void NovelControler::loadScript(NovelScript *script){
+void NovelController::loadScript(NovelScript *script){
     this->script = script;
     GameModel::getInstance()->setScript(script);
+}
+
+void NovelController::setNameToModel(string name){
+    GameModel::getInstance()->textLayerModel->setName(name);
+    
+    return;
 }
 
 NS_NV_END

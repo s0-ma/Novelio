@@ -120,6 +120,7 @@ void AnimationLabel::setOnParagraphEndsCallback(std::function<void(void)> callba
     
 };
 
+//---------------------------------------------------------------------------------------------------------------
 
 TypewriterLabel::TypewriterLabel() : AnimationLabel(){
     
