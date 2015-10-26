@@ -24,10 +24,10 @@
 #include "CommandExecutor.h"
 #include "NovelScript.h"
 
-#include "Model/GameModel.h"
-#include "Model/TextLayerModel.h"
+#include "../Model/GameModel.h"
+#include "../Model/TextLayerModel.h"
 
-#include "Utils/Split.h"
+#include "../Utils/Split.h"
 
 #define COMMENT_PREFIX ".//"
 #define COMMAND_PREFIX "."

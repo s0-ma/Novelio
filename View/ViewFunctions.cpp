@@ -8,8 +8,8 @@
 
 #include "ViewFunctions.h"
 
-#include "Model/GameModel.h"
-#include "Controller/NovelController.h"
+#include "../Model/GameModel.h"
+#include "../Controller/NovelController.h"
 
 NS_NV_BEGIN
 

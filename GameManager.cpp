@@ -89,4 +89,8 @@ GameManager::portraitMap::portraitMap(string name, string path){
     imgPath = path;
 }
     
+void GameManager::unsetOnExitFunction(){
+    this->onExitScript = nullptr;
+}
+
 NS_NV_END
