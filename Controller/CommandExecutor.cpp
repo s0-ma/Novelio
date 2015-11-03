@@ -557,7 +557,10 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
 void ScriptCommand::callRegisteredFunction(){
     auto action = [](){
         auto gm = GameManager::getInstance();
-        gm->onCallFunction();
+        auto f = gm->onCallFunction;
+        if(f != nullptr){
+            f();
+        }
     };
     execInstantCommand(action);
 }
