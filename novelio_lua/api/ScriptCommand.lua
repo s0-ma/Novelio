@@ -39,6 +39,11 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ScriptCommand] callRegisteredFunction 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#ScriptCommand] hideEmoticon 
 -- @param self
 -- @param #string id

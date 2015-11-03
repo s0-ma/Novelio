@@ -229,6 +229,39 @@ int lua_novelio_ScriptCommand_Quake(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_novelio_ScriptCommand_callRegisteredFunction(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_callRegisteredFunction'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::callRegisteredFunction();
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:callRegisteredFunction",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_callRegisteredFunction'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_novelio_ScriptCommand_hideEmoticon(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2170,6 +2203,7 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"showAllPortrait", lua_novelio_ScriptCommand_showAllPortrait);
         tolua_function(tolua_S,"jump", lua_novelio_ScriptCommand_jump);
         tolua_function(tolua_S,"Quake", lua_novelio_ScriptCommand_Quake);
+        tolua_function(tolua_S,"callRegisteredFunction", lua_novelio_ScriptCommand_callRegisteredFunction);
         tolua_function(tolua_S,"hideEmoticon", lua_novelio_ScriptCommand_hideEmoticon);
         tolua_function(tolua_S,"fadeoutBGM", lua_novelio_ScriptCommand_fadeoutBGM);
         tolua_function(tolua_S,"select", lua_novelio_ScriptCommand_select);
