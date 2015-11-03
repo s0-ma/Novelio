@@ -554,26 +554,43 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
     
 }
 
+void ScriptCommand::callRegisteredFunction(){
+    auto action = [](){
+        auto gm = GameManager::getInstance();
+        gm->onCallFunction();
+    };
+    execInstantCommand(action);
+}
+
 void ScriptCommand::exit(){
     auto action = [](){
-
-        auto bLayer = GameManager::getInstance()->getBackgroundLayer();
-        if(bLayer != nullptr)
+        
+        auto gm = GameManager::getInstance();
+        auto bLayer = gm->getBackgroundLayer();
+        if(bLayer != nullptr){
             bLayer->removeFromParent();
+            gm->setBackgroundLayer(nullptr);
+        }
         
-        auto pLayer = GameManager::getInstance()->getPortraitLayer();
-        if(pLayer != nullptr)
+        auto pLayer = gm->getPortraitLayer();
+        if(pLayer != nullptr){
             pLayer->removeFromParent();
+            gm->setPortraitLayer(nullptr);
+        }
         
-        auto tLayer = GameManager::getInstance()->getTextLayer();
-        if(tLayer != nullptr)
+        auto tLayer = gm->getTextLayer();
+        if(tLayer != nullptr){
             tLayer->removeFromParent();
+            gm->setTextLayer(nullptr);
+        }
         
-        auto uLayer = GameManager::getInstance()->getUILayer();
-        if (uLayer != nullptr)
+        auto uLayer = gm->getUILayer();
+        if (uLayer != nullptr){
             uLayer->removeFromParent();
+            gm->setUILayer(nullptr);
+        }
     
-        auto f = GameManager::getInstance()->onExitScript;
+        auto f = gm->onExitScript;
         if(f != nullptr){
             f();
         }

@@ -58,6 +58,10 @@ public:
     void setOnExitFunction(std::function<void(void)> f);
     void unsetOnExitFunction();
     std::function<void(void)> onExitScript = nullptr;
+
+    void setOnCallFunction(std::function<void(void)> f);
+    void unsetOnCallFunction();
+    std::function<void(void)> onCallFunction = nullptr;
     
     //一度登録、使用した画像のキャッシュ
     class portraitMap{

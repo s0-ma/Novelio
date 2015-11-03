@@ -82,6 +82,10 @@ void GameManager::setOnExitFunction(std::function<void(void)> f){
     this->onExitScript = f;
 };
 
+void GameManager::setOnCallFunction(std::function<void(void)> f){
+    this->onCallFunction = f;
+};
+
 GameManager::portraitMap::portraitMap(){
 }
 GameManager::portraitMap::portraitMap(string name, string path){
@@ -91,6 +95,9 @@ GameManager::portraitMap::portraitMap(string name, string path){
     
 void GameManager::unsetOnExitFunction(){
     this->onExitScript = nullptr;
+}
+void GameManager::unsetOnCallFunction(){
+    this->onCallFunction = nullptr;
 }
 
 NS_NV_END

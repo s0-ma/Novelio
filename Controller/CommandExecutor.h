@@ -129,6 +129,7 @@ public:
     static void jumpToNewFile(string filename, string label);
 
     //その他
+    static void callRegisteredFunction();//登録した関数を呼ぶ
     static void exit();//Novelio関連のレイヤーを消去。
 //    static void printToTextbox(string txt);
 };
