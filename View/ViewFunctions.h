@@ -21,7 +21,7 @@ public:
     static void load(int n_slot);
     static void save(int n_slot);
     
-    static void HideText();
+    static void hideText();
     static void setAutoMode();
     static void setAutoModeSpeed(int speed);
     static void setSkipMode();

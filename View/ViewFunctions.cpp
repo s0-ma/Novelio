@@ -20,7 +20,7 @@ void ViewFunctions::save(int n_slot){
     
 }
 
-void ViewFunctions::HideText(){
+void ViewFunctions::hideText(){
     
 }
 void ViewFunctions::setAutoMode(){

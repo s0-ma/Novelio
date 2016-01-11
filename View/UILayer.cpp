@@ -41,7 +41,7 @@ bool UILayer::init(){
                                             scene->addChild(LogLayer::create(), Z_SCENARIO_LOG);
                                             GameManager::getInstance()->getUILayer()->setVisible(false);
                                         });
-    logBtn->setPosition(Vec2(250,-250));
+    logBtn->setPosition(Vec2(150,-250));
     
     //SKIP
     auto skipBtn = MenuItemImage::create("nvRes/system/button_skip.png",
@@ -49,7 +49,7 @@ bool UILayer::init(){
                                         [](Ref* sender){
                                             ViewFunctions::setSkipMode();
                                         });
-    skipBtn->setPosition(Vec2(320,-250));
+    skipBtn->setPosition(Vec2(220,-250));
 
     //AUTO
     auto autoBtn = MenuItemImage::create("nvRes/system/button_auto.png",
@@ -57,9 +57,25 @@ bool UILayer::init(){
                                          [](Ref* sender){
                                              ViewFunctions::setAutoMode();  
                                          });
-    autoBtn->setPosition(Vec2(390,-250));
+    autoBtn->setPosition(Vec2(290,-250));
     
-    auto menu = Menu::create(logBtn, skipBtn, autoBtn, NULL);
+    //System
+    auto systemBtn = MenuItemImage::create("nvRes/system/button_system.png",
+                                         "nvRes/system/button_system_on.png",
+                                         [](Ref* sender){
+                                             ViewFunctions::setAutoMode();
+                                         });
+    systemBtn->setPosition(Vec2(360,-250));
+    
+    //Hide Text
+    auto hideTextBtn = MenuItemImage::create("nvRes/system/button_hidetext.png",
+                                         "nvRes/system/button_hidetext_on.png",
+                                         [](Ref* sender){
+                                             ViewFunctions::hideText();
+                                         });
+    hideTextBtn->setPosition(Vec2(430,-250));
+    
+    auto menu = Menu::create(logBtn, skipBtn, autoBtn, systemBtn, hideTextBtn, NULL);
     addChild(menu);
     
     return true;
