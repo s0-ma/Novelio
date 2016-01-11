@@ -9,6 +9,7 @@
 #include "ViewFunctions.h"
 
 #include "../Model/GameModel.h"
+#include "../GameManager.h"
 #include "../Controller/NovelController.h"
 
 NS_NV_BEGIN
@@ -21,7 +22,9 @@ void ViewFunctions::save(int n_slot){
 }
 
 void ViewFunctions::hideText(){
-    
+    //テキストレイヤとUIレイヤを非表示に設定
+    GameManager::getInstance()->getUILayer()->setVisible(false);
+    GameManager::getInstance()->getTextLayer()->setVisible(false);
 }
 void ViewFunctions::setAutoMode(){
     GameModel::getInstance()->setScenarioMode(GameModel::AUTO);

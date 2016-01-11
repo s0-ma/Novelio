@@ -57,29 +57,36 @@ NovelController::~NovelController()
  */
 bool NovelController::onDisplayTouched(void){
 //    CCLOG("NovelControler::onDisplayTouched");
-    
-    //Auto,SkipならNormalに
-    if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
-        GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
-    }
-    
-    //実行途中のエフェクトがある場合は割り込み
-    if(_stopRunningCommand()){
-        return true;
-    }
-    
-    //テキスト表示中なら残りを表示
-    auto tLayer = GameManager::getInstance()->getTextLayer();
-    if(tLayer->state == nv::TextLayer::SHOWING){
-        tLayer->showAllText();
-        return true;
-    }else if(tLayer->state == nv::TextLayer::STOP){
-        tLayer->startText();
-        return true;
-    }
 
-    //行を実行
-    _execNextLine();
+    //hideTextボタンが押された状態の場合、テキスト送りせず、hideText状態を解除する
+    if(GameManager::getInstance()->getUILayer()->isVisible()){
+        //Auto,SkipならNormalに
+        if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
+            GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
+        }
+        
+        //実行途中のエフェクトがある場合は割り込み
+        if(_stopRunningCommand()){
+            return true;
+        }
+        
+        //テキスト表示中なら残りを表示
+        auto tLayer = GameManager::getInstance()->getTextLayer();
+        if(tLayer->state == nv::TextLayer::SHOWING){
+            tLayer->showAllText();
+            return true;
+        }else if(tLayer->state == nv::TextLayer::STOP){
+            tLayer->startText();
+            return true;
+        }
+
+        //行を実行
+        _execNextLine();
+    }else{
+        //hideText状態の解除
+        GameManager::getInstance()->getUILayer()->setVisible(true);
+        GameManager::getInstance()->getTextLayer()->setVisible(true);
+    }
     
     return true;
     
