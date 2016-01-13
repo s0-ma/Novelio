@@ -22,19 +22,41 @@
 
 NS_NV_BEGIN
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief スクリプト中のコマンド実行クラス。static関数executeのみを持つ。
+*/
+/* ----------------------------------------------------------------------------*/
 class CommandExecutor{
 public:
+/* --------------------------------------------------------------------------*/
+/**
+* @brief スクリプト中のLuaComannd文字列は、実際にはこの関数にセットされる。
+この中でLuaエンジンで実行される。
+*
+* @param cmd
+* @param type
+*/
+/* ----------------------------------------------------------------------------*/
     static void execute(std::string cmd, NovelioScriptLine::LineType type);
 };
 
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief Lua関数から呼ばれるc++関数クラス。できるだけstaticで記述すること。
+
+CommandExecutor::executeを経由することで、次の行がどう振る舞うのかがnextLineType変数にセットされる。
+その後、execInstantCommand (一瞬で処理が終わるコマンド)かexecIntervalCommand(有限時間をかけて処理が実行されるコマンド)が実行される。
+*/
+/* ----------------------------------------------------------------------------*/
 class ScriptCommand/* : public Ref*/{
 private:
     static NovelioScriptLine::LineType nextLineType;
     /**
      *  一瞬で処理が終わるエフェクトを実行
      *
-     *  @param action 実行される関数。
+     *  @param action 実行される関数(即時関数)
      */
     static void execInstantCommand(function<void(void)> action);
     /**

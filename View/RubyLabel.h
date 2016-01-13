@@ -16,42 +16,51 @@
 USING_NS_CC;
 
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief ルビ付きのラベルを実装したクラス。アニメーションなどはしません。
+
+実装的には、Nodeクラスを継承。内部に子として文とルビ用の２つのラベルクラスを持っている.
+最低限のラベルプロトコルのみしか実装していないため、通常のラベルクラスの様に使うには、
+拡充が必要
+*/
+/* ----------------------------------------------------------------------------*/
 class RubyLabel : public cocos2d::Node, public cocos2d::LabelProtocol{
-public:
-    RubyLabel();
-    ~RubyLabel();
-    static RubyLabel * createWithTTF(const std::string& text, const std::string& fontFile,
-                                     float fontSize, float rubyfontSize = 0,
-                                     const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
-                                     TextVAlignment vAlignment = TextVAlignment::TOP);
-protected:
-    struct RubyIndex{
-        int parentStart;
-        int parentEnd;
-        int rubyStart;
-        int rubyEnd;
-    };
-    std::string fullText;
-    std::string parentText;
-    Label* parentLetters;
-    std::string rubyText;
-    Label* rubyLetters;
-    std::vector<RubyIndex> rubyIndex;
-    
-public:
-    void setString(const std::string& text);
-    const std::string& getString() const override { return fullText; };
-    void setColor(const Color3B &color);
+    public:
+        RubyLabel();
+        ~RubyLabel();
+        static RubyLabel * createWithTTF(const std::string& text, const std::string& fontFile,
+                float fontSize, float rubyfontSize = 0,
+                const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
+                TextVAlignment vAlignment = TextVAlignment::TOP);
+    protected:
+        struct RubyIndex{
+            int parentStart;
+            int parentEnd;
+            int rubyStart;
+            int rubyEnd;
+        };
+        std::string fullText;
+        std::string parentText;
+        Label* parentLetters;
+        std::string rubyText;
+        Label* rubyLetters;
+        std::vector<RubyIndex> rubyIndex;
+        void adjustRubyPosition();
 
-void setLineHeight(float lineHeight);
-void setMaxLineWidth(unsigned int maxLineWidth);
-void adjustRubyPosition();
-Size getContentSize();
+    public:
+        void setString(const std::string& text);
+        const std::string& getString() const override { return fullText; };
+        void setColor(const Color3B &color);
+
+        void setLineHeight(float lineHeight);
+        void setMaxLineWidth(unsigned int maxLineWidth);
+        Size getContentSize();
 
 
-protected:
-int countByte(unsigned char);
-int countString(const std::string text);
+    protected:
+        int countByte(unsigned char);
+        int countString(const std::string text);
 
 };
 

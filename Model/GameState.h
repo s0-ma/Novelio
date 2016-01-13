@@ -16,6 +16,7 @@ public:
     GameState();
     ~GameState();
     
+    //Background
     string BackgroundImagePath;
     string BGMPath;
     string SEPath;
