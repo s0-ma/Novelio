@@ -33,7 +33,7 @@
 //#include "Model/Data.h"
 #include "Model/GameModel.h"
 //#include "Model/GlobalData.h"
-#include "Model/LocalData.h"
+//#include "Model/LocalData.h"
 #include "Model/LogLayerModel.h"
 #include "Model/PortraitLayerModel.h"
 //#include "Model/Preservable.h"

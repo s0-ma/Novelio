@@ -39,14 +39,15 @@ private:
     GameModel(const GameModel& rhs);
     GameModel& operator=(const GameModel& rhs);
     
-//    データ保持用コンテナ
-//    Vector<ControlledData*> dataContainer;
     
     ScenarioMode mode;
     
     //セーブ用メンバ変数
     std::string filename;
     
+    int line;
+    int paragraph;
+    int sentence;
     
 public:
     ~GameModel();
@@ -65,35 +66,14 @@ public:
     
     void setScript(NovelScript* script);
 
-//    DEFINE_INT_DATA(Line);
-    int line;
-    void setLine(int l){
-//        nv::PreservableValueManager::getInstance()->setData(absKey + "__Line", l);
-        this->line = l;
-    };
-    int getLine(){
-//        return nv::PreservableValueManager::getInstance()->getIntData(absKey + "__Line");
-        return line;
-    };
+    void setLine(int l){this->line = l;};
+    int getLine(){return line;};
+    void setParagraph(int p){this->paragraph = p;};
+    int getParagraph(){return paragraph;};
+    void setSentence(int s){this->sentence = s;};
+    int getSentence(){return this->sentence;};
     
     void goNextLine();
-    
-//    DEFINE_INT_DATA(Paragraph);
-//    DEFINE_INT_DATA(Sentence);
-    int paragraph;
-    void setParagraph(int p){
-        this->paragraph = p;
-    };
-    int getParagraph(){
-        return paragraph;
-    };
-    int sentence;
-    void setSentence(int s){
-        this->sentence = s;
-    };
-    int getSentence(){
-        return this->sentence;
-    };
     
     vector<NovelioScriptLine*> comments;
     
@@ -106,6 +86,12 @@ public:
     
     void addComment(NovelioScriptLine* line);
     vector<NovelioScriptLine*> getComments();
+    
+//    メメント関係
+public:
+    static void saveThumbnail(string filename);
+    static Sprite* getThumbnail(string filename);
+    
 };
 
 NS_NV_END
