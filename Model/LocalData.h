@@ -9,23 +9,20 @@
 #ifndef __Novelio__LocalData__
 #define __Novelio__LocalData__
 
-#include "cocos2d.h"
+#include "../Macros.h"
 
-#include "ControlledData.h"
 
-USING_NS_CC;
 
-class LocalData : public ControlledData{
+NS_NV_BEGIN
+
+class LocalData{
 public:
-    LocalData();
-    ~LocalData();
-    
-    static LocalData* create(string filename);
-    
-    void saveThumbnail();
-    Sprite* getThumbnail();
+    static void saveThumbnail(string filename);
+    static Sprite* getThumbnail(string filename);
     
 };
+
+NS_NV_END
 
 
 

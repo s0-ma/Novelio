@@ -10,8 +10,8 @@
 #include "GameManager.h"
 #include "BackgroundLayer.h"
 
-#include "GlobalData.h"
-#include "LocalData.h"
+//#include "GlobalData.h"
+//#include "LocalData.h"
 
 #define SHOW_FADEIN_TIME 0.5
 #define SHOW_FADEOUT_TIME 0.5
@@ -27,18 +27,18 @@ GameModel* GameModel::getInstance() {
     return instance;
 };
 
-GameModel::GameModel() : Preservable::Preservable("GameModel")
+GameModel::GameModel()
 {
 //    setMode(NORMAL);
 //    setMode(AUTO);
     setScenarioMode(SKIP);
     
-    dataContainer.pushBack(GlobalData::create("global"));
-    dataContainer.pushBack(LocalData::create("save1"));
-    dataContainer.pushBack(LocalData::create("save2"));
+//    dataContainer.pushBack(GlobalData::create("global"));
+//    dataContainer.pushBack(LocalData::create("save1"));
+//    dataContainer.pushBack(LocalData::create("save2"));
     
-//    backgroundLayerModel = new BackgroundLayerModel() ;
-    addDataNode(new BackgroundLayerModel());
+    backgroundLayerModel = new BackgroundLayerModel() ;
+//    addDataNode(new BackgroundLayerModel());
     portraitLayerModel = new PortraitLayerModel();
     textLayerModel = new TextLayerModel();
     logLayerModel = new LogLayerModel();

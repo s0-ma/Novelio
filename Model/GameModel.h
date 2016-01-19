@@ -12,21 +12,21 @@
 #include "../Macros.h"
 #include "../Controller/NovelScript.h"
 
-#include "ControlledData.h"
+//#include "ControlledData.h"
 #include "BackgroundLayerModel.h"
 #include "TextLayerModel.h"
 #include "PortraitLayerModel.h"
 #include "LogLayerModel.h"
 #include "../View/Portrait.h"
 
-#include "Preservable.h"
+//#include "Preservable.h"
 
 NS_NV_BEGIN
 
 /**
  *  アドベンチャー画面のマネージャー（Singleton）
  */
-class GameModel : public Preservable
+class GameModel
 {
 public:
     enum ScenarioMode{NORMAL, AUTO, SKIP};
@@ -40,7 +40,7 @@ private:
     GameModel& operator=(const GameModel& rhs);
     
 //    データ保持用コンテナ
-    Vector<ControlledData*> dataContainer;
+//    Vector<ControlledData*> dataContainer;
     
     ScenarioMode mode;
     
@@ -65,16 +65,41 @@ public:
     
     void setScript(NovelScript* script);
 
-    DEFINE_INT_DATA(Line);
+//    DEFINE_INT_DATA(Line);
+    int line;
+    void setLine(int l){
+//        nv::PreservableValueManager::getInstance()->setData(absKey + "__Line", l);
+        this->line = l;
+    };
+    int getLine(){
+//        return nv::PreservableValueManager::getInstance()->getIntData(absKey + "__Line");
+        return line;
+    };
+    
     void goNextLine();
-    DEFINE_INT_DATA(Paragraph);
-    DEFINE_INT_DATA(Sentence);
+    
+//    DEFINE_INT_DATA(Paragraph);
+//    DEFINE_INT_DATA(Sentence);
+    int paragraph;
+    void setParagraph(int p){
+        this->paragraph = p;
+    };
+    int getParagraph(){
+        return paragraph;
+    };
+    int sentence;
+    void setSentence(int s){
+        this->sentence = s;
+    };
+    int getSentence(){
+        return this->sentence;
+    };
     
     vector<NovelioScriptLine*> comments;
     
-    //各レイヤーのモデル
-//    BackgroundLayerModel* backgroundLayerModel;
 public:
+    //各レイヤーのモデル
+    BackgroundLayerModel* backgroundLayerModel;
     PortraitLayerModel* portraitLayerModel;
     TextLayerModel* textLayerModel;
     LogLayerModel* logLayerModel;

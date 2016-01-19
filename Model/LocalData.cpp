@@ -8,52 +8,9 @@
 
 #include "LocalData.h"
 
-LocalData::LocalData(){
-    //使用できるキーを制限(最終的には外部ファイルに移したい。)
-    boolKeyList = {
-    };
-    intKeyList = {
-        "paragraph"
-    };
-    doubleKeyList = {
-    };
-    stringKeyList = {
-        "id",
-        "scriptFilename",
-        "background",
-        "portrait_0",
-        "portrait_1",
-        "portrait_2",
-        "portrait_3",
-        "portrait_4",
-        "portrait_5",
-        "portrait_6",
-        "portrait_7",
-        "portrait_8",
-        "portrait_9",
-        "name",
-        "text",
-        "bgm",
-        "se"
-    };
-    
-};
+NS_NV_BEGIN
 
-LocalData::~LocalData(){
-}
-
-LocalData* LocalData::create(string filename){
-    auto pRet = new (std::nothrow) LocalData();
-    if( pRet && pRet->initWithFilename(filename))
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    return nullptr;
-}
-
-void LocalData::saveThumbnail(){
+void LocalData::saveThumbnail(string filename){
     auto size = Director::getInstance()->getWinSize();
     RenderTexture* texture = RenderTexture::create((int)size.width, (int)size.height);
     texture->setPosition(Vec2(size.width * 0.5f, size.height * 0.5f));
@@ -71,7 +28,7 @@ void LocalData::saveThumbnail(){
     CCLOG("%s",(string(SAVEDIR) + "/" + filename + ".png").c_str());
 }
 
-Sprite* LocalData::getThumbnail(){
+Sprite* LocalData::getThumbnail(string filename){
     auto path = FileUtils::getInstance()->getWritablePath();
     if(1){
         auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
@@ -80,3 +37,5 @@ Sprite* LocalData::getThumbnail(){
     }
     return Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
 }
+
+NS_NV_END
