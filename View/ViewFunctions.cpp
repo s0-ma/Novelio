@@ -26,6 +26,11 @@ void ViewFunctions::hideText(){
     GameManager::getInstance()->getUILayer()->setVisible(false);
     GameManager::getInstance()->getTextLayer()->setVisible(false);
 }
+void ViewFunctions::unsetHideText(){
+    //テキストレイヤとUIレイヤを表示
+    GameManager::getInstance()->getUILayer()->setVisible(true);
+    GameManager::getInstance()->getTextLayer()->setVisible(true);
+}
 void ViewFunctions::setAutoMode(){
     GameModel::getInstance()->setScenarioMode(GameModel::AUTO);
     NovelController::getInstance()->_execNextLine();
