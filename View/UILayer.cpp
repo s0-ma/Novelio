@@ -52,10 +52,61 @@ bool UILayer::init(){
     skipBtn->setPosition(Vec2(220,-250));
 
     //AUTO
-    auto autoBtn = MenuItemImage::create("nvRes/system/button_auto.png",
+    std::vector<string> autoBtnMenuSpeedxPath = {
+        "nvRes/system/button_auto_speedx1.png",
+        "nvRes/system/button_auto_speedx2.png",
+        "nvRes/system/button_auto_speedx4.png",
+        "nvRes/system/button_auto_speedx8.png",
+        "nvRes/system/button_auto_speedx16.png"};
+
+    cocos2d::Vector<MenuItem*> autoBtnSpeedx;
+    auto autoBtnCallback = [this](Ref* sender){
+        std::vector<string> autoBtnSpeedxPath = {
+            "nvRes/system/button_speedx1.png",
+            "nvRes/system/button_speedx2.png",
+            "nvRes/system/button_speedx4.png",
+            "nvRes/system/button_speedx8.png",
+            "nvRes/system/button_speedx16.png"};
+        MenuItem* item = (MenuItem*)sender;
+        int tag = item->getTag();
+        ViewFunctions::setAutoModeSpeed(tag);
+        ViewFunctions::setAutoMode();
+        this->autoBtnPopup->setVisible(false);
+        this->autoBtn->setNormalImage(Sprite::create(autoBtnSpeedxPath[tag]));
+        this->autoBtn->setScale(1.5);
+    };
+    for(int i = 0; i < 5; i++){
+        auto s = Sprite::create(autoBtnMenuSpeedxPath[i]);
+        auto nsf = SpriteFrame::createWithTexture(s->getTexture(), Rect(0, 0, 45, 30));
+        auto ssf = SpriteFrame::createWithTexture(s->getTexture(), Rect(45, 0, 45, 30));
+        auto mii = MenuItemImage::create();
+        mii->setNormalSpriteFrame(nsf);
+        mii->setSelectedSpriteFrame(ssf);
+        mii->setTag(i);
+        mii->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+        mii->setCallback(autoBtnCallback);
+        mii->setPosition(Vec2(0 ,-25*i));
+        autoBtnSpeedx.pushBack(mii);
+    }
+    
+    auto autoBtnPopupMenu = Menu::createWithArray(autoBtnSpeedx);
+    autoBtnPopupMenu->ignoreAnchorPointForPosition(false);
+    autoBtnPopup = Layer::create();
+    autoBtnPopup->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    
+    auto autoBtnPopupBack = Sprite::create("nvRes/system/box_auto.png");
+    autoBtnPopupBack->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    
+    autoBtnPopup->setPosition(Vec2(800, 200));
+    addChild(autoBtnPopup);
+    autoBtnPopup->addChild(autoBtnPopupBack);
+    autoBtnPopup->addChild(autoBtnPopupMenu);
+    autoBtnPopup->setVisible(false);//非表示
+    
+    autoBtn = MenuItemImage::create("nvRes/system/button_auto.png",
                                          "nvRes/system/button_auto_on.png",
-                                         [](Ref* sender){
-                                             ViewFunctions::setAutoMode();  
+                                         [this](Ref* sender){
+                                             this->autoBtnPopup->setVisible(true);
                                          });
     autoBtn->setPosition(Vec2(290,-250));
     
@@ -87,6 +138,27 @@ bool UILayer::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event){
 
 void UILayer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event){
     NovelController::getInstance()->onDisplayTouched();    
+}
+
+bool UILayer::isWaitingClick(){
+    bool res = false;
+    if(this->autoBtnPopup->isVisible()){
+        res = true;
+    }
+    if(!(this->isVisible())){
+        res = true;
+    }
+    return res;
+}
+
+void UILayer::unWait(){
+    ViewFunctions::unsetHideText();
+    this->autoBtnPopup->setVisible(false);
+}
+
+void UILayer::unsetAutoMode(){
+    this->autoBtn->setScale(1.0);
+    this->autoBtn->setNormalImage(Sprite::create("nvRes/system/button_auto.png"));
 }
 
 NS_NV_END

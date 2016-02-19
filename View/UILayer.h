@@ -16,10 +16,16 @@ NS_NV_BEGIN
 
 class UILayer : public cocos2d::LayerColor, create_func<UILayer>
 {
+private:
+
+    cocos2d::Layer* autoBtnPopup;
+    cocos2d::MenuItemImage* autoBtn;
 public:
     bool init();
     using create_func::create;
-    
+    bool isWaitingClick();
+    void unWait();
+    void unsetAutoMode();
     //    private:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);

@@ -23,6 +23,7 @@
 #include "ScriptParser.h"
 #include "CommandExecutor.h"
 #include "NovelScript.h"
+#include "ViewFunctions.h"
 
 #include "../Model/GameModel.h"
 #include "../Model/TextLayerModel.h"
@@ -58,11 +59,13 @@ NovelController::~NovelController()
 bool NovelController::onDisplayTouched(void){
 //    CCLOG("NovelControler::onDisplayTouched");
 
-    //hideTextボタンが押された状態の場合、テキスト送りせず、hideText状態を解除する
-    if(GameManager::getInstance()->getUILayer()->isVisible()){
+    //UILayerがクリック待ちの場合、テキストを進めずにUILayerの処理をすすめる
+    if(!(GameManager::getInstance()->getUILayer()->isWaitingClick())){
         //Auto,SkipならNormalに
         if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
             GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
+            //Autoボタンの表示を元に戻す
+            GameManager::getInstance()->getUILayer()->unsetAutoMode();
         }
         
         //実行途中のエフェクトがある場合は割り込み
@@ -83,9 +86,7 @@ bool NovelController::onDisplayTouched(void){
         //行を実行
         _execNextLine();
     }else{
-        //hideText状態の解除
-        GameManager::getInstance()->getUILayer()->setVisible(true);
-        GameManager::getInstance()->getTextLayer()->setVisible(true);
+        GameManager::getInstance()->getUILayer()->unWait();
     }
     
     return true;
