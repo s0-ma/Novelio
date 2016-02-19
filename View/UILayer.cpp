@@ -12,7 +12,7 @@
 #include "GameManager.h"
 #include "CCLuaEngine.h"
 #include "ViewFunctions.h"
-
+#include "TitleScene.h"
 
 NS_NV_BEGIN
 
@@ -107,14 +107,71 @@ bool UILayer::init(){
                                          "nvRes/system/button_auto_on.png",
                                          [this](Ref* sender){
                                              this->autoBtnPopup->setVisible(true);
+                                             this->systemBtnPopup->setVisible(false);
                                          });
     autoBtn->setPosition(Vec2(290,-250));
     
     //System
-    auto systemBtn = MenuItemImage::create("nvRes/system/button_system.png",
+    std::vector<string> systemBtnMenuPath = {
+        "nvRes/system/button_system_save.png",
+        "nvRes/system/button_system_load.png",
+        "nvRes/system/button_system_backtitle.png",
+        "nvRes/system/button_system_config.png"};
+    
+    cocos2d::Vector<MenuItem*> systemBtnItem;
+    auto systemBtnCallback = [this](Ref* sender){
+        MenuItem* item = (MenuItem*)sender;
+        int tag = item->getTag();
+        switch(tag){
+                
+            case 0 ://save
+                break;
+            case 1 ://load
+                break;
+            case 2 :{//back to title
+                auto nextScene = TitleScene::create();
+                auto trans = TransitionFade::create(1.0f,nextScene);
+                Director::getInstance()->replaceScene(trans);
+                break;}
+            case 3 ://config
+                break;
+            default:
+                break;
+        }
+        this->systemBtnPopup->setVisible(false);
+    };
+    for(int i = 0; i < 4; i++){
+        auto s = Sprite::create(systemBtnMenuPath[i]);
+        auto nsf = SpriteFrame::createWithTexture(s->getTexture(), Rect(0, 0, 125, 50));
+        auto ssf = SpriteFrame::createWithTexture(s->getTexture(), Rect(125, 0, 125, 50));
+        auto mii = MenuItemImage::create();
+        mii->setNormalSpriteFrame(nsf);
+        mii->setSelectedSpriteFrame(ssf);
+        mii->setTag(i);
+        mii->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+        mii->setCallback(systemBtnCallback);
+        mii->setPosition(Vec2(0 ,-38*i));
+        systemBtnItem.pushBack(mii);
+    }
+    
+    auto systemBtnPopupMenu = Menu::createWithArray(systemBtnItem);
+    systemBtnPopupMenu->ignoreAnchorPointForPosition(false);
+    systemBtnPopup = Layer::create();
+    systemBtnPopup->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    
+    auto systemBtnPopupBack = Sprite::create("nvRes/system/box_system.png");
+    systemBtnPopupBack->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    
+    systemBtnPopup->setPosition(Vec2(820, 230));
+    addChild(systemBtnPopup);
+    systemBtnPopup->addChild(systemBtnPopupBack);
+    systemBtnPopup->addChild(systemBtnPopupMenu);
+    systemBtnPopup->setVisible(false);//非表示
+    systemBtn = MenuItemImage::create("nvRes/system/button_system.png",
                                          "nvRes/system/button_system_on.png",
-                                         [](Ref* sender){
-                                             ViewFunctions::setAutoMode();
+                                         [this](Ref* sender){
+                                             this->systemBtnPopup->setVisible(true);
+                                             this->autoBtnPopup->setVisible(false);
                                          });
     systemBtn->setPosition(Vec2(360,-250));
     
@@ -145,6 +202,9 @@ bool UILayer::isWaitingClick(){
     if(this->autoBtnPopup->isVisible()){
         res = true;
     }
+    if(this->systemBtnPopup->isVisible()){
+        res = true;
+    }
     if(!(this->isVisible())){
         res = true;
     }
@@ -154,6 +214,7 @@ bool UILayer::isWaitingClick(){
 void UILayer::unWait(){
     ViewFunctions::unsetHideText();
     this->autoBtnPopup->setVisible(false);
+    this->systemBtnPopup->setVisible(false);
 }
 
 void UILayer::unsetAutoMode(){

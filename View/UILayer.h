@@ -19,7 +19,9 @@ class UILayer : public cocos2d::LayerColor, create_func<UILayer>
 private:
 
     cocos2d::Layer* autoBtnPopup;
+    cocos2d::Layer* systemBtnPopup;
     cocos2d::MenuItemImage* autoBtn;
+    cocos2d::MenuItemImage* systemBtn;
 public:
     bool init();
     using create_func::create;
