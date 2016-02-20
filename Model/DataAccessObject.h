@@ -28,9 +28,8 @@ public:
     
     ~SqliteDAO();
     
-    void writeMemento(Memento* memento);
-    void createRecord(int i, Memento* memento);
-    void updateRecord(int i, Memento* memento);
+    void writeMemento(int key, Memento* memento);
+    Memento* createMemento(int i);
     
 private:
     sqlite3* db = NULL;

@@ -29,11 +29,13 @@ CareTaker::~CareTaker(){
 
 void CareTaker::storeMemento(){
     auto mem = GameModel::getInstance()->createMemento();
-    SqliteDAO::getInstance()->writeMemento(mem);
+    int i = 1;
+    SqliteDAO::getInstance()->writeMemento(i, mem);
 };
 
-void CareTaker::loadMemento(Memento* memento){
-    return GameModel::getInstance()->setMemento(memento);
+void CareTaker::loadMemento(int key){
+    Memento* memento = SqliteDAO::getInstance()->createMemento(key);
+    GameModel::getInstance()->setMemento(memento);
 };
 
 NS_NV_END

@@ -43,15 +43,51 @@ void SqliteDAO::initializeTables(){
         if( status != SQLITE_OK ) CCLOG("create table failed : %s", errorMessage);
 }
 
-void SqliteDAO::writeMemento(Memento *memento){
+void SqliteDAO::writeMemento(int key, Memento *memento){
     string create_sql = "";
-    create_sql += "INSERT INTO SAVE_DATA (SCRIPT_FILE, PARAGRAPH, LINE) ";
-    create_sql += "VALUES (\""+ memento->getFilename() + "\"," + to_string(memento->getParagraph()) + "," + to_string(memento->getLine()) + ");";
+    create_sql += "INSERT INTO SAVE_DATA (SAVE_NO, SCRIPT_FILE, PARAGRAPH, LINE) ";
+    create_sql += "VALUES ("+ to_string(key) + ",\"" + memento->getFilename() + "\"," + to_string(memento->getParagraph()) + "," + to_string(memento->getLine()) + ");";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ) CCLOG("insert failed : %s", errorMessage);
     
     delete memento;
+}
+
+Memento* SqliteDAO::createMemento(int key){
+    Memento* ret = new Memento();
+    
+    string query = "";
+    query += "SELECT * FROM SAVE_DATA WHERE SAVE_NO = " + to_string(key) + ";";
+    
+    // データの抽出
+    // ステートメントの用意
+    sqlite3_stmt *pStmt = NULL;
+    auto err = sqlite3_prepare_v2(db, query.c_str(), -1, &pStmt, NULL);
+    
+    if(err != SQLITE_OK){
+        /* TODO:エラー処理 */
+    }else{
+        // データの抽出
+        while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
+            int id = sqlite3_column_int(pStmt, 0);
+            ret->setFilename(to_string(sqlite3_column_int(pStmt, 1)));
+            ret->setParagraph(sqlite3_column_int(pStmt, 2));
+            ret->setLine(sqlite3_column_int(pStmt, 3));
+            
+            CCLOG("save_id %d opend.\n", id);
+        }
+        
+        if(err != SQLITE_DONE){
+            /* TODO: エラー処理 */
+        }
+    }
+    
+    // ステートメントの解放
+    sqlite3_finalize(pStmt);
+    
+    return ret;
+    
 }
 
 void SqliteDAO::init(){

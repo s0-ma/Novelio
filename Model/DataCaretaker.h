@@ -28,7 +28,7 @@ public:
     ~CareTaker();
     
     void storeMemento();
-    void loadMemento(Memento* memento);
+    void loadMemento(int key);
 };
 
 NS_NV_END
