@@ -420,7 +420,7 @@ void ScriptCommand::preloadBackground(string path){
 void ScriptCommand::BG_CutIn(string path){
     auto action = [path](){
         auto gm = GameManager::getInstance();
-        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->childrenData["BackgroundLayerModel"])->setBackgroundImagePath(path);
+        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setBackgroundImagePath(path);
         gm->getBackgroundLayer()->setBackgroundImage();
     };
     
@@ -492,7 +492,7 @@ void ScriptCommand::fadeOut(float t_sec){
 void ScriptCommand::playBGM(string path, bool loop /*= true*/){
     auto action = [path, loop](){
 //        auto gm = GameManager::getInstance();
-        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->childrenData["BackgroundLayerModel"])->setBGMPath(path);
+        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setBGMPath(path);
         NMDAudioEngine::getInstance()->setBackgroundMusicVolume(1);
         NMDAudioEngine::getInstance()->playBackgroundMusic(path.c_str(), loop);
     };
@@ -522,7 +522,7 @@ void ScriptCommand::stopBGM(){
 }
 void ScriptCommand::playSE(string path, bool loop /*= false*/){
     auto action = [path, loop](){
-        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->childrenData["BackgroundLayerModel"])->setSEPath(path);
+        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setSEPath(path);
         NMDAudioEngine::getInstance()->playEffect(path.c_str(), loop);
     };
     
@@ -533,7 +533,7 @@ void ScriptCommand::fadeoutSE(float time){
 }
 void ScriptCommand::stopAllSE(){
     auto action = [](){
-        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->childrenData["BackgroundLayerModel"])->setSEPath("");
+        static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setSEPath("");
         NMDAudioEngine::getInstance()->stopAllEffects();
     };
     

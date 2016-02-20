@@ -8,9 +8,12 @@
 
 #include "BackgroundLayerModel.h"
 
-BackgroundLayerModel::BackgroundLayerModel() : Preservable::Preservable("BackgroundLayerModel"){
+NS_NV_BEGIN
+
+BackgroundLayerModel::BackgroundLayerModel(){
     
 }
 BackgroundLayerModel::~BackgroundLayerModel(){
 }
 
+NS_NV_END

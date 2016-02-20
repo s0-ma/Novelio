@@ -17,10 +17,30 @@
 
 #include "cocos2d.h"
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief start namespace nv
+*/
+/* ----------------------------------------------------------------------------*/
 #define NS_NV_BEGIN                     namespace nv {
+/* --------------------------------------------------------------------------*/
+/**
+* @brief end namespace
+*/
+/* ----------------------------------------------------------------------------*/
 #define NS_NV_END                       }
+/* --------------------------------------------------------------------------*/
+/**
+* @brief using namespace nv,
+*/
+/* ----------------------------------------------------------------------------*/
 #define USING_NS_NV                     using namespace nv;
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief define savedir (default .tenclaps)
+*/
+/* ----------------------------------------------------------------------------*/
 #define SAVEDIR ".tenclaps"
 
 #pragma execution_character_set("utf-8")
@@ -29,29 +49,45 @@ using namespace std;
 
 NS_NV_BEGIN
 
-//位置指定用の関数群
+/* --------------------------------------------------------------------------*/
+/**
+* @brief 位置指定用の関数
+*/
+/* ----------------------------------------------------------------------------*/
 inline cocos2d::Point PointFromCenter(float x, float y)
 {
     return cocos2d::Point(x + Director::getInstance()->getWinSize().width /2,
                           y + Director::getInstance()->getWinSize().height /2);
 };
+/**
+* @brief 位置指定用の関数
+*/
 inline cocos2d::Point PointFromBottomLeft(float x, float y)
 {
     return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x,
                           y + Director::getInstance()->getVisibleOrigin().y);
 };
+/**
+* @brief 位置指定用の関数
+*/
 inline cocos2d::Point PointFromBottomRight(float x, float y)
 {
     return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x
                           + Director::getInstance()->getWinSize().width,
                           y + Director::getInstance()->getVisibleOrigin().y);
 };
+/**
+* @brief 位置指定用の関数
+*/
 inline cocos2d::Point PointFromTopLeft(float x, float y)
 {
     return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x,
                           y + Director::getInstance()->getVisibleOrigin().y
                           + Director::getInstance()->getWinSize().height);
 };
+/**
+* @brief 位置指定用の関数
+*/
 inline cocos2d::Point PointFromTopRight(float x, float y)
 {
     return cocos2d::Point(x + Director::getInstance()->getVisibleOrigin().x
@@ -61,8 +97,16 @@ inline cocos2d::Point PointFromTopRight(float x, float y)
 };
 
 
+/* --------------------------------------------------------------------------*/
+/**
+* @brief init関数に引数を取らせるための補助クラス。
 //Cocos2d-xのCREATE_FUNCをマシな実装にした より
-//("http://melpon.org/blog/cocos2dx-create-func")
+*
+("http://melpon.org/blog/cocos2dx-create-func")
+
+* @tparam Derived
+*/
+/* ----------------------------------------------------------------------------*/
 template<class Derived>
 struct create_func {
     template<class... Args>

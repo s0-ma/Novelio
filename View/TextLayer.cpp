@@ -130,7 +130,7 @@ void TextLayer::setTextColor(const cocos2d::Color3B &color){
 void TextLayer::setText(){
     std::string text = GameModel::getInstance()->textLayerModel->getText();
     this->text = text;
-    textLabel->setText(text);
+    textLabel->setTexts({text});
 };
 void TextLayer::setTexts(){
     std::vector<std::string> texts = GameModel::getInstance()->textLayerModel->getTexts();

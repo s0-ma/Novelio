@@ -35,7 +35,7 @@ bool BackgroundLayer::init()
 }
 
 void BackgroundLayer::setBackgroundImage(){
-    string path = static_cast<BackgroundLayerModel*>(GameModel::getInstance()->childrenData["BackgroundLayerModel"])->getBackgroundImagePath();
+    string path = static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->getBackgroundImagePath();
     frontSprite->setTexture(path);
 };
 

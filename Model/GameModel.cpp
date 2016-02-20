@@ -10,8 +10,8 @@
 #include "GameManager.h"
 #include "BackgroundLayer.h"
 
-#include "GlobalData.h"
-#include "LocalData.h"
+//#include "GlobalData.h"
+//#include "LocalData.h"
 
 #define SHOW_FADEIN_TIME 0.5
 #define SHOW_FADEOUT_TIME 0.5
@@ -27,18 +27,18 @@ GameModel* GameModel::getInstance() {
     return instance;
 };
 
-GameModel::GameModel() : Preservable::Preservable("GameModel")
+GameModel::GameModel()
 {
 //    setMode(NORMAL);
 //    setMode(AUTO);
     setScenarioMode(SKIP);
     
-    dataContainer.pushBack(GlobalData::create("global"));
-    dataContainer.pushBack(LocalData::create("save1"));
-    dataContainer.pushBack(LocalData::create("save2"));
+//    dataContainer.pushBack(GlobalData::create("global"));
+//    dataContainer.pushBack(LocalData::create("save1"));
+//    dataContainer.pushBack(LocalData::create("save2"));
     
-//    backgroundLayerModel = new BackgroundLayerModel() ;
-    addDataNode(new BackgroundLayerModel());
+    backgroundLayerModel = new BackgroundLayerModel() ;
+//    addDataNode(new BackgroundLayerModel());
     portraitLayerModel = new PortraitLayerModel();
     textLayerModel = new TextLayerModel();
     logLayerModel = new LogLayerModel();
@@ -106,5 +106,64 @@ vector<NovelioScriptLine*> GameModel::getComments(){
     comments.clear();
     return ret;
 }
+
+
+void GameModel::saveThumbnail(string filename){
+    auto size = Director::getInstance()->getWinSize();
+    RenderTexture* texture = RenderTexture::create((int)size.width, (int)size.height);
+    texture->setPosition(Vec2(size.width * 0.5f, size.height * 0.5f));
+    texture->begin();
+    Director::getInstance()->getRunningScene()->visit();
+    texture->end();
+    
+    //ディレクトリがなければ作る
+    auto rootPath = FileUtils::getInstance()->getWritablePath();
+    if (! FileUtils::getInstance()->isDirectoryExist(rootPath+SAVEDIR)){
+        FileUtils::getInstance()-> createDirectory(rootPath+SAVEDIR);
+    }
+    
+    texture->saveToFile(string(SAVEDIR) + "/" + filename + ".png");
+    CCLOG("%s",(string(SAVEDIR) + "/" + filename + ".png").c_str());
+}
+
+Sprite* GameModel::getThumbnail(string filename){
+    auto path = FileUtils::getInstance()->getWritablePath();
+    if(1){
+        auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
+        SpriteFrameCache::getInstance()->removeSpriteFrameByName(fullpath);
+        CCLOG("%s",fullpath.c_str());
+    }
+    return Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
+}
+
+
+Memento* GameModel::createMemento(){
+    Memento* ret = new Memento();
+    ret->setFilename(this->filename);
+    ret->setParagraph(this->paragraph);
+    ret->setSentence(this->sentence);
+    ret->setLine(this->getLine());
+    
+    return ret;
+};
+
+void GameModel::setMemento(Memento* memento){
+    if(this->filename != memento->getFilename()){
+        this->filename = memento->getFilename();
+    }
+    if(this->paragraph != memento->getParagraph()){
+        this->paragraph = memento->getParagraph();
+    }
+    if(this->sentence != memento->getSentence()){
+        this->sentence = memento->getSentence();
+    }
+    if(this->line != memento->getLine()){
+        this->line = memento->getLine();
+    }
+    
+    delete memento;
+    
+};
+
 
 NS_NV_END

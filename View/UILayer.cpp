@@ -13,6 +13,7 @@
 #include "CCLuaEngine.h"
 #include "ViewFunctions.h"
 #include "TitleScene.h"
+#include "DataCaretaker.h"
 
 NS_NV_BEGIN
 
@@ -185,6 +186,23 @@ bool UILayer::init(){
     
     auto menu = Menu::create(logBtn, skipBtn, autoBtn, systemBtn, hideTextBtn, NULL);
     addChild(menu);
+    
+    
+    //For DEBUG
+    auto pLabel = Label::createWithSystemFont("1", "Arial", 50);
+    auto debugButton = MenuItemLabel::create(pLabel,
+                                         [](Ref* sender){
+                                            CareTaker::getInstance()->storeMemento(1);
+                                         });
+    debugButton->setPosition(Vec2(330,+250));
+    menu->addChild(debugButton);
+    auto pLabel2 = Label::createWithSystemFont("2", "Arial", 50);
+    auto debugButton2 = MenuItemLabel::create(pLabel2,
+                                         [](Ref* sender){
+                                            CareTaker::getInstance()->loadMemento(1);
+                                         });
+    debugButton2->setPosition(Vec2(430,+250));
+    menu->addChild(debugButton2);
     
     return true;
 }

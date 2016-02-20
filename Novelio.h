@@ -29,14 +29,14 @@
 //Model
 //! @addtogroup Model
 #include "Model/BackgroundLayerModel.h"
-#include "Model/ControlledData.h"
-#include "Model/Data.h"
+//#include "Model/ControlledData.h"
+//#include "Model/Data.h"
 #include "Model/GameModel.h"
-#include "Model/GlobalData.h"
-#include "Model/LocalData.h"
+//#include "Model/GlobalData.h"
+//#include "Model/LocalData.h"
 #include "Model/LogLayerModel.h"
 #include "Model/PortraitLayerModel.h"
-#include "Model/Preservable.h"
+//#include "Model/Preservable.h"
 #include "Model/TextLayerModel.h"
 
 //Utils

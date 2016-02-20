@@ -12,21 +12,22 @@
 #include "../Macros.h"
 #include "../Controller/NovelScript.h"
 
-#include "ControlledData.h"
+//#include "ControlledData.h"
 #include "BackgroundLayerModel.h"
 #include "TextLayerModel.h"
 #include "PortraitLayerModel.h"
 #include "LogLayerModel.h"
 #include "../View/Portrait.h"
+#include "Memento.h"
 
-#include "Preservable.h"
+//#include "Preservable.h"
 
 NS_NV_BEGIN
 
 /**
  *  アドベンチャー画面のマネージャー（Singleton）
  */
-class GameModel : public Preservable
+class GameModel
 {
 public:
     enum ScenarioMode{NORMAL, AUTO, SKIP};
@@ -39,14 +40,15 @@ private:
     GameModel(const GameModel& rhs);
     GameModel& operator=(const GameModel& rhs);
     
-//    データ保持用コンテナ
-    Vector<ControlledData*> dataContainer;
     
     ScenarioMode mode;
     
     //セーブ用メンバ変数
     std::string filename;
     
+    int line;
+    int paragraph;
+    int sentence;
     
 public:
     ~GameModel();
@@ -65,22 +67,34 @@ public:
     
     void setScript(NovelScript* script);
 
-    DEFINE_INT_DATA(Line);
+    void setLine(int l){this->line = l;};
+    int getLine(){return line;};
+    void setParagraph(int p){this->paragraph = p;};
+    int getParagraph(){return paragraph;};
+    void setSentence(int s){this->sentence = s;};
+    int getSentence(){return this->sentence;};
+    
     void goNextLine();
-    DEFINE_INT_DATA(Paragraph);
-    DEFINE_INT_DATA(Sentence);
     
     vector<NovelioScriptLine*> comments;
     
-    //各レイヤーのモデル
-//    BackgroundLayerModel* backgroundLayerModel;
 public:
+    //各レイヤーのモデル
+    BackgroundLayerModel* backgroundLayerModel;
     PortraitLayerModel* portraitLayerModel;
     TextLayerModel* textLayerModel;
     LogLayerModel* logLayerModel;
     
     void addComment(NovelioScriptLine* line);
     vector<NovelioScriptLine*> getComments();
+    
+//    メメント関係
+public:
+    Memento* createMemento();
+    void setMemento(Memento* memento);
+    static void saveThumbnail(string filename);
+    static Sprite* getThumbnail(string filename);
+    
 };
 
 NS_NV_END
