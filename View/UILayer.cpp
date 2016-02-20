@@ -12,6 +12,7 @@
 #include "GameManager.h"
 #include "CCLuaEngine.h"
 #include "ViewFunctions.h"
+#include "DataCaretaker.h"
 
 
 NS_NV_BEGIN
@@ -71,6 +72,7 @@ bool UILayer::init(){
     auto hideTextBtn = MenuItemImage::create("nvRes/system/button_hidetext.png",
                                          "nvRes/system/button_hidetext_on.png",
                                          [](Ref* sender){
+                                            CareTaker::getInstance()->storeMemento();
                                              ViewFunctions::hideText();
                                          });
     hideTextBtn->setPosition(Vec2(430,-250));

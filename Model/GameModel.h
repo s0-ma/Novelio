@@ -18,6 +18,7 @@
 #include "PortraitLayerModel.h"
 #include "LogLayerModel.h"
 #include "../View/Portrait.h"
+#include "Memento.h"
 
 //#include "Preservable.h"
 
@@ -89,6 +90,8 @@ public:
     
 //    メメント関係
 public:
+    Memento* createMemento();
+    void setMemento(Memento* memento);
     static void saveThumbnail(string filename);
     static Sprite* getThumbnail(string filename);
     

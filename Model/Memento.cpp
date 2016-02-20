@@ -7,3 +7,13 @@
 //
 
 #include "Memento.h"
+
+NS_NV_BEGIN
+Memento::Memento(){
+    
+}
+Memento::~Memento(){
+    
+}
+
+NS_NV_END

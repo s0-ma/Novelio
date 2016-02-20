@@ -20,10 +20,6 @@ public:
     BackgroundLayerModel();
     ~BackgroundLayerModel();
 
-//    DEFINE_STRING_DATA(BackgroundImagePath);
-//    DEFINE_STRING_DATA(BGMPath);
-//    DEFINE_STRING_DATA(SEPath);
-    
     string bgImagePath;
     void setBackgroundImagePath(string p){
         this->bgImagePath = p;

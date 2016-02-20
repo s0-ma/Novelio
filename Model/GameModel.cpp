@@ -135,4 +135,35 @@ Sprite* GameModel::getThumbnail(string filename){
     }
     return Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
 }
+
+
+Memento* GameModel::createMemento(){
+    Memento* ret = new Memento();
+    ret->setFilename(this->filename);
+    ret->setParagraph(this->paragraph);
+    ret->setSentence(this->sentence);
+    ret->setLine(this->getLine());
+    
+    return ret;
+};
+
+void GameModel::setMemento(Memento* memento){
+    if(this->filename != memento->getFilename()){
+        this->filename = memento->getFilename();
+    }
+    if(this->paragraph != memento->getParagraph()){
+        this->paragraph = memento->getParagraph();
+    }
+    if(this->sentence != memento->getSentence()){
+        this->sentence = memento->getSentence();
+    }
+    if(this->line != memento->getLine()){
+        this->line = memento->getLine();
+    }
+    
+    delete memento;
+    
+};
+
+
 NS_NV_END
