@@ -84,7 +84,7 @@ bool UILayer::init(){
     auto pLabel = Label::createWithSystemFont("1", "Arial", 50);
     auto debugButton = MenuItemLabel::create(pLabel,
                                          [](Ref* sender){
-                                            CareTaker::getInstance()->storeMemento();
+                                            CareTaker::getInstance()->storeMemento(1);
                                          });
     debugButton->setPosition(Vec2(330,+250));
     menu->addChild(debugButton);

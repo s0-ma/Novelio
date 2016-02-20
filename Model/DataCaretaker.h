@@ -27,7 +27,7 @@ public:
     static CareTaker* getInstance();
     ~CareTaker();
     
-    void storeMemento();
+    void storeMemento(int key);
     void loadMemento(int key);
 };
 

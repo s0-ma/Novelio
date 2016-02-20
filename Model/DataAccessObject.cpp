@@ -45,11 +45,11 @@ void SqliteDAO::initializeTables(){
 
 void SqliteDAO::writeMemento(int key, Memento *memento){
     string create_sql = "";
-    create_sql += "INSERT INTO SAVE_DATA (SAVE_NO, SCRIPT_FILE, PARAGRAPH, LINE) ";
+    create_sql += "REPLACE INTO SAVE_DATA (SAVE_NO, SCRIPT_FILE, PARAGRAPH, LINE) ";
     create_sql += "VALUES ("+ to_string(key) + ",\"" + memento->getFilename() + "\"," + to_string(memento->getParagraph()) + "," + to_string(memento->getLine()) + ");";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
-    if( status != SQLITE_OK ) CCLOG("insert failed : %s", errorMessage);
+    if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);
     
     delete memento;
 }

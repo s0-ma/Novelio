@@ -27,10 +27,9 @@ CareTaker::~CareTaker(){
     
 }
 
-void CareTaker::storeMemento(){
+void CareTaker::storeMemento(int key){
     auto mem = GameModel::getInstance()->createMemento();
-    int i = 1;
-    SqliteDAO::getInstance()->writeMemento(i, mem);
+    SqliteDAO::getInstance()->writeMemento(key, mem);
 };
 
 void CareTaker::loadMemento(int key){
