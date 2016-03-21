@@ -8,7 +8,7 @@
 
 #include "LogLayer.h"
 
-#include "../extensions/cocos-ext.h"
+
 
 #include "../GameManager.h"
 #include "../Model/GameModel.h"
@@ -29,17 +29,15 @@ bool LogLayer::init(){
     //背面
     setBackground("nvRes/system/box_backlog.png");
     
-    
 
-//    scroll view
+    //scroll view
     auto size = Director::getInstance()->getVisibleSize();
-    auto scrollView = cocos2d::extension::ScrollView::create(size);
+    scrollView = cocos2d::extension::ScrollView::create(size);
     scrollView->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
-//    scrollView->setAnchorPoint(Vec2(0.,0.));
-//    scrollView->setPosition(0,0);
-    addChild(scrollView);
+    scrollView->setBounceable(true);
+    addChild(scrollView, 20);
     
-//    auto base = Layer::create();
+    auto base = Layer::create();
     
     //log text
     vector<string> log_data = GameModel::getInstance()->logLayerModel->getLog();
@@ -48,23 +46,19 @@ bool LogLayer::init(){
         log += log_data[i] + "\n";
     }
     
-    Label* label = Label::createWithTTF("", "res/fonts/ipamp.ttf", 25);
+    //label
+    label = Label::createWithTTF("", "res/fonts/ipamp.ttf", 25);
     label->setString(log);
-    label->setColor(Color3B(255, 0, 127));
+    label->setLineHeight(35.0);//行間の設定
+    label->setWidth(size.width * 0.9);//左右に5%のマージンをつける
+    label->setColor(Color3B::BLACK);
 
-//    auto hoge= Sprite::create("nvRes/character/ame/ame.png");
-//    label->setPosition(PointFromCenter(0, 0));
+
+    base->addChild(label);
+
+    scrollView->setContainer(base);
     
-//    base->addChild(hoge);
-//    base->addChild(label);
-//    scrollView->setPosition(Vec2(0,0));
-//    addChild(base);
-    scrollView->setContainer(label);
-    scrollView->setContentSize(label->getContentSize());
-    CCLOG("%f",label->getContentSize().height);
-//    CCLOG("%f",Sprite::create("nvRes/character/ame/ame.png")->getContentSize().height);
-//    scrollView->setBounceable(true);
-    
+    this->setContentSize();
 
     //前面
     auto backBtn = MenuItemImage::create("nvRes/system/button_log_back.png",
@@ -77,7 +71,7 @@ bool LogLayer::init(){
     backBtn->setPosition(Vec2(400,-250));
     
     auto menu = Menu::create(backBtn, NULL);
-    addChild(menu);
+    addChild(menu, 30);
 
     
     return true;
@@ -89,6 +83,24 @@ void LogLayer::setBackground(string path){
     background->setAnchorPoint(Vec2(0.5,0.5));
     background->setPosition(PointFromCenter(0,0));
     addChild(background);
+}
+
+void LogLayer::setContentSize(){
+    auto size = Director::getInstance()->getVisibleSize();
+    //画面端のマージンを、画面全体の5%に設定
+    auto startx = size.width * 0.05;
+    auto starty = size.height * 0.05;
+    //ラベルが画面サイズより大きい場合
+    if(label->getContentSize().height > size.height){
+        label->setPosition(PointFromBottomLeft(startx, starty));
+        label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        scrollView->setContentSize(label->getContentSize());
+    //ラベルが画面サイズより小さい場合
+    }else{
+        label->setPosition(PointFromTopLeft(startx, -starty));
+        label->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+        scrollView->setContentSize(size);
+    }
 }
 
 void LogLayer::showLog(){
