@@ -24,7 +24,7 @@ public:
 
 private:
     std::map<std::string, Portrait*> portraits;
-
+    void onEnter();
 
 public:
     Portrait* getPortrait(string id);

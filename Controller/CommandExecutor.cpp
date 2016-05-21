@@ -257,6 +257,7 @@ void ScriptCommand::showPortrait(string id, float fade_sec/* = 0*/, int alpha/*=
 
 void ScriptCommand::changePortraitFace(string id, string face_id, float fade_sec){
     GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
+    GameModel::getInstance()->portraitLayerModel->portraits[id].faceId = face_id;
     GameModel::getInstance()->portraitLayerModel->portraits[id].facePath = GameManager::getInstance()->portraitPool[id].facePath[face_id];
     if(GameModel::getInstance()->portraitLayerModel->portraits.count(id) == 0){
         addPortrait(id, GameManager::getInstance()->portraitPool[id].imgPath);

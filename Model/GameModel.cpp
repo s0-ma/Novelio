@@ -157,11 +157,12 @@ Memento* GameModel::createMemento(){
     map<string, PortraitModel>::iterator it = portraits.begin();
     while( it != portraits.end()){
         if ((*it).second.isVisible){
-            auto face_id = (*it).first;
+            auto id = (*it).first;
             auto p = (*it).second;
             Memento::P tmp;
         
-            tmp.face_id = face_id;
+            tmp.id = id;
+            tmp.face_id = p.faceId;
             tmp.basePath = p.basePath;
             tmp.x = p.x;
             tmp.y = p.y;
@@ -193,9 +194,31 @@ void GameModel::setMemento(Memento* memento){
         this->line = memento->getLine();
     }
     
-    auto hoge = memento->getBackground();
-    this->backgroundLayerModel->setBackgroundImagePath(hoge);
+    auto bg = memento->getBackground();
+    this->backgroundLayerModel->setBackgroundImagePath(bg);
     
+    auto portraits = memento->getPortraits();
+    auto plm = this->portraitLayerModel;
+    for(int i=0; i<portraits.size(); i++){
+        //TODO ここにportraitsの読み込み処理。
+        auto id = portraits[i].id;
+        auto &pm = plm->portraits[id];
+        pm.basePath = portraits[i].basePath;
+        pm.isVisible = true;
+        pm.id = portraits[i].id;
+        pm.faceId = portraits[i].face_id;
+        pm.facePath = portraits[i].facePath;
+//        string screenName;
+        pm.facePool[portraits[i].face_id] = portraits[i].facePath;
+        pm.x = portraits[i].x;
+        pm.y = portraits[i].y;
+        pm.emo_x = portraits[i].emoX;
+        pm.emo_y = portraits[i].emoY;
+        pm.emoticon_path = portraits[i].emoPath;
+//        double scale;
+//        bool grayout;
+        
+    }
     delete memento;
     
 };

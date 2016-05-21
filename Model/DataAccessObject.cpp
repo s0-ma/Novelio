@@ -42,7 +42,7 @@ void SqliteDAO::initializeTables(){
     create_sql += "CREATE TABLE TEXT_LAYER( SAVE_NO int primary key, NAME text, TEXT text );";
     create_sql += "CREATE TABLE BG_LAYER( SAVE_NO int primary key, BG_PATH text );";
 //    create_sql += "CREATE TABLE PORTRAIT_LAYER( SAVE_NO int primary key );";
-    create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
+    create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, ID text, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ){
@@ -61,8 +61,9 @@ void SqliteDAO::writeMemento(int key, Memento *memento){
     create_sql += "DELETE FROM PORTRAITS WHERE SAVE_NO = " + to_string(key) + ";";
     auto portraits = memento->getPortraits();
     for(int i = 0; i< portraits.size(); i++){
-        create_sql += "INSERT INTO PORTRAITS( SAVE_NO, BASE_PATH, FACE_ID, FACE_PATH, X, Y, EMO_ID, EMO_X, EMO_Y) ";
+        create_sql += "INSERT INTO PORTRAITS( SAVE_NO, ID, BASE_PATH, FACE_ID, FACE_PATH, X, Y, EMO_ID, EMO_X, EMO_Y) ";
         create_sql += "VALUES ("+ to_string(key) + ","
+                                + "\"" + portraits[i].id + "\","
                                 + "\"" + portraits[i].basePath + "\","
                                 + "\"" + portraits[i].face_id + "\","
                                 + "\"" + portraits[i].facePath + "\","
@@ -208,22 +209,25 @@ Memento* SqliteDAO::createMemento(int key){
         // データの抽出
         vector<Memento::P> portraits;
         while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
-            int id = sqlite3_column_int(pStmt, 0);
-            auto base_path =sqlite3_column_text(pStmt, 1);
-            auto face_id =sqlite3_column_text(pStmt, 2);
-            auto face_path =sqlite3_column_text(pStmt, 3);
-            auto x =sqlite3_column_int(pStmt, 4);
-            auto y =sqlite3_column_int(pStmt, 5);
-            auto emo_id =sqlite3_column_text(pStmt, 6);
-            auto emo_x =sqlite3_column_int(pStmt, 7);
-            auto emo_y =sqlite3_column_int(pStmt, 8);
+            int save_no = sqlite3_column_int(pStmt, 0);
+            auto id =sqlite3_column_text(pStmt, 1);
+            auto base_path =sqlite3_column_text(pStmt, 2);
+            auto face_id =sqlite3_column_text(pStmt, 3);
+            auto face_path =sqlite3_column_text(pStmt, 4);
+            auto x =sqlite3_column_int(pStmt, 5);
+            auto y =sqlite3_column_int(pStmt, 6);
+            auto emo_path =sqlite3_column_text(pStmt, 7);
+            auto emo_x =sqlite3_column_int(pStmt, 8);
+            auto emo_y =sqlite3_column_int(pStmt, 9);
             
             Memento::P tmp;
-            tmp.basePath = *base_path;
-            tmp.facePath = *face_path;
+            tmp.id = string((char*)id);
+            tmp.basePath = string((char*)base_path);
+            tmp.face_id = string((char*)face_id);
+            tmp.facePath = string((char*)face_path);
             tmp.x = x;
             tmp.y = y;
-            tmp.emoPath = *emo_id;
+            tmp.emoPath = string((char*)emo_path);
             tmp.emoX = emo_x;
             tmp.emoY = emo_y;
             

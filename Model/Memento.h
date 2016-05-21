@@ -18,6 +18,7 @@ class Memento{
 public:
     class P{
     public:
+        string id;
         string face_id;
         string basePath;
         string facePath;

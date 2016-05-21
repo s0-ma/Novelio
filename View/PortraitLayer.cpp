@@ -28,6 +28,23 @@ bool PortraitLayer::init(){
     return true;
 }
 
+void PortraitLayer::onEnter(){
+    auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
+    map<string, PortraitModel>::iterator it = portraits.begin();
+    while(it != portraits.end()){
+        if((*it).second.isVisible == true){
+            //ここに初期表示処理
+            auto id = (*it).first;
+            addPortrait(id);
+            setPortraitPosition(id);
+//            cutinPortrait(id);
+            cutinFace(id, (*it).second.faceId);
+        }
+        it++;
+    }
+}
+
+
 Portrait* PortraitLayer::getPortrait(string id){
     if(portraits.count(id) == 0){
         return nullptr;
@@ -64,7 +81,7 @@ void PortraitLayer::cutinPortrait(std::string id){
         portraits[id]->setOpacity(255);
     }else{
         CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
-                        GameModel::getInstance()->getLine(), id.c_str());
+        GameModel::getInstance()->getLine(), id.c_str());
     }
 };
 
