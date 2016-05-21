@@ -40,8 +40,13 @@ private:
     GameModel(const GameModel& rhs);
     GameModel& operator=(const GameModel& rhs);
     
-    
     ScenarioMode mode;
+    
+    //グローバル保存データ
+    int bgmVolume;
+    int seVolume;
+    int textSpeed;
+    int recentSaveNo;
     
     //セーブ用メンバ変数
     std::string filename;
@@ -66,6 +71,15 @@ public:
     bool isCmdWorking(std::string cmd);
     
     void setScript(NovelScript* script);
+    
+    void setBgmVolume(int bgmVol){this->bgmVolume = bgmVol;};
+    int getBgmVolume(){return this->bgmVolume;};
+    void setSeVolume(int seVol){this->seVolume = seVol;};
+    int getSeVolume(){return this->seVolume;};
+    void setTextSpeed(int s){this->textSpeed = s;};
+    int getTextSpeed(){return this->textSpeed;};
+    void setRecentSaveNo(int n){this->recentSaveNo = n;};
+    int getRecentSaveNo(){return this->recentSaveNo;};
 
     void setLine(int l){this->line = l;};
     int getLine(){return line;};

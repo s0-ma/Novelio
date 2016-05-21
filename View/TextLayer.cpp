@@ -165,8 +165,6 @@ void TextLayer::startText(){
         textLabel->run();
     }else{
         textLabel->showAll();
-        //            auto nc = NovelControler::getInstance();
-        //            nc->onDisplayTouched();
     }
 };
 void TextLayer::pauseText(){
@@ -179,13 +177,19 @@ void TextLayer::showAllText(){
 void TextLayer::onTextEnds(){
     auto gm = GameModel::getInstance();
     if(gm->getScenarioMode() == GameModel::AUTO){
-        auto nc = NovelController::getInstance();
-        nc->_execNextLine();
+        NovelController::getInstance()->_execNextLine();
+        
     }else if(gm->getScenarioMode() == GameModel::SKIP){
-        this->runAction(Sequence::create(DelayTime::create(SKIP_SPEED),CallFunc::create([this](){
-            auto nc = NovelController::getInstance();
-            nc->_execNextLine();
-        }), NULL));
+        auto action = Sequence::create(DelayTime::create(SKIP_SPEED),
+                                       CallFunc::create([](){
+                                            NovelController::getInstance()->_execNextLine();
+                                        }),
+                                       NULL);
+        Director::getInstance()->getRunningScene()->runAction(action);
+        
+//        NovelController::getInstance()->_execNextLine();
+
+        
     }
 };
 void TextLayer::onLineEnds(){
@@ -199,6 +203,13 @@ void TextLayer::onParaEnds(){
 
 Sprite* TextLayer::getTextBox(){
     return textBox;
-}
+};
+
+void TextLayer::onEnter(){
+    //textLayerの初期化はやらなくても良いかも。下記のようにすれば実装は可能。
+//    GameModel::getInstance()->textLayerModel->setText("hogehoge");
+//    setText();
+//    showAllText();
+};
 
 NS_NV_END

@@ -12,6 +12,7 @@
 #include "../Macros.h"
 
 #include "Memento.h"
+#include "DataAccessObject.h"
 
 NS_NV_BEGIN
 
@@ -27,8 +28,13 @@ public:
     static CareTaker* getInstance();
     ~CareTaker();
     
+    vector<SqliteDAO::LoadInformation> getLoadInformation();
+    
+    void saveGlobalData();
+    void loadGlobalData();
+    
     void storeMemento(int key);
-    void loadMemento(int key);
+    bool loadMemento(int key);
 };
 
 NS_NV_END

@@ -27,14 +27,44 @@ CareTaker::~CareTaker(){
     
 }
 
-void CareTaker::storeMemento(int key){
-    auto mem = GameModel::getInstance()->createMemento();
-    SqliteDAO::getInstance()->writeMemento(key, mem);
+vector<SqliteDAO::LoadInformation> CareTaker::getLoadInformation(){
+    auto dao = SqliteDAO::getInstance()->getLoadInformation();
+    return dao;
+}
+
+void CareTaker::saveGlobalData(){
+    auto dao = SqliteDAO::getInstance();
+    auto m = GameModel::getInstance();
+    dao->writeGlobalData(m->getBgmVolume(), m->getSeVolume(), m->getTextSpeed(), m->getRecentSaveNo());
 };
 
-void CareTaker::loadMemento(int key){
+void CareTaker::loadGlobalData(){
+    auto d = SqliteDAO::getInstance()->getGlobalData();
+    auto m = GameModel::getInstance();
+    m->setBgmVolume(d["bgm_vol"]);
+    m->setSeVolume(d["se_vol"]);
+    m->setTextSpeed(d["text_speed"]);
+    m->setRecentSaveNo(d["recent_save"]);
+};
+
+void CareTaker::storeMemento(int key){
+    auto model = GameModel::getInstance();
+    auto dao = SqliteDAO::getInstance();
+    dao->writeMemento(key, model->createMemento());
+    
+    string p = "save"+to_string(key);
+    model->saveThumbnail(p);
+    dao->writeLoadIndex(key, p , "test.");
+};
+
+bool CareTaker::loadMemento(int key){
     Memento* memento = SqliteDAO::getInstance()->createMemento(key);
-    GameModel::getInstance()->setMemento(memento);
+    if(memento->getFilename() != ""){
+        GameModel::getInstance()->setMemento(memento);
+        return true;
+    }else{
+        return false;
+    }
 };
 
 NS_NV_END

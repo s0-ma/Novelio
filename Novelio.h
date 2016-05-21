@@ -28,6 +28,8 @@
 
 //Model
 //! @addtogroup Model
+#include "Model/DataAccessObject.h"
+#include "Model/DataCaretaker.h"
 #include "Model/BackgroundLayerModel.h"
 //#include "Model/ControlledData.h"
 //#include "Model/Data.h"
@@ -61,5 +63,6 @@
 #include "View/SimpleNovelioScene.h"
 #include "View/TextLayer.h"
 #include "View/UILayer.h"
+#include "View/ViewFunctions.h"
 
 #endif

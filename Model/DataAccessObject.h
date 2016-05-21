@@ -23,13 +23,31 @@ class SqliteDAO{
     SqliteDAO(const SqliteDAO& rhs);
     SqliteDAO& operator=(const SqliteDAO& rhs);
 public:
+    
+    struct LoadInformation{
+        int saveNo;
+        string datetime;
+        string screenShot;
+        string comment;
+    };
+    
     //唯一のアクセス手段
     static SqliteDAO* getInstance();
     
     ~SqliteDAO();
     
+    //個別セーブデータ
     void writeMemento(int key, Memento* memento);
+    void writeLoadIndex(int key, string thumbnailPath, string comment);
     Memento* createMemento(int i);
+    
+    //グローバルデータ
+    void writeGlobalData(int bgm_vol, int se_vol, int text_speed, int recent_save);
+    map<string, int> getGlobalData();
+    
+    //ロード画面用データ
+    vector<LoadInformation> getLoadInformation();
+    
     
 private:
     sqlite3* db = NULL;

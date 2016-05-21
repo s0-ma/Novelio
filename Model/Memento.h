@@ -15,7 +15,7 @@
 NS_NV_BEGIN
 
 class Memento{
-    
+public:
     class P{
     public:
         string basePath;

@@ -24,6 +24,7 @@ class BackgroundLayer : public cocos2d::Layer, create_func<BackgroundLayer>
     public:
         bool init();
         using create_func::create;
+        void onEnter();
 
     private:
 

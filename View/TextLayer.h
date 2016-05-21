@@ -94,6 +94,7 @@ private:
     void onLineEnds();
     void onParaEnds();
     
+    void onEnter();
 };
 
 NS_NV_END

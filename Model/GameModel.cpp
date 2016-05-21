@@ -43,8 +43,6 @@ GameModel::GameModel()
     textLayerModel = new TextLayerModel();
     logLayerModel = new LogLayerModel();
     
-    setLine(-1);
-
 }
 
 GameModel::~GameModel()
@@ -90,6 +88,7 @@ void GameModel::setScript(NovelScript *script){
     this->filename = script->filename;
     setParagraph(1);
     setSentence(1);
+    setLine(-1);
 }
 
 void GameModel::goNextLine(){
@@ -112,8 +111,14 @@ void GameModel::saveThumbnail(string filename){
     auto size = Director::getInstance()->getWinSize();
     RenderTexture* texture = RenderTexture::create((int)size.width, (int)size.height);
     texture->setPosition(Vec2(size.width * 0.5f, size.height * 0.5f));
+    
+    //サムネイル作成対象のオブジェクトをvisit.
     texture->begin();
-    Director::getInstance()->getRunningScene()->visit();
+//    Director::getInstance()->getRunningScene()->visit();
+    auto gm = GameManager::getInstance();
+    gm->getBackgroundLayer()->visit();
+    gm->getPortraitLayer()->visit();
+    gm->getTextLayer()->visit();
     texture->end();
     
     //ディレクトリがなければ作る
@@ -123,17 +128,18 @@ void GameModel::saveThumbnail(string filename){
     }
     
     texture->saveToFile(string(SAVEDIR) + "/" + filename + ".png");
-    CCLOG("%s",(string(SAVEDIR) + "/" + filename + ".png").c_str());
+    CCLOG("Save to file: %s",(string(SAVEDIR) + "/" + filename + ".png").c_str());
 }
 
 Sprite* GameModel::getThumbnail(string filename){
     auto path = FileUtils::getInstance()->getWritablePath();
-    if(1){
-        auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
-        SpriteFrameCache::getInstance()->removeSpriteFrameByName(fullpath);
-        CCLOG("%s",fullpath.c_str());
-    }
-    return Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
+    
+    auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
+    Director::getInstance()->getTextureCache()->removeTextureForKey(fullpath);
+    
+    auto ret =  Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
+    
+    return ret;
 }
 
 
@@ -143,6 +149,8 @@ Memento* GameModel::createMemento(){
     ret->setParagraph(this->paragraph);
     ret->setSentence(this->sentence);
     ret->setLine(this->getLine());
+    
+    ret->setBackground(this->backgroundLayerModel->getBackgroundImagePath());
     
     return ret;
 };
@@ -160,6 +168,9 @@ void GameModel::setMemento(Memento* memento){
     if(this->line != memento->getLine()){
         this->line = memento->getLine();
     }
+    
+    auto hoge = memento->getBackground();
+    this->backgroundLayerModel->setBackgroundImagePath(hoge);
     
     delete memento;
     
