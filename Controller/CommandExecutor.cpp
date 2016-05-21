@@ -236,6 +236,8 @@ void ScriptCommand::clearPortrait(string id, float fade_sec){
     
 }
 void ScriptCommand::showPortrait(string id, float fade_sec/* = 0*/, int alpha/*=255*/){
+    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
+    
     if(fade_sec == 0){
         auto action = [id,alpha](){
             auto manager = GameManager::getInstance()->getPortraitLayer();
@@ -254,8 +256,12 @@ void ScriptCommand::showPortrait(string id, float fade_sec/* = 0*/, int alpha/*=
 }
 
 void ScriptCommand::changePortraitFace(string id, string face_id, float fade_sec){
+    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
+    GameModel::getInstance()->portraitLayerModel->portraits[id].facePath = GameManager::getInstance()->portraitPool[id].facePath[face_id];
     if(GameModel::getInstance()->portraitLayerModel->portraits.count(id) == 0){
-        addPortrait(id, GameManager::getInstance()->portraitPool[id].facePath[face_id]);
+        addPortrait(id, GameManager::getInstance()->portraitPool[id].imgPath);
+        //下のはなぜこういうコードが書いてあったのか不明。修正したけど、影響あるかもわからない。
+        //addPortrait(id, GameManager::getInstance()->portraitPool[id].facePath[face_id]);
     }
     
     if(fade_sec == 0){
@@ -297,6 +303,8 @@ void ScriptCommand::changePortraitFace(string id, string face_id, float fade_sec
 
 
 void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
+    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = false;
+
     if(fade_sec == 0){
         auto action = [id](){
             auto manager = GameManager::getInstance()->getPortraitLayer();
@@ -318,6 +326,13 @@ void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
     
 }
 void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
+    auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
+    map<string, PortraitModel>::iterator it = portraits.begin();
+    while(it != portraits.end()){
+        (*it).second.isVisible = false;
+        ++it;
+    }
+    
     if(fade_sec == 0){
         auto action = [](){
             auto manager = GameManager::getInstance()->getPortraitLayer();
@@ -396,8 +411,8 @@ void ScriptCommand::setEmoticonDefaultPosition(string id, int x, int y){
 }
 void ScriptCommand::setEmoticon(string id, string emo){
     auto action = [id, emo](){
+        GameModel::getInstance()->portraitLayerModel->portraits[id].emoticon_path = GameManager::getInstance()->emoticonPool[emo][0];
         auto p = GameModel::getInstance()->portraitLayerModel->portraits[id];
-        p.emoticon_path = GameManager::getInstance()->emoticonPool[emo][0];
         GameManager::getInstance()->getPortraitLayer()->getPortrait(id)->addEmoticon(p.emoticon_path, p.emo_x, p.emo_y);
     };
     

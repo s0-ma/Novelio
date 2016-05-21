@@ -152,6 +152,30 @@ Memento* GameModel::createMemento(){
     
     ret->setBackground(this->backgroundLayerModel->getBackgroundImagePath());
     
+    vector<Memento::P> ret_portraits;
+    auto portraits = this->portraitLayerModel->portraits;
+    map<string, PortraitModel>::iterator it = portraits.begin();
+    while( it != portraits.end()){
+        if ((*it).second.isVisible){
+            auto face_id = (*it).first;
+            auto p = (*it).second;
+            Memento::P tmp;
+        
+            tmp.face_id = face_id;
+            tmp.basePath = p.basePath;
+            tmp.x = p.x;
+            tmp.y = p.y;
+            tmp.facePath = p.facePath;
+            tmp.emoPath = p.emoticon_path;
+            tmp.emoX = p.emo_x;
+            tmp.emoY = p.emo_y;
+        
+            ret_portraits.push_back(tmp);
+        }
+        ++it;
+    }
+    ret->setPortraits(ret_portraits);
+    
     return ret;
 };
 

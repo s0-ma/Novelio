@@ -21,7 +21,7 @@ PortraitFaceFade* PortraitFaceFade::create(float d, string path, int x, int y){
 }
 
 bool PortraitFaceFade::initWithDuration(float d, string path, int x, int y){
-    if (CCActionInterval::initWithDuration(d))
+    if (ActionInterval::initWithDuration(d))
     {
         _newFacePath = path;
         _x = x;
@@ -55,7 +55,7 @@ PortraitFaceFade* PortraitFaceFade::reverse() const
 
 void PortraitFaceFade::startWithTarget(Node *pTarget)
 {
-    CCActionInterval::startWithTarget( pTarget );
+    ActionInterval::startWithTarget( pTarget );
     
     //顔だけだと1pxくらいのズレが生じるので、全身を作ってフェード,入れ替え
     auto basePath = static_cast<Portrait*>(pTarget)->basePath;
@@ -94,7 +94,7 @@ void PortraitFaceFade::stop(void)
     static_cast<Portrait*>(_target)->changeFace(_newFacePath);
     _target->setOpacity(255);
     _newFace->removeFromParent();
-    CCActionInterval::stop();
+    ActionInterval::stop();
 }
 
 

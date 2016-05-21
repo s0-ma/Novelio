@@ -13,6 +13,7 @@
 
 struct PortraitModel{
 public:
+    bool isVisible = false;
     string id;
     string basePath;
     string faceId;

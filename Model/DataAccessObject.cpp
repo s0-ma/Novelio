@@ -57,6 +57,21 @@ void SqliteDAO::writeMemento(int key, Memento *memento){
 
     create_sql += "REPLACE INTO BG_LAYER (SAVE_NO, BG_PATH) ";
     create_sql += "VALUES ("+ to_string(key) + ",\"" + memento->getBackground() + "\");";
+
+    create_sql += "DELETE FROM PORTRAITS WHERE SAVE_NO = " + to_string(key) + ";";
+    auto portraits = memento->getPortraits();
+    for(int i = 0; i< portraits.size(); i++){
+        create_sql += "INSERT INTO PORTRAITS( SAVE_NO, BASE_PATH, FACE_ID, FACE_PATH, X, Y, EMO_ID, EMO_X, EMO_Y) ";
+        create_sql += "VALUES ("+ to_string(key) + ","
+                                + "\"" + portraits[i].basePath + "\","
+                                + "\"" + portraits[i].face_id + "\","
+                                + "\"" + portraits[i].facePath + "\","
+                                + to_string(portraits[i].x) + ","
+                                + to_string(portraits[i].y) + ","
+                                + "\"" + portraits[i].emoPath + "\","
+                                + to_string(portraits[i].emoX) + ","
+                                + to_string(portraits[i].emoY) + ");";
+    }
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);

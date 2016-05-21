@@ -186,10 +186,6 @@ void TextLayer::onTextEnds(){
                                         }),
                                        NULL);
         Director::getInstance()->getRunningScene()->runAction(action);
-        
-//        NovelController::getInstance()->_execNextLine();
-
-        
     }
 };
 void TextLayer::onLineEnds(){
