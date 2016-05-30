@@ -327,7 +327,7 @@ void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
     
 }
 void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
-    auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
+    auto &portraits = GameModel::getInstance()->portraitLayerModel->portraits;
     map<string, PortraitModel>::iterator it = portraits.begin();
     while(it != portraits.end()){
         (*it).second.isVisible = false;
@@ -422,7 +422,8 @@ void ScriptCommand::setEmoticon(string id, string emo){
 
 void ScriptCommand::hideEmoticon(string id){
     auto action = [id](){
-        auto p = GameModel::getInstance()->portraitLayerModel->portraits[id];
+        auto &p = GameModel::getInstance()->portraitLayerModel->portraits[id];
+        p.emoticon_path = "";
         GameManager::getInstance()->getPortraitLayer()->getPortrait(id)->removeEmoticon();
     };
     

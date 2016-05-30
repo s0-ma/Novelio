@@ -39,6 +39,10 @@ void PortraitLayer::onEnter(){
             setPortraitPosition(id);
 //            cutinPortrait(id);
             cutinFace(id, (*it).second.faceId);
+            
+            if((*it).second.emoticon_path != ""){
+                GameManager::getInstance()->getPortraitLayer()->getPortrait(id)->addEmoticon((*it).second.emoticon_path, (*it).second.emo_x, (*it).second.emo_y);
+            }
         }
         it++;
     }
