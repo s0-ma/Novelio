@@ -40,7 +40,7 @@ void SqliteDAO::initializeTables(){
     //個別セーブデータ
     create_sql += "CREATE TABLE SAVE_DATA( SAVE_NO int primary key, SCRIPT_FILE text, PARAGRAPH int, LINE int);";
     create_sql += "CREATE TABLE TEXT_LAYER( SAVE_NO int primary key, NAME text, TEXT text );";
-    create_sql += "CREATE TABLE BG_LAYER( SAVE_NO int primary key, BG_PATH text );";
+    create_sql += "CREATE TABLE BG_LAYER( SAVE_NO int primary key, BG_PATH text, BGM_PATH text, SE_PATH text );";
 //    create_sql += "CREATE TABLE PORTRAIT_LAYER( SAVE_NO int primary key );";
     create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, ID text, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
     
@@ -55,8 +55,11 @@ void SqliteDAO::writeMemento(int key, Memento *memento){
     create_sql += "REPLACE INTO SAVE_DATA (SAVE_NO, SCRIPT_FILE, PARAGRAPH, LINE) ";
     create_sql += "VALUES ("+ to_string(key) + ",\"" + memento->getFilename() + "\"," + to_string(memento->getParagraph()) + "," + to_string(memento->getLine()) + ");";
 
-    create_sql += "REPLACE INTO BG_LAYER (SAVE_NO, BG_PATH) ";
-    create_sql += "VALUES ("+ to_string(key) + ",\"" + memento->getBackground() + "\");";
+    create_sql += "REPLACE INTO BG_LAYER (SAVE_NO, BG_PATH, BGM_PATH, SE_PATH) ";
+    create_sql += "VALUES ("+ to_string(key) + ","
+                    +"\"" + memento->getBackground() + "\","
+                    +"\"" + memento->getBGM() + "\","
+                    +"\"" + memento->getSE() + "\");";
 
     create_sql += "DELETE FROM PORTRAITS WHERE SAVE_NO = " + to_string(key) + ";";
     auto portraits = memento->getPortraits();
@@ -191,7 +194,11 @@ Memento* SqliteDAO::createMemento(int key){
         while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
             int id = sqlite3_column_int(pStmt, 0);
             auto bg =sqlite3_column_text(pStmt, 1);
+            auto bgm = sqlite3_column_text(pStmt, 2);
+            auto se = sqlite3_column_text(pStmt, 3);
             ret->setBackground(string((char*)bg));
+            ret->setBGM(string((char*)bgm));
+            ret->setSE(string((char*)se));
             
             CCLOG("save_id %d (bg_layer): %s", id, string((char*)bg).c_str());
         }

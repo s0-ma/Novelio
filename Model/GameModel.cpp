@@ -177,6 +177,9 @@ Memento* GameModel::createMemento(){
     }
     ret->setPortraits(ret_portraits);
     
+    ret->setBGM(this->backgroundLayerModel->getBGMPath());
+    ret->setSE(this->backgroundLayerModel->getSEPath());
+    
     return ret;
 };
 
@@ -219,6 +222,10 @@ void GameModel::setMemento(Memento* memento){
 //        bool grayout;
         
     }
+    
+    this->backgroundLayerModel->setBGMPath(memento->getBGM());
+    this->backgroundLayerModel->setSEPath(memento->getSE());
+    
     delete memento;
     
 };

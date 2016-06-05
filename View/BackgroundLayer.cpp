@@ -37,6 +37,11 @@ bool BackgroundLayer::init()
 void BackgroundLayer::onEnter(){
     auto gm = GameManager::getInstance();
     gm->getBackgroundLayer()->setBackgroundImage();
+    
+    auto bgm_path = GameModel::getInstance()->backgroundLayerModel->getBGMPath();
+    NMDAudioEngine::getInstance()->playBackgroundMusic(bgm_path.c_str());
+    auto se_path = GameModel::getInstance()->backgroundLayerModel->getSEPath();
+    NMDAudioEngine::getInstance()->playEffect(se_path.c_str());
 }
 
 void BackgroundLayer::setBackgroundImage(){
