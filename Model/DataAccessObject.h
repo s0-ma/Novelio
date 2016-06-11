@@ -10,7 +10,7 @@
 #define __Novelio__DataAccessObject__
 
 #include "../Macros.h"
-#include "sqlite3.h"
+#include "../extensions/sqlite3.h"
 #include "Memento.h"
 
 NS_NV_BEGIN

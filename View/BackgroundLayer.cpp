@@ -35,6 +35,9 @@ bool BackgroundLayer::init()
 }
 
 void BackgroundLayer::onEnter(){
+    
+    Layer::onEnter();
+    
     auto gm = GameManager::getInstance();
     gm->getBackgroundLayer()->setBackgroundImage();
     

@@ -29,6 +29,9 @@ bool PortraitLayer::init(){
 }
 
 void PortraitLayer::onEnter(){
+    
+    Layer::onEnter();
+    
     auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
     map<string, PortraitModel>::iterator it = portraits.begin();
     while(it != portraits.end()){
