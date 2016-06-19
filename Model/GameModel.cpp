@@ -9,6 +9,7 @@
 #include "GameModel.h"
 #include "GameManager.h"
 #include "BackgroundLayer.h"
+#include "DataCaretaker.h"
 
 //#include "GlobalData.h"
 //#include "LocalData.h"
@@ -29,9 +30,9 @@ GameModel* GameModel::getInstance() {
 
 GameModel::GameModel()
 {
-//    setMode(NORMAL);
+    setScenarioMode(NORMAL);
 //    setMode(AUTO);
-    setScenarioMode(SKIP);
+//    setScenarioMode(SKIP);
     
 //    dataContainer.pushBack(GlobalData::create("global"));
 //    dataContainer.pushBack(LocalData::create("save1"));
@@ -42,6 +43,13 @@ GameModel::GameModel()
     portraitLayerModel = new PortraitLayerModel();
     textLayerModel = new TextLayerModel();
     logLayerModel = new LogLayerModel();
+    
+    auto g = nv::CareTaker::getInstance()->getGlobalData();
+    setBgmVolume(float(g["bgm_vol"])/256);
+    setSeVolume(float(g["se_vol"])/256);
+    setTextSpeed(g["text_speed"]);
+    setRecentSaveNo(g["recent_save"]);
+
     
 }
 

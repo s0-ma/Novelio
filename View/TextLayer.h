@@ -58,7 +58,7 @@ public:
     void setTextFont(std::string path);
     void setTextFontSize(int size);
     void setTextColor(const Color3B& color);
-    void setTextSpeed(double speed);
+    void setTextSpeed();
     void setLineHeight(float lineHeight);
     
     void setText();

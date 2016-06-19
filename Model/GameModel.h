@@ -43,10 +43,10 @@ private:
     ScenarioMode mode;
     
     //グローバル保存データ
-    int bgmVolume;
-    int seVolume;
-    int textSpeed;
-    int recentSaveNo;
+    int bgmVolume = 128;
+    int seVolume = 128;
+    int textSpeed = 20;
+    int recentSaveNo = -1;
     
     //セーブ用メンバ変数
     std::string filename;

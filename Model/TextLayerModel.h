@@ -12,6 +12,7 @@
 #include "../Macros.h"
 
 class TextLayerModel {
+    
 private:
     std::string name;
     std::string text;

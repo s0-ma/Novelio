@@ -11,6 +11,7 @@
 #include "../Controller/NovelController.h"
 #include "GameModel.h"
 #include "GameManager.h"
+#include "../Model/DataCaretaker.h"
 
 #define SKIP_SPEED 0.1
 
@@ -59,7 +60,7 @@ void TextLayer::initializeLayer(){
     setTextColor(Color3B::BLACK);
     textLabel->setVerticalAlignment(cocos2d::TextVAlignment::TOP);
     textLabel->setHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
-    setTextSpeed(20);
+//    setTextSpeed(20);
     setLineHeight(textFontSize);
     this->addChild(textLabel,20);
     
@@ -146,7 +147,8 @@ void TextLayer::addText(){
     textLabel->addText(texts[texts.size()-1]);
 };
 
-void TextLayer::setTextSpeed(double speed){
+void TextLayer::setTextSpeed(){
+    auto speed = GameModel::getInstance()->getTextSpeed();
     textSpeed = speed;
 };
 
@@ -206,6 +208,7 @@ void TextLayer::onEnter(){
 //    GameModel::getInstance()->textLayerModel->setText("hogehoge");
 //    setText();
 //    showAllText();
+    setTextSpeed();
 };
 
 NS_NV_END
