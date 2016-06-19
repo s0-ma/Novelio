@@ -35,6 +35,7 @@ void SqliteDAO::initializeTables(){
     string create_sql = "";
     //全体データ
     create_sql += "CREATE TABLE MANAGEMENT ( BGM_VOLUME int(3), SE_VOLUME int(3), TEXT_SPEED int(3), RECENT_SAVE int(3) );";
+    create_sql += "INSERT INTO MANAGEMENT ( BGM_VOLUME, SE_VOLUME , TEXT_SPEED , RECENT_SAVE ) VALUES (128, 128, 128, -1);";
     //セーブ/ロード画面用
     create_sql += "CREATE TABLE DISPLAY( SAVE_NO int primary key, SAVE_DATETIME text, SCREEN_SHOT text, SAVE_COMMENT text);";
     //個別セーブデータ
@@ -100,8 +101,11 @@ void SqliteDAO::writeLoadIndex(int key, string thumbnailPath, string comment){
 
 void SqliteDAO::writeGlobalData(int bgm_vol, int se_vol, int text_speed, int recent_save){
     string create_sql = "";
-    create_sql += "REPLACE INTO SAVE_DATA (BGM_VOLUME, SE_VOLUME, TEXT_SPEED, RECENT_SAVE) ";
-    create_sql += "VALUES ("+ to_string(bgm_vol) + "," + to_string(se_vol) + "," + to_string(text_speed) + "," + to_string(recent_save) + ");";
+    create_sql += "UPDATE MANAGEMENT SET ";
+    create_sql += "BGM_VOLUME = " + to_string(bgm_vol) + ","
+                + "SE_VOLUME = " + to_string(se_vol) + ","
+                + "TEXT_SPEED = " + to_string(text_speed) + ","
+                + "RECENT_SAVE = " + to_string(recent_save) + ";";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);
@@ -126,7 +130,7 @@ map<string, int> SqliteDAO::getGlobalData(){
             ret["bgm_vol"] = sqlite3_column_int(pStmt, 0);
             ret["se_vol"] = sqlite3_column_int(pStmt, 1);
             ret["text_speed"] = sqlite3_column_int(pStmt, 2);
-            ret["recet_save"] = sqlite3_column_int(pStmt, 3);
+            ret["recent_save"] = sqlite3_column_int(pStmt, 3);
         }
         if(err != SQLITE_DONE){
             /* TODO: エラー処理 */

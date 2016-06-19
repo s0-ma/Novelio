@@ -29,6 +29,7 @@ public:
     ~CareTaker();
     
     vector<SqliteDAO::LoadInformation> getLoadInformation();
+    map<string, int> getGlobalData();
     
     void saveGlobalData();
     void loadGlobalData();

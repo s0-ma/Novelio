@@ -32,6 +32,11 @@ vector<SqliteDAO::LoadInformation> CareTaker::getLoadInformation(){
     return dao;
 }
 
+map<string, int> CareTaker::getGlobalData(){
+    auto g = SqliteDAO::getInstance()->getGlobalData();
+    return g;
+}
+
 void CareTaker::saveGlobalData(){
     auto dao = SqliteDAO::getInstance();
     auto m = GameModel::getInstance();
