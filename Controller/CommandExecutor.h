@@ -98,29 +98,34 @@ public:
     static void changeTextBox(string filename);
     
     //PortraitLayer(add,clear: メモリ上の話。 show,hide: 見た目の話。)
-    static void addPortrait(string id, string path, int x=0, int y=0, int alpha=255);
-    static void addPortraitFace(string id, string face_id, string path, int x=0, int y=0, int alpha=255);
+//    static void addPortrait(string id, string path, int x=0, int y=0, int alpha=255);
+//    static void addPortraitFace(string id, string face_id, string path, int x=0, int y=0, int alpha=255);
 
     static void showPortraitLayer(float fade_sec = 0);
     static void hidePortraitLayer(float fade_sec = 0);
 
-    static void showPortrait(string id, float fade_sec = 0, int alpha=255);
+//    static void _showPortrait(string id, float fade_sec = 0, int alpha=255);
+    static void showPortrait(string id, string path, int x=0, int y=0, float fade_sec = 0, int alpha=255);
+//    static void _hidePortrait(string id, int fade_sec = 0);
     static void hidePortrait(string id, int fade_sec = 0);
-    static void clearPortrait(string id, float fade_sec);
+//    static void clearPortrait(string id, float fade_sec);
 
     static void showAllPortrait(float fade_sec = 1);
-    static void hideAllPortrait(float fade_sec = 1);
-    static void clearAllPortrait(float fade_sec = 1);
+    static void hideAllPortrait(float fade_sec = 0);
+//    static void clearAllPortrait(float fade_sec = 1);
     
-    static void clearUnusedPortrate();
+//    static void clearUnusedPortrate();
 
     static void movePortrait(string id, int x, int y, int effect = 0, int param = 1);
     static void changePortraitFace(string id, string face_id, float fade_sec = 0);
+//    static void _changePortraitFace(string id, string face_path, float fade_sec = 0);
     
-    static void registerEmoticonPath(string id, string path1, string path2 = "");
-    static void setEmoticonDefaultPosition(string id, int x, int y);
-    static void setEmoticon(string id, string emo);
-    static void hideEmoticon(string id);
+//    static void registerEmoticonPath(string id, string path1, string path2 = "");
+//    static void setEmoticonDefaultPosition(string id, int x, int y);
+//    static void setEmoticon(string id, string emo);
+//    static void hideEmoticon(string id);
+    static void addEmoticon(string id, string emo_path, int x, int y);
+    static void hideEmoticon(string id, float t_sec = 0);
     
     //BackgroundLayer
     static void preloadBackground(string path);

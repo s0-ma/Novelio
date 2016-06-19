@@ -12,11 +12,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] setEmoticonDefaultPosition 
+-- @function [parent=#ScriptCommand] hideEmoticon 
 -- @param self
 -- @param #string id
--- @param #int x
--- @param #int y
+-- @param #float t_sec
         
 --------------------------------
 -- 
@@ -44,15 +43,14 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] hideEmoticon 
--- @param self
--- @param #string id
-        
---------------------------------
--- 
 -- @function [parent=#ScriptCommand] fadeoutBGM 
 -- @param self
 -- @param #float time
+        
+--------------------------------
+-- 
+-- @function [parent=#ScriptCommand] setTextSpeed 
+-- @param self
         
 --------------------------------
 -- 
@@ -79,12 +77,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] fadeoutSE 
--- @param self
--- @param #float time
-        
---------------------------------
--- 
 -- @function [parent=#ScriptCommand] clearText 
 -- @param self
         
@@ -93,6 +85,9 @@
 -- @function [parent=#ScriptCommand] showPortrait 
 -- @param self
 -- @param #string id
+-- @param #string path
+-- @param #int x
+-- @param #int y
 -- @param #float fade_sec
 -- @param #int alpha
         
@@ -165,24 +160,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] addPortrait 
+-- @function [parent=#ScriptCommand] fadeoutSE 
 -- @param self
--- @param #string id
--- @param #string path
--- @param #int x
--- @param #int y
--- @param #int alpha
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] addPortraitFace 
--- @param self
--- @param #string id
--- @param #string face_id
--- @param #string path
--- @param #int x
--- @param #int y
--- @param #int alpha
+-- @param #float time
         
 --------------------------------
 -- 
@@ -199,21 +179,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] registerEmoticonPath 
--- @param self
--- @param #string id
--- @param #string path1
--- @param #string path2
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] setEmoticon 
--- @param self
--- @param #string id
--- @param #string emo
-        
---------------------------------
--- 
 -- @function [parent=#ScriptCommand] changePortraitFace 
 -- @param self
 -- @param #string id
@@ -227,20 +192,12 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScriptCommand] clearUnusedPortrate 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] setTextSpeed 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] clearPortrait 
+-- @function [parent=#ScriptCommand] addEmoticon 
 -- @param self
 -- @param #string id
--- @param #float fade_sec
+-- @param #string emo_path
+-- @param #int x
+-- @param #int y
         
 --------------------------------
 -- 
@@ -304,11 +261,6 @@
 --------------------------------
 -- 
 -- @function [parent=#ScriptCommand] showPortraitLayer 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#ScriptCommand] clearAllPortrait 
 -- @param self
         
 --------------------------------

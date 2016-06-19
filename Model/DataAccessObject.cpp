@@ -22,7 +22,7 @@ SqliteDAO* SqliteDAO::getInstance() {
 };
 
 SqliteDAO::SqliteDAO(){
-    this->init();
+    this->init(string(SAVEDIR) + "/novelio.db");
 }
 SqliteDAO::~SqliteDAO(){
     //Close
@@ -154,7 +154,7 @@ Memento* SqliteDAO::createMemento(int key){
         // データの抽出
         while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
             int id = sqlite3_column_int(pStmt, 0);
-            ret->setFilename(to_string(sqlite3_column_int(pStmt, 1)));
+            ret->setFilename(string((char*)sqlite3_column_text(pStmt, 1)));
             ret->setParagraph(sqlite3_column_int(pStmt, 2));
             ret->setLine(sqlite3_column_int(pStmt, 3));
             
@@ -254,12 +254,12 @@ Memento* SqliteDAO::createMemento(int key){
     return ret;
 }
 
-void SqliteDAO::init(){
+void SqliteDAO::init(string file){
     bool isFirstRun = true;
     
     //DBファイルの保存先のパス
     auto filePath = FileUtils::getInstance()->getWritablePath();
-    filePath.append(".tenclaps/novelio.db");
+    filePath.append(file);
     
     //初回起動かどうかの確認
     if(FileUtils::getInstance()->isFileExist(filePath)){
@@ -317,5 +317,9 @@ vector<SqliteDAO::LoadInformation> SqliteDAO::getLoadInformation(){
     
     return ret;
 };
+
+void SqliteDAO::changeSaveFile(string file){
+    init(file);
+}
 
 NS_NV_END

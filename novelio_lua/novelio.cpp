@@ -57,7 +57,7 @@ int lua_novelio_ScriptCommand_playSE(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_setEmoticonDefaultPosition(lua_State* tolua_S)
+int lua_novelio_ScriptCommand_hideEmoticon(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -72,27 +72,37 @@ int lua_novelio_ScriptCommand_setEmoticonDefaultPosition(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
-    if (argc == 3)
+    if (argc == 1)
     {
         std::string arg0;
-        int arg1;
-        int arg2;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:setEmoticonDefaultPosition");
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "nv.ScriptCommand:setEmoticonDefaultPosition");
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:setEmoticonDefaultPosition");
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:hideEmoticon");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_setEmoticonDefaultPosition'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_hideEmoticon'", nullptr);
             return 0;
         }
-        nv::ScriptCommand::setEmoticonDefaultPosition(arg0, arg1, arg2);
+        nv::ScriptCommand::hideEmoticon(arg0);
         return 0;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:setEmoticonDefaultPosition",argc, 3);
+    if (argc == 2)
+    {
+        std::string arg0;
+        double arg1;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:hideEmoticon");
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "nv.ScriptCommand:hideEmoticon");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_hideEmoticon'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::hideEmoticon(arg0, arg1);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:hideEmoticon",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_setEmoticonDefaultPosition'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_hideEmoticon'.",&tolua_err);
 #endif
     return 0;
 }
@@ -262,41 +272,6 @@ int lua_novelio_ScriptCommand_callRegisteredFunction(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_hideEmoticon(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:hideEmoticon");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_hideEmoticon'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::hideEmoticon(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:hideEmoticon",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_hideEmoticon'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_novelio_ScriptCommand_fadeoutBGM(lua_State* tolua_S)
 {
     int argc = 0;
@@ -329,6 +304,39 @@ int lua_novelio_ScriptCommand_fadeoutBGM(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_fadeoutBGM'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_novelio_ScriptCommand_setTextSpeed(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_setTextSpeed'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::setTextSpeed();
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:setTextSpeed",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_setTextSpeed'.",&tolua_err);
 #endif
     return 0;
 }
@@ -496,41 +504,6 @@ int lua_novelio_ScriptCommand_BG_SlideIn(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_fadeoutSE(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 1)
-    {
-        double arg0;
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "nv.ScriptCommand:fadeoutSE");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_fadeoutSE'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::fadeoutSE(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:fadeoutSE",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_fadeoutSE'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_novelio_ScriptCommand_clearText(lua_State* tolua_S)
 {
     int argc = 0;
@@ -579,24 +552,12 @@ int lua_novelio_ScriptCommand_showPortrait(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
-    if (argc == 1)
-    {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_showPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::showPortrait(arg0);
-        return 0;
-    }
     if (argc == 2)
     {
         std::string arg0;
-        double arg1;
+        std::string arg1;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_showPortrait'", nullptr);
@@ -608,10 +569,10 @@ int lua_novelio_ScriptCommand_showPortrait(lua_State* tolua_S)
     if (argc == 3)
     {
         std::string arg0;
-        double arg1;
+        std::string arg1;
         int arg2;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:showPortrait");
         if(!ok)
         {
@@ -621,7 +582,67 @@ int lua_novelio_ScriptCommand_showPortrait(lua_State* tolua_S)
         nv::ScriptCommand::showPortrait(arg0, arg1, arg2);
         return 0;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:showPortrait",argc, 1);
+    if (argc == 4)
+    {
+        std::string arg0;
+        std::string arg1;
+        int arg2;
+        int arg3;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:showPortrait");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_showPortrait'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::showPortrait(arg0, arg1, arg2, arg3);
+        return 0;
+    }
+    if (argc == 5)
+    {
+        std::string arg0;
+        std::string arg1;
+        int arg2;
+        int arg3;
+        double arg4;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_number(tolua_S, 6,&arg4, "nv.ScriptCommand:showPortrait");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_showPortrait'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::showPortrait(arg0, arg1, arg2, arg3, arg4);
+        return 0;
+    }
+    if (argc == 6)
+    {
+        std::string arg0;
+        std::string arg1;
+        int arg2;
+        int arg3;
+        double arg4;
+        int arg5;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_number(tolua_S, 6,&arg4, "nv.ScriptCommand:showPortrait");
+        ok &= luaval_to_int32(tolua_S, 7,(int *)&arg5, "nv.ScriptCommand:showPortrait");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_showPortrait'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::showPortrait(arg0, arg1, arg2, arg3, arg4, arg5);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:showPortrait",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -1088,7 +1109,7 @@ int lua_novelio_ScriptCommand_hidePortraitLayer(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_addPortrait(lua_State* tolua_S)
+int lua_novelio_ScriptCommand_fadeoutSE(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -1103,178 +1124,23 @@ int lua_novelio_ScriptCommand_addPortrait(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
-    if (argc == 2)
+    if (argc == 1)
     {
-        std::string arg0;
-        std::string arg1;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortrait");
+        double arg0;
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "nv.ScriptCommand:fadeoutSE");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortrait'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_fadeoutSE'", nullptr);
             return 0;
         }
-        nv::ScriptCommand::addPortrait(arg0, arg1);
+        nv::ScriptCommand::fadeoutSE(arg0);
         return 0;
     }
-    if (argc == 3)
-    {
-        std::string arg0;
-        std::string arg1;
-        int arg2;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:addPortrait");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortrait(arg0, arg1, arg2);
-        return 0;
-    }
-    if (argc == 4)
-    {
-        std::string arg0;
-        std::string arg1;
-        int arg2;
-        int arg3;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addPortrait");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortrait(arg0, arg1, arg2, arg3);
-        return 0;
-    }
-    if (argc == 5)
-    {
-        std::string arg0;
-        std::string arg1;
-        int arg2;
-        int arg3;
-        int arg4;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addPortrait");
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "nv.ScriptCommand:addPortrait");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortrait(arg0, arg1, arg2, arg3, arg4);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:addPortrait",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:fadeoutSE",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_addPortrait'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_novelio_ScriptCommand_addPortraitFace(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 3)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "nv.ScriptCommand:addPortraitFace");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortraitFace'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortraitFace(arg0, arg1, arg2);
-        return 0;
-    }
-    if (argc == 4)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        int arg3;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addPortraitFace");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortraitFace'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortraitFace(arg0, arg1, arg2, arg3);
-        return 0;
-    }
-    if (argc == 5)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        int arg3;
-        int arg4;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "nv.ScriptCommand:addPortraitFace");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortraitFace'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortraitFace(arg0, arg1, arg2, arg3, arg4);
-        return 0;
-    }
-    if (argc == 6)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        int arg3;
-        int arg4;
-        int arg5;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "nv.ScriptCommand:addPortraitFace");
-        ok &= luaval_to_int32(tolua_S, 7,(int *)&arg5, "nv.ScriptCommand:addPortraitFace");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addPortraitFace'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::addPortraitFace(arg0, arg1, arg2, arg3, arg4, arg5);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:addPortraitFace",argc, 3);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_addPortraitFace'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_fadeoutSE'.",&tolua_err);
 #endif
     return 0;
 }
@@ -1359,96 +1225,6 @@ int lua_novelio_ScriptCommand_SpriteSheetAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_SpriteSheetAnimation'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_novelio_ScriptCommand_registerEmoticonPath(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        std::string arg0;
-        std::string arg1;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:registerEmoticonPath");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:registerEmoticonPath");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_registerEmoticonPath'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::registerEmoticonPath(arg0, arg1);
-        return 0;
-    }
-    if (argc == 3)
-    {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:registerEmoticonPath");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:registerEmoticonPath");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "nv.ScriptCommand:registerEmoticonPath");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_registerEmoticonPath'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::registerEmoticonPath(arg0, arg1, arg2);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:registerEmoticonPath",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_registerEmoticonPath'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_novelio_ScriptCommand_setEmoticon(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
-    {
-        std::string arg0;
-        std::string arg1;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:setEmoticon");
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:setEmoticon");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_setEmoticon'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::setEmoticon(arg0, arg1);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:setEmoticon",argc, 2);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_setEmoticon'.",&tolua_err);
 #endif
     return 0;
 }
@@ -1564,7 +1340,7 @@ int lua_novelio_ScriptCommand_BG_FadeOut(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_clearUnusedPortrate(lua_State* tolua_S)
+int lua_novelio_ScriptCommand_addEmoticon(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
@@ -1579,91 +1355,29 @@ int lua_novelio_ScriptCommand_clearUnusedPortrate(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_clearUnusedPortrate'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::clearUnusedPortrate();
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:clearUnusedPortrate",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_clearUnusedPortrate'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_novelio_ScriptCommand_setTextSpeed(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_setTextSpeed'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::setTextSpeed();
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:setTextSpeed",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_setTextSpeed'.",&tolua_err);
-#endif
-    return 0;
-}
-int lua_novelio_ScriptCommand_clearPortrait(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 2)
+    if (argc == 4)
     {
         std::string arg0;
-        double arg1;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:clearPortrait");
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "nv.ScriptCommand:clearPortrait");
+        std::string arg1;
+        int arg2;
+        int arg3;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:addEmoticon");
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "nv.ScriptCommand:addEmoticon");
+        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "nv.ScriptCommand:addEmoticon");
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "nv.ScriptCommand:addEmoticon");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_clearPortrait'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_addEmoticon'", nullptr);
             return 0;
         }
-        nv::ScriptCommand::clearPortrait(arg0, arg1);
+        nv::ScriptCommand::addEmoticon(arg0, arg1, arg2, arg3);
         return 0;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:clearPortrait",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:addEmoticon",argc, 4);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_clearPortrait'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_addEmoticon'.",&tolua_err);
 #endif
     return 0;
 }
@@ -2108,51 +1822,6 @@ int lua_novelio_ScriptCommand_showPortraitLayer(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_novelio_ScriptCommand_clearAllPortrait(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_clearAllPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::clearAllPortrait();
-        return 0;
-    }
-    if (argc == 1)
-    {
-        double arg0;
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "nv.ScriptCommand:clearAllPortrait");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_clearAllPortrait'", nullptr);
-            return 0;
-        }
-        nv::ScriptCommand::clearAllPortrait(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:clearAllPortrait",argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_clearAllPortrait'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_novelio_ScriptCommand_hideUILayer(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2199,18 +1868,17 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"ScriptCommand");
         tolua_function(tolua_S,"playSE", lua_novelio_ScriptCommand_playSE);
-        tolua_function(tolua_S,"setEmoticonDefaultPosition", lua_novelio_ScriptCommand_setEmoticonDefaultPosition);
+        tolua_function(tolua_S,"hideEmoticon", lua_novelio_ScriptCommand_hideEmoticon);
         tolua_function(tolua_S,"showAllPortrait", lua_novelio_ScriptCommand_showAllPortrait);
         tolua_function(tolua_S,"jump", lua_novelio_ScriptCommand_jump);
         tolua_function(tolua_S,"Quake", lua_novelio_ScriptCommand_Quake);
         tolua_function(tolua_S,"callRegisteredFunction", lua_novelio_ScriptCommand_callRegisteredFunction);
-        tolua_function(tolua_S,"hideEmoticon", lua_novelio_ScriptCommand_hideEmoticon);
         tolua_function(tolua_S,"fadeoutBGM", lua_novelio_ScriptCommand_fadeoutBGM);
+        tolua_function(tolua_S,"setTextSpeed", lua_novelio_ScriptCommand_setTextSpeed);
         tolua_function(tolua_S,"select", lua_novelio_ScriptCommand_select);
         tolua_function(tolua_S,"showTextLayer", lua_novelio_ScriptCommand_showTextLayer);
         tolua_function(tolua_S,"showUILayer", lua_novelio_ScriptCommand_showUILayer);
         tolua_function(tolua_S,"BG_SlideIn", lua_novelio_ScriptCommand_BG_SlideIn);
-        tolua_function(tolua_S,"fadeoutSE", lua_novelio_ScriptCommand_fadeoutSE);
         tolua_function(tolua_S,"clearText", lua_novelio_ScriptCommand_clearText);
         tolua_function(tolua_S,"showPortrait", lua_novelio_ScriptCommand_showPortrait);
         tolua_function(tolua_S,"changeTextBox", lua_novelio_ScriptCommand_changeTextBox);
@@ -2224,17 +1892,12 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"BG_Quake", lua_novelio_ScriptCommand_BG_Quake);
         tolua_function(tolua_S,"stopAllSE", lua_novelio_ScriptCommand_stopAllSE);
         tolua_function(tolua_S,"hidePortraitLayer", lua_novelio_ScriptCommand_hidePortraitLayer);
-        tolua_function(tolua_S,"addPortrait", lua_novelio_ScriptCommand_addPortrait);
-        tolua_function(tolua_S,"addPortraitFace", lua_novelio_ScriptCommand_addPortraitFace);
+        tolua_function(tolua_S,"fadeoutSE", lua_novelio_ScriptCommand_fadeoutSE);
         tolua_function(tolua_S,"BG_CutIn", lua_novelio_ScriptCommand_BG_CutIn);
         tolua_function(tolua_S,"SpriteSheetAnimation", lua_novelio_ScriptCommand_SpriteSheetAnimation);
-        tolua_function(tolua_S,"registerEmoticonPath", lua_novelio_ScriptCommand_registerEmoticonPath);
-        tolua_function(tolua_S,"setEmoticon", lua_novelio_ScriptCommand_setEmoticon);
         tolua_function(tolua_S,"changePortraitFace", lua_novelio_ScriptCommand_changePortraitFace);
         tolua_function(tolua_S,"BG_FadeOut", lua_novelio_ScriptCommand_BG_FadeOut);
-        tolua_function(tolua_S,"clearUnusedPortrate", lua_novelio_ScriptCommand_clearUnusedPortrate);
-        tolua_function(tolua_S,"setTextSpeed", lua_novelio_ScriptCommand_setTextSpeed);
-        tolua_function(tolua_S,"clearPortrait", lua_novelio_ScriptCommand_clearPortrait);
+        tolua_function(tolua_S,"addEmoticon", lua_novelio_ScriptCommand_addEmoticon);
         tolua_function(tolua_S,"hidePortrait", lua_novelio_ScriptCommand_hidePortrait);
         tolua_function(tolua_S,"resetGame", lua_novelio_ScriptCommand_resetGame);
         tolua_function(tolua_S,"reloadScript", lua_novelio_ScriptCommand_reloadScript);
@@ -2246,7 +1909,6 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"hideTextLayer", lua_novelio_ScriptCommand_hideTextLayer);
         tolua_function(tolua_S,"BG_FadeIn", lua_novelio_ScriptCommand_BG_FadeIn);
         tolua_function(tolua_S,"showPortraitLayer", lua_novelio_ScriptCommand_showPortraitLayer);
-        tolua_function(tolua_S,"clearAllPortrait", lua_novelio_ScriptCommand_clearAllPortrait);
         tolua_function(tolua_S,"hideUILayer", lua_novelio_ScriptCommand_hideUILayer);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(nv::ScriptCommand).name();

@@ -19,6 +19,8 @@ class BackgroundLayerModel{
 public:
     BackgroundLayerModel();
     ~BackgroundLayerModel();
+    
+    void reset();
 
     string bgImagePath;
     void setBackgroundImagePath(string p){

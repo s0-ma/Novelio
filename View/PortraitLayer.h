@@ -49,6 +49,9 @@ public:
     //!
     void removePortrait(std::string id);
     
+    void addEmoticon(string id);
+    void removeEmoticon(string id);
+    
     void clear();
     
 };

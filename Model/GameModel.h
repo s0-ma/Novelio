@@ -93,6 +93,9 @@ public:
     vector<NovelioScriptLine*> comments;
     
 public:
+    
+    void reset();
+    
     //各レイヤーのモデル
     BackgroundLayerModel* backgroundLayerModel;
     PortraitLayerModel* portraitLayerModel;

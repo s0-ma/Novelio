@@ -8,6 +8,14 @@
 
 #include "PortraitLayerModel.h"
 
+void PortraitLayerModel::reset(){
+    map<string, PortraitModel>::iterator it = portraits.begin();
+    while(it != portraits.end()){
+        portraits.erase(it++);
+    }
+    
+}
+
 void PortraitLayerModel::addPortrait(string id, string path){
     portraits[id] = PortraitModel();
     portraits[id].basePath = path;

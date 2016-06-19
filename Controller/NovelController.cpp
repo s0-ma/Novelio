@@ -30,6 +30,8 @@
 
 #include "../Utils/Split.h"
 
+#include "DataCaretaker.h"
+
 #define COMMENT_PREFIX ".//"
 #define COMMAND_PREFIX "."
 #define JUMP_TAG_PREFIX "::"
@@ -144,6 +146,7 @@ void NovelController::_execNextLine(){
         
     }else if(line->getLineType() == NovelioScriptLine::BREAK){
         //改ページして次の行実行
+//        SqliteDAO::getInstance()->writeMemento(key++, GameModel::getInstance()->createMemento());
         auto model = GameModel::getInstance()->textLayerModel;
         auto tLayer = GameManager::getInstance()->getTextLayer();
         model->setText("");
@@ -193,6 +196,7 @@ void NovelController::_execNextLine(){
 void NovelController::onParagraphEnds(){
     auto gm = GameModel::getInstance();
     gm->setParagraph(gm->getParagraph() +1);
+    
 }
 
 /**

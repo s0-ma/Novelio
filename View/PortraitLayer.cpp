@@ -65,7 +65,7 @@ void PortraitLayer::addPortrait(string id){
     auto basePath = GameModel::getInstance()->portraitLayerModel->portraits[id].basePath;
 //    CCLOG("%s", basePath.c_str());
     portraits[id] = Portrait::create(basePath);
-    addChild(portraits[id]);
+    addChild(portraits[id],0,id);
 };
 
 void PortraitLayer::setPortraitPosition(std::string id){
@@ -100,16 +100,18 @@ void PortraitLayer::fadeinPortrait(std::string id, int t_sec){
 }
 
 void PortraitLayer::cutoutPortrait(std::string id){
-    if(getOpacity() == 0){
-        setOpacity(255);
-    }
-    if(portraits.count(id) != 0){
-        portraits[id]->setOpacity(0);
-        portraits[id]->removeEmoticon();
-    }else{
-        CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
-                        GameModel::getInstance()->getLine(), id.c_str());
-    }
+    auto p = getChildByName(id);
+    p->removeFromParent();
+//    if(getOpacity() == 0){
+//        setOpacity(255);
+//    }
+//    if(portraits.count(id) != 0){
+//        portraits[id]->setOpacity(0);
+//        portraits[id]->removeEmoticon();
+//    }else{
+//        CCLOG("l:%d, %s not found in PortraitLayer::portraits.",
+//                        GameModel::getInstance()->getLine(), id.c_str());
+//    }
 };
 
 void PortraitLayer::fadeoutPortrait(std::string id, int t_sec){
@@ -152,6 +154,15 @@ void PortraitLayer::removePortrait(std::string id){
     portraits[id] = Portrait::create(basePath);
     removeChild(portraits[id]);
 };
+
+void PortraitLayer::addEmoticon(string id){
+    auto model = GameModel::getInstance()->portraitLayerModel->portraits[id];
+    portraits[id]->addEmoticon(model.emoticon_path, model.emo_x, model.emo_y);
+}
+
+void PortraitLayer::removeEmoticon(string id){
+    portraits[id]->removeEmoticon();
+}
 
 void PortraitLayer::clear(){
     

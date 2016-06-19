@@ -16,4 +16,10 @@ BackgroundLayerModel::BackgroundLayerModel(){
 BackgroundLayerModel::~BackgroundLayerModel(){
 }
 
+void BackgroundLayerModel::reset(){
+    bgImagePath = "";
+    bgmPath = "";
+    sePath = "";
+}
+
 NS_NV_END

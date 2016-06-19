@@ -230,5 +230,10 @@ void GameModel::setMemento(Memento* memento){
     
 };
 
+void GameModel::reset(){
+    backgroundLayerModel->reset();
+    portraitLayerModel->reset();
+}
+
 
 NS_NV_END

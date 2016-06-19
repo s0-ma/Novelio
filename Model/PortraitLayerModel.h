@@ -34,6 +34,7 @@ private:
 
 public:
     std::map<std::string, PortraitModel> portraits;
+    void reset();
     
     void addPortrait(string id, string path);
     void addPortraitFace(string id, string faceId, string path);

@@ -37,6 +37,8 @@ private:
     NovelScript* script;
     void onParagraphEnds();
     
+//    int key = 10;
+    
 public:
     ~NovelController();
     //唯一のアクセス手段

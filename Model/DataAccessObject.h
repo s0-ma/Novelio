@@ -48,12 +48,14 @@ public:
     //ロード画面用データ
     vector<LoadInformation> getLoadInformation();
     
+    //開発用
+    void changeSaveFile(string file);
     
 private:
     sqlite3* db = NULL;
     char* errorMessage = NULL;
     
-    void init();
+    void init(string file);
     void initializeTables();
 
 };
