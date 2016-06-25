@@ -152,6 +152,10 @@ void TextLayer::setTextSpeed(){
     textSpeed = speed;
 };
 
+void TextLayer::setTextWaitTime(double t_sec){
+    textWaitTime = t_sec;
+};
+
 void TextLayer::setLineHeight(float lineHeight){
     textLabel->setLineHeight(lineHeight);
 };
@@ -179,8 +183,12 @@ void TextLayer::showAllText(){
 void TextLayer::onTextEnds(){
     auto gm = GameModel::getInstance();
     if(gm->getScenarioMode() == GameModel::AUTO){
-        NovelController::getInstance()->_execNextLine();
-        
+        auto action = Sequence::create(DelayTime::create(textWaitTime),
+                                       CallFunc::create([](){
+                                            NovelController::getInstance()->_execNextLine();
+                                        }),
+                                       NULL);
+        Director::getInstance()->getRunningScene()->runAction(action);
     }else if(gm->getScenarioMode() == GameModel::SKIP){
         auto action = Sequence::create(DelayTime::create(SKIP_SPEED),
                                        CallFunc::create([](){

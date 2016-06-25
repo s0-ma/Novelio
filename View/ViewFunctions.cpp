@@ -36,8 +36,8 @@ void ViewFunctions::setAutoMode(){
     NovelController::getInstance()->_execNextLine();
 //    GameModel::getInstance()->save();
 }
-void ViewFunctions::setAutoModeSpeed(int speed){
-    
+void ViewFunctions::setAutoModeSpeed(double t_sec){
+    GameManager::getInstance()->getTextLayer()->setTextWaitTime(t_sec);
 }
 void ViewFunctions::setSkipMode(){
     GameModel::getInstance()->setScenarioMode(GameModel::SKIP);
@@ -47,9 +47,6 @@ void ViewFunctions::setBGMVol(int vol){
     
 }
 void ViewFunctions::setSEVol(int vol){
-    
-}
-void ViewFunctions::setTextSpeed(int speed){
     
 }
 static std::vector<std::string> getLogText(){

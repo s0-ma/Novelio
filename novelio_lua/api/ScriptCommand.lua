@@ -142,6 +142,11 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ScriptCommand] execNextLine 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#ScriptCommand] BG_Quake 
 -- @param self
 -- @param #int x

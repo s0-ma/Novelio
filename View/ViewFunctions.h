@@ -24,11 +24,10 @@ public:
     static void hideText();
     static void unsetHideText();
     static void setAutoMode();
-    static void setAutoModeSpeed(int speed);
+    static void setAutoModeSpeed(double t_sec);
     static void setSkipMode();
     static void setBGMVol(int vol);
     static void setSEVol(int vol);
-    static void setTextSpeed(int speed);
     static std::vector<std::string> getLogText();
     
 };

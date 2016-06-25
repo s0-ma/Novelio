@@ -56,4 +56,5 @@ int register_all_novelio(lua_State* tolua_S);
 
 
 
+
 #endif // __novelio_h__

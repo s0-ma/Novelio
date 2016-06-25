@@ -665,6 +665,14 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
     
 }
 
+void ScriptCommand::execNextLine(){
+    auto action = [](){
+        NovelController::getInstance()->onDisplayTouched();
+    };
+    
+    execInstantCommand(action);
+}
+
 void ScriptCommand::callRegisteredFunction(){
     auto action = [](){
         auto gm = GameManager::getInstance();

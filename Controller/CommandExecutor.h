@@ -154,6 +154,7 @@ public:
     static void select();//未定。選択肢に関する何か
     static void jump(string label);
     static void jumpToNewFile(string filename, string label);
+    static void execNextLine();
 
     //その他
     static void callRegisteredFunction();//登録した関数を呼ぶ

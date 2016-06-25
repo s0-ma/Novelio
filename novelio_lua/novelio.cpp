@@ -978,6 +978,39 @@ int lua_novelio_ScriptCommand_save(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_novelio_ScriptCommand_execNextLine(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_execNextLine'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::execNextLine();
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:execNextLine",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_execNextLine'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_novelio_ScriptCommand_BG_Quake(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1889,6 +1922,7 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"print", lua_novelio_ScriptCommand_print);
         tolua_function(tolua_S,"movePortrait", lua_novelio_ScriptCommand_movePortrait);
         tolua_function(tolua_S,"save", lua_novelio_ScriptCommand_save);
+        tolua_function(tolua_S,"execNextLine", lua_novelio_ScriptCommand_execNextLine);
         tolua_function(tolua_S,"BG_Quake", lua_novelio_ScriptCommand_BG_Quake);
         tolua_function(tolua_S,"stopAllSE", lua_novelio_ScriptCommand_stopAllSE);
         tolua_function(tolua_S,"hidePortraitLayer", lua_novelio_ScriptCommand_hidePortraitLayer);

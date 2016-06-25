@@ -59,6 +59,7 @@ public:
     void setTextFontSize(int size);
     void setTextColor(const Color3B& color);
     void setTextSpeed();
+    void setTextWaitTime(double t_sec);
     void setLineHeight(float lineHeight);
     
     void setText();
@@ -89,6 +90,7 @@ private:
     int textFontSize;
     cocos2d::Point textPosition;
     double textSpeed;
+    double textWaitTime = 0;
     
     void onTextEnds();
     void onLineEnds();
