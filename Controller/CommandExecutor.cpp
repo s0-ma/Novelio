@@ -337,6 +337,15 @@ void ScriptCommand::changePortraitFace(string id, string face_path, float fade_s
         CCLOG("error: base portrait not exist.");
     }
     
+    if(face_path == ""){
+        // nvRes/character/sayaka/sayaka_fukigen_0.png
+        auto model = GameModel::getInstance()->portraitLayerModel;
+        // @TODO 相馬くんへ。引数がからもじれつの場合、差分をランダムに変更するように（0しかなければ変えない、01があればトグル、012があれば今のじゃないやつにランダムに変える）していってください。
+        face_path = model->portraits[id].facePath;
+    }else{
+        face_path = "nvRes/character/" + id + "/" + id + "_" + face_path + "_0.png";
+    }
+    
 //    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
     GameModel::getInstance()->portraitLayerModel->portraits[id].facePath = face_path;
     
