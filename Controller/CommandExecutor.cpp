@@ -604,7 +604,7 @@ void ScriptCommand::playBGM(string path, bool loop /*= true*/){
     auto action = [path, loop](){
 //        auto gm = GameManager::getInstance();
         static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setBGMPath(path);
-        NMDAudioEngine::getInstance()->setBackgroundMusicVolume(1);
+        //NMDAudioEngine::getInstance()->setBackgroundMusicVolume(1);
         NMDAudioEngine::getInstance()->playBackgroundMusic(path.c_str(), loop);
     };
     
