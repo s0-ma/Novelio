@@ -100,8 +100,11 @@ void PortraitLayer::fadeinPortrait(std::string id, int t_sec){
 }
 
 void PortraitLayer::cutoutPortrait(std::string id){
-    auto p = getChildByName(id);
-    p->removeFromParent();
+
+    while(getChildByName(id) != NULL){
+        auto p = getChildByName(id);
+        p->removeFromParent();
+    };
 //    if(getOpacity() == 0){
 //        setOpacity(255);
 //    }
