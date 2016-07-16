@@ -257,6 +257,12 @@ void ScriptCommand::hidePortraitLayer(float fade_sec /*= 0*/){
 
 void ScriptCommand::showPortrait(string id, string path, int x, int y, float fade_sec/* = 0*/, int alpha/*=255*/){
 
+    
+    // @TODO 暫定対応
+    // 同じ人がすでにいる場合、その人を消す
+    GameModel::getInstance()->portraitLayerModel->portraits.erase(id);
+    GameManager::getInstance()->getPortraitLayer()->cutoutPortrait(id);
+
     auto model = GameModel::getInstance()->portraitLayerModel;
     model->addPortrait(id, path);
     model->portraits[id].x = x;
