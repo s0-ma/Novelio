@@ -153,7 +153,7 @@ public:
     //シナリオ進行
     static void select();//未定。選択肢に関する何か
     static void jump(string label);
-    static void jumpToNewFile(string filename, string label);
+    static void jumpToNewFile(string filename, string label="");
     static void execNextLine();
     
     static void eventCGON(string filename);

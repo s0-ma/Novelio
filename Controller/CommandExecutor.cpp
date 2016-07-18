@@ -551,7 +551,20 @@ void ScriptCommand::jump(string label){
     };
     execInstantCommand(action);
 }
+
 void ScriptCommand::jumpToNewFile(string filename, string label){
+    auto action = [filename, label](){
+        
+        auto script = NovelScript::create(filename, NovelScript::NOVELIO);
+        NovelController::getInstance()->loadScript(script);
+        
+        if(label != ""){
+            GameModel::getInstance()->setLine(NovelController::getInstance()->getScript()->tags[label]);
+        }else{
+            GameModel::getInstance()->setLine(0);
+        }
+    };
+    execInstantCommand(action);
     
 }
 
