@@ -17,6 +17,8 @@
 
 NS_NV_BEGIN
 
+int LogLayer::maxLogLine = 1000;
+
 bool LogLayer::init(){
     if(! Layer::init()){
         return false;
@@ -42,7 +44,7 @@ bool LogLayer::init(){
     //log text
     vector<string> log_data = GameModel::getInstance()->logLayerModel->getLog();
     string log = "";
-    for (int i=0; i<log_data.size(); i++){
+    for (int i=log_data.size() - maxLogLine ; i<log_data.size(); i++){
         log += log_data[i] + "\n";
     }
     

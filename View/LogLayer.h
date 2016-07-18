@@ -22,6 +22,7 @@ public:
     Label* label;
     void showLog();
 private:
+    static int maxLogLine;//画面表示するログ行数の最大値
     cocos2d::extension::ScrollView* scrollView;
     void setContentSize();
 };
