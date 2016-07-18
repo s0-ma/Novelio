@@ -155,6 +155,8 @@ public:
     static void jump(string label);
     static void jumpToNewFile(string filename, string label);
     static void execNextLine();
+    
+    static void eventCGON(string filename);
 
     //その他
     static void callRegisteredFunction();//登録した関数を呼ぶ

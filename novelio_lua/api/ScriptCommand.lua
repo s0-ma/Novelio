@@ -99,6 +99,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ScriptCommand] eventCGON 
+-- @param self
+-- @param #string filename
+        
+--------------------------------
+-- 
 -- @function [parent=#ScriptCommand] hideAllPortrait 
 -- @param self
         

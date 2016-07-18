@@ -30,6 +30,8 @@
 #include "../View/Portrait.h"
 #include "../View/Shake.h"
 
+#include "EventScene.hpp"
+
 NS_NV_BEGIN
 
 void CommandExecutor::execute(std::string cmd, NovelioScriptLine::LineType type){
@@ -578,6 +580,11 @@ void ScriptCommand::callRegisteredFunction(){
         }
     };
     execInstantCommand(action);
+}
+
+void ScriptCommand::eventCGON(string filename){
+    auto scene = EventScene::create(filename);
+    Director::getInstance()->pushScene(scene);
 }
 
 void ScriptCommand::exit(){

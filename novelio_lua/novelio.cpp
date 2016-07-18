@@ -685,6 +685,41 @@ int lua_novelio_ScriptCommand_changeTextBox(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_novelio_ScriptCommand_eventCGON(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:eventCGON");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_eventCGON'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::eventCGON(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:eventCGON",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_eventCGON'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_novelio_ScriptCommand_hideAllPortrait(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1915,6 +1950,7 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"clearText", lua_novelio_ScriptCommand_clearText);
         tolua_function(tolua_S,"showPortrait", lua_novelio_ScriptCommand_showPortrait);
         tolua_function(tolua_S,"changeTextBox", lua_novelio_ScriptCommand_changeTextBox);
+        tolua_function(tolua_S,"eventCGON", lua_novelio_ScriptCommand_eventCGON);
         tolua_function(tolua_S,"hideAllPortrait", lua_novelio_ScriptCommand_hideAllPortrait);
         tolua_function(tolua_S,"exit", lua_novelio_ScriptCommand_exit);
         tolua_function(tolua_S,"fadeIn", lua_novelio_ScriptCommand_fadeIn);
