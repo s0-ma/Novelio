@@ -22,6 +22,12 @@ CareTaker* CareTaker::getInstance() {
 };
 
 CareTaker::CareTaker(){
+    //ディレクトリがなければ作る
+    auto rootPath = FileUtils::getInstance()->getWritablePath();
+    if (! FileUtils::getInstance()->isDirectoryExist(rootPath+SAVEDIR)){
+        FileUtils::getInstance()-> createDirectory(rootPath+SAVEDIR);
+    }
+    
 }
 CareTaker::~CareTaker(){
     
