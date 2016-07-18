@@ -203,57 +203,6 @@ void ScriptCommand::showPortraitLayer(float fade_sec /*= 0*/){
 void ScriptCommand::hidePortraitLayer(float fade_sec /*= 0*/){
     
 }
-//void ScriptCommand::addPortrait(string id, string path, int x/*=0*/, int y/*=0*/, int alpha/*=255*/){
-//    GameManager::getInstance()->portraitPool[id] = GameManager::portraitMap(id, path);
-//    
-//    auto action = [id,path,x,y,alpha](){
-//        auto model = GameModel::getInstance()->portraitLayerModel;
-//        model->addPortrait(id, path);
-//        model->portraits[id].x = x;
-//        model->portraits[id].y = y;
-//        //    model->set(id, alpha);
-//        
-//        auto pLayer = GameManager::getInstance()->getPortraitLayer();
-//        pLayer->addPortrait(id);
-//        pLayer->setPortraitPosition(id);
-//    };
-//    
-//    execInstantCommand(action);
-//}
-//
-//void ScriptCommand::addPortraitFace(string id, string face_id, string path, int x/*=0*/, int y/*=0*/, int alpha/*=255*/){
-//    GameManager::getInstance()->portraitPool[id].facePath[face_id] = path;
-//    
-//    auto action = [id,face_id,path](){
-//        auto model = GameModel::getInstance()->portraitLayerModel;
-//        model->addPortraitFace(id, face_id, path);
-//    };
-//    
-//    execInstantCommand(action);
-//}
-//
-//void ScriptCommand::clearPortrait(string id, float fade_sec){
-//    
-//}
-//void ScriptCommand::_showPortrait(string id, float fade_sec/* = 0*/, int alpha/*=255*/){
-//    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
-//    
-//    if(fade_sec == 0){
-//        auto action = [id,alpha](){
-//            auto manager = GameManager::getInstance()->getPortraitLayer();
-//            manager->cutinPortrait(id);
-//        };
-//        execInstantCommand(action);
-//    }else{
-//        auto key = "_showPortrait_"+id;
-//        auto subject = GameManager::getInstance()->getPortraitLayer()->getPortrait(id);
-//        auto action = FadeIn::create(fade_sec);
-//        auto interrupt = [subject](){
-//            subject->setOpacity(255);
-//        };
-//        execIntervalCommand(key, subject, action, interrupt);
-//    }
-//}
 
 void ScriptCommand::showPortrait(string id, string path, int x, int y, float fade_sec/* = 0*/, int alpha/*=255*/){
 
@@ -291,52 +240,6 @@ void ScriptCommand::showPortrait(string id, string path, int x, int y, float fad
     }
 }
 
-//void ScriptCommand::_changePortraitFace(string id, string face_id, float fade_sec){
-//    GameModel::getInstance()->portraitLayerModel->portraits[id].isVisible = true;
-//    GameModel::getInstance()->portraitLayerModel->portraits[id].faceId = face_id;
-//    GameModel::getInstance()->portraitLayerModel->portraits[id].facePath = GameManager::getInstance()->portraitPool[id].facePath[face_id];
-//    if(GameModel::getInstance()->portraitLayerModel->portraits.count(id) == 0){
-//        addPortrait(id, GameManager::getInstance()->portraitPool[id].imgPath);
-//        //下のはなぜこういうコードが書いてあったのか不明。修正したけど、影響あるかもわからない。
-//        //addPortrait(id, GameManager::getInstance()->portraitPool[id].facePath[face_id]);
-//    }
-//    
-//    if(fade_sec == 0){
-//        auto action = [id, face_id](){
-//            auto model = GameModel::getInstance()->portraitLayerModel;
-////            CCLOG("%s", face_id.c_str());
-//
-//            model->portraits[id].facePath = model->portraits[id].facePool[face_id];
-//            
-//            auto pLayer = GameManager::getInstance()->getPortraitLayer();
-//            pLayer->cutinFace(id, face_id);
-//        };
-//        execInstantCommand(action);
-//        return;
-//        
-//    }else{
-//        auto facePath = GameModel::getInstance()->portraitLayerModel->portraits[id].facePool[face_id];
-//        
-//        string key = "_changePortraitFace";
-//        
-//        auto subject = GameManager::getInstance()->getPortraitLayer()->getPortrait(id);
-//        
-//        auto action = PortraitFaceFade::create(fade_sec, facePath);
-//        
-//        auto interrupt = [subject, facePath](){
-//            if(subject != nullptr){
-//                subject->changeFace(facePath);
-//                subject->removeAllChildren();
-//            }else{
-//                CCLOG("l:%d, PortraitSprite: %s not found on pLayer.",
-//                            GameModel::getInstance()->getLine(), facePath.c_str());
-//            }
-//        };
-//        
-//        execIntervalCommand(key, subject, action, interrupt);
-//    }
-//
-//}
 
 void ScriptCommand::changePortraitFace(string id, string face_path, float fade_sec){
     if(GameModel::getInstance()->portraitLayerModel->portraits.count(id) == 0){
@@ -388,30 +291,6 @@ void ScriptCommand::changePortraitFace(string id, string face_path, float fade_s
 
 }
 
-//void ScriptCommand::_hidePortrait(string id, int fade_sec/* = 0*/){
-//    GameModel::getInstance()->portraitLayerModel->portraits [id].isVisible = false;
-//
-//    if(fade_sec == 0){
-//        auto action = [id](){
-//            auto manager = GameManager::getInstance()->getPortraitLayer();
-//            manager->cutoutPortrait(id);
-//        };
-//        execInstantCommand(action);
-//    }else{
-////        auto manager = GameManager::getInstance()->getPortraitLayer();
-////        manager->fadeoutPortrait(id, fade_sec);
-//        auto key = "_hidePortrait"+id;
-//        auto subject = GameManager::getInstance()->getPortraitLayer()->getPortrait(id);
-//        auto action = FadeOut::create(fade_sec);
-//        auto interrupt = [subject](){
-//            subject->setOpacity(0);
-//            subject->removeEmoticon();
-//        };
-//        execIntervalCommand(key, subject, action, interrupt);
-//    }
-//    
-//}
-
 void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
     //画面上にないものはmodelから消去
     GameModel::getInstance()->portraitLayerModel->portraits.erase(id);
@@ -442,7 +321,11 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
             auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
             map<string, PortraitModel>::iterator it;
             for(it = portraits.begin(); it != portraits.end(); it++){
-                pLayer->cutoutPortrait(it->first);
+                //先頭に"_"が付く場合は特殊ケースとして扱い、明示的に指定しないと消せないようにする。
+                if(it->first.find("_") == 0){
+                }else{
+                    pLayer->cutoutPortrait(it->first);
+                }
             }
         };
         execInstantCommand(action);
@@ -452,7 +335,13 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
         for(it = portraits.begin(); it != portraits.end(); it++){
             auto key = "hidePortrait_"+it->first;
             auto subject = GameManager::getInstance()->getPortraitLayer()->getPortrait(it->first);
-            auto action = FadeOut::create(fade_sec);
+            ActionInterval* action;
+            //先頭に"_"が付く場合は特殊ケースとして扱い、明示的に指定しないと消せないようにする。
+            if(it->first.find("_") == 0){
+                action = Sequence::create(CallFunc::create([](){return true;}), NULL);
+            }else{
+                action = FadeOut::create(fade_sec);
+            }
             auto interrupt = [subject](){
                 subject->removeFromParent();
             };
@@ -465,8 +354,11 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
     auto &portraits = GameModel::getInstance()->portraitLayerModel->portraits;
     map<string, PortraitModel>::iterator it = portraits.begin();
     while(it != portraits.end()){
-        portraits.erase(it++);
-//        (*it).second.isVisible = false;
+        if(it->first.find("_") == 0){
+            it++;
+        }else{
+            portraits.erase(it++);
+        }
     }
     
 
@@ -490,28 +382,6 @@ void ScriptCommand::movePortrait(string id, int x, int y, int effect /*= 0*/, in
     
 }
 
-//void ScriptCommand::registerEmoticonPath(string id, string path1, string path2 /*=""*/){
-//    if (GameManager::getInstance()->emoticonPool.count(id) == 0){
-//        GameManager::getInstance()->emoticonPool[id].push_back(path1);
-//        if(path2 != ""){
-//            GameManager::getInstance()->emoticonPool[id].push_back(path1);
-//        }
-//    }else{
-//        GameManager::getInstance()->emoticonPool[id][0] = path1;
-//        if(path2 != ""){
-//            GameManager::getInstance()->emoticonPool[id][1] = path1;
-//        }
-//    }
-//}
-//
-//void ScriptCommand::setEmoticonDefaultPosition(string id, int x, int y){
-//    auto action = [id, x, y](){
-//        GameModel::getInstance()->portraitLayerModel->portraits[id].emo_x = x;
-//        GameModel::getInstance()->portraitLayerModel->portraits[id].emo_y = y;
-//    };
-//    
-//    execInstantCommand(action);
-//}
 void ScriptCommand::addEmoticon(string id, string emo_path, int x, int y){
     auto action = [id, emo_path, x, y](){
 //        GameModel::getInstance()->portraitLayerModel->portraits[id].emoticon_path = GameManager::getInstance()->emoticonPool[emo_path][0];
@@ -538,6 +408,9 @@ void ScriptCommand::hideEmoticon(string id, float t_sec/*=0*/){
     
     execInstantCommand(action);
 }
+
+
+
 
 //BackgroundLayer
 void ScriptCommand::preloadBackground(string path){
@@ -681,33 +554,6 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
 }
 
 void ScriptCommand::execNextLine(){
-//    //実行順番が意味を持つ(exec chainの最終段で実行される)コマンドなので、例外的にInstanceではなくInterval的に動作させる。
-//    
-//    string key = "execNextLine";
-//    
-//    auto subject = GameManager::getInstance()->getUILayer();
-//
-//    auto action = Sequence::create(CallFunc::create([](){
-//        if(GameModel::getInstance()->getScenarioMode() == GameModel::SKIP){
-//            //pass
-//        }else if(GameModel::getInstance()->getScenarioMode() == GameModel::AUTO){
-//            
-//            
-//        }else{ //NORMAL
-//            NovelController::getInstance()->_execNextLine();
-//        }
-//        
-//        return true;
-//        
-//    }),NULL);
-//    
-//    auto interrupt = [subject](){
-//        //pass
-//    };
-//    
-//    execIntervalCommand(key, subject, action, interrupt);
-    
-    
     
     auto action = [](){
         if(GameModel::getInstance()->getScenarioMode() == GameModel::SKIP){
