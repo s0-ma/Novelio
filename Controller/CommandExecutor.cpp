@@ -66,9 +66,9 @@ void ScriptCommand::execInstantCommand(function<void(void)> action){
             NovelController::getInstance()->_execNextLine();
         }
     }else{
-        if(!GameModel::getInstance()->isAnyCmdWorking()){
+//        if(!GameModel::getInstance()->isAnyCmdWorking()){
             NovelController::getInstance()->_execNextLine();
-        }
+//        }
     }
 
 }
@@ -681,10 +681,45 @@ void ScriptCommand::jumpToNewFile(string filename, string label){
 }
 
 void ScriptCommand::execNextLine(){
-    auto action = [](){
-        NovelController::getInstance()->onDisplayTouched();
-    };
+//    //実行順番が意味を持つ(exec chainの最終段で実行される)コマンドなので、例外的にInstanceではなくInterval的に動作させる。
+//    
+//    string key = "execNextLine";
+//    
+//    auto subject = GameManager::getInstance()->getUILayer();
+//
+//    auto action = Sequence::create(CallFunc::create([](){
+//        if(GameModel::getInstance()->getScenarioMode() == GameModel::SKIP){
+//            //pass
+//        }else if(GameModel::getInstance()->getScenarioMode() == GameModel::AUTO){
+//            
+//            
+//        }else{ //NORMAL
+//            NovelController::getInstance()->_execNextLine();
+//        }
+//        
+//        return true;
+//        
+//    }),NULL);
+//    
+//    auto interrupt = [subject](){
+//        //pass
+//    };
+//    
+//    execIntervalCommand(key, subject, action, interrupt);
     
+    
+    
+    auto action = [](){
+        if(GameModel::getInstance()->getScenarioMode() == GameModel::SKIP){
+            //pass
+        }else if(GameModel::getInstance()->getScenarioMode() == GameModel::AUTO){
+            //pass
+        }else{ //NORMAL
+            NovelController::getInstance()->_execNextLine();
+        }
+        return true;
+        
+    };
     execInstantCommand(action);
 }
 

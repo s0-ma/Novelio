@@ -57,7 +57,7 @@ public:
     
     void setNameToModel(string name);
     
-protected:
+//protected:
     bool _stopRunningCommand();
     string _preProcessText(string);
     
