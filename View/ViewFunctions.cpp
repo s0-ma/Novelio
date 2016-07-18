@@ -36,12 +36,26 @@ void ViewFunctions::setAutoMode(){
     NovelController::getInstance()->_execNextLine();
 //    GameModel::getInstance()->save();
 }
+void ViewFunctions::setNormalMode(){
+        GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
+        //Autoボタンの表示を元に戻す
+        GameManager::getInstance()->getUILayer()->unsetAutoMode();
+}
 void ViewFunctions::setAutoModeSpeed(double t_sec){
     GameManager::getInstance()->getTextLayer()->setTextWaitTime(t_sec);
 }
 void ViewFunctions::setSkipMode(){
-    GameModel::getInstance()->setScenarioMode(GameModel::SKIP);
-    NovelController::getInstance()->_execNextLine();
+
+    if(!(GameManager::getInstance()->getUILayer()->isWaitingClick())){
+        if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
+            //Auto,SkipならNormalに
+            ViewFunctions::setNormalMode();
+        }else{
+            //Normalの場合、Skipに
+            GameModel::getInstance()->setScenarioMode(GameModel::SKIP);
+            NovelController::getInstance()->_execNextLine();
+        }
+    }
 }
 void ViewFunctions::setBGMVol(int vol){
     

@@ -65,9 +65,7 @@ bool NovelController::onDisplayTouched(void){
     if(!(GameManager::getInstance()->getUILayer()->isWaitingClick())){
         //Auto,SkipならNormalに
         if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
-            GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
-            //Autoボタンの表示を元に戻す
-            GameManager::getInstance()->getUILayer()->unsetAutoMode();
+            ViewFunctions::setNormalMode();
         }
         
         //実行途中のエフェクトがある場合は割り込み

@@ -26,6 +26,7 @@ public:
     static void setAutoMode();
     static void setAutoModeSpeed(double t_sec);
     static void setSkipMode();
+    static void setNormalMode();
     static void setBGMVol(int vol);
     static void setSEVol(int vol);
     static std::vector<std::string> getLogText();
