@@ -234,6 +234,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ScriptCommand] setFileToAlbum 
+-- @param self
+-- @param #string filename
+        
+--------------------------------
+-- 
 -- @function [parent=#ScriptCommand] BG_CutOut 
 -- @param self
         

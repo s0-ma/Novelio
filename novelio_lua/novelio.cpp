@@ -1597,6 +1597,41 @@ int lua_novelio_ScriptCommand_stopBGM(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_novelio_ScriptCommand_setFileToAlbum(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"nv.ScriptCommand",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:setFileToAlbum");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_setFileToAlbum'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::setFileToAlbum(arg0);
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:setFileToAlbum",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_novelio_ScriptCommand_setFileToAlbum'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_novelio_ScriptCommand_BG_CutOut(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1741,6 +1776,18 @@ int lua_novelio_ScriptCommand_jumpToNewFile(lua_State* tolua_S)
 
     argc = lua_gettop(tolua_S) - 1;
 
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "nv.ScriptCommand:jumpToNewFile");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_novelio_ScriptCommand_jumpToNewFile'", nullptr);
+            return 0;
+        }
+        nv::ScriptCommand::jumpToNewFile(arg0);
+        return 0;
+    }
     if (argc == 2)
     {
         std::string arg0;
@@ -1755,7 +1802,7 @@ int lua_novelio_ScriptCommand_jumpToNewFile(lua_State* tolua_S)
         nv::ScriptCommand::jumpToNewFile(arg0, arg1);
         return 0;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:jumpToNewFile",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "nv.ScriptCommand:jumpToNewFile",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -1972,6 +2019,7 @@ int lua_register_novelio_ScriptCommand(lua_State* tolua_S)
         tolua_function(tolua_S,"resetGame", lua_novelio_ScriptCommand_resetGame);
         tolua_function(tolua_S,"reloadScript", lua_novelio_ScriptCommand_reloadScript);
         tolua_function(tolua_S,"stopBGM", lua_novelio_ScriptCommand_stopBGM);
+        tolua_function(tolua_S,"setFileToAlbum", lua_novelio_ScriptCommand_setFileToAlbum);
         tolua_function(tolua_S,"BG_CutOut", lua_novelio_ScriptCommand_BG_CutOut);
         tolua_function(tolua_S,"preloadBackground", lua_novelio_ScriptCommand_preloadBackground);
         tolua_function(tolua_S,"playBGM", lua_novelio_ScriptCommand_playBGM);

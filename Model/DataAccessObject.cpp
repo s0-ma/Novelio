@@ -329,7 +329,8 @@ void SqliteDAO::changeSaveFile(string file){
 
 void SqliteDAO::writeAlbumImage(string filepath){
     string create_sql = "";
-    create_sql += "INSERT INTO ALBUM(\""+ filepath +"\");";
+    create_sql += "INSERT INTO ALBUM(IMAGE_PATH) ";
+    create_sql += "VALUES (\""+ filepath + "\");";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);
