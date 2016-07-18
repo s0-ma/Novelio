@@ -600,6 +600,10 @@ void ScriptCommand::eventCGON(string filename){
     Director::getInstance()->pushScene(scene);
 }
 
+void ScriptCommand::setFileToAlbum(string filename){
+    CareTaker::getInstance()->saveAlbumImage(filename);
+}
+
 void ScriptCommand::exit(){
     auto action = [](){
         

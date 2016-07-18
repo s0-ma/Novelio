@@ -157,6 +157,7 @@ public:
     static void execNextLine();
     
     static void eventCGON(string filename);
+    static void setFileToAlbum(string filename);
 
     //その他
     static void callRegisteredFunction();//登録した関数を呼ぶ

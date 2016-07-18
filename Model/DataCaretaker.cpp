@@ -79,4 +79,13 @@ bool CareTaker::loadMemento(int key){
     }
 };
 
+void CareTaker::saveAlbumImage(string filepath){
+    auto dao = SqliteDAO::getInstance();
+    dao->writeAlbumImage(filepath);
+}
+
+vector<string> CareTaker::getAlbumImages(){
+    auto dao = SqliteDAO::getInstance();
+    return dao->getAlbumImages();
+}
 NS_NV_END

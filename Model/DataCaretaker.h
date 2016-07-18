@@ -36,6 +36,9 @@ public:
     
     void storeMemento(int key);
     bool loadMemento(int key);
+    
+    void saveAlbumImage(string filepath);
+    vector<string> getAlbumImages();
 };
 
 NS_NV_END

@@ -48,6 +48,9 @@ public:
     //ロード画面用データ
     vector<LoadInformation> getLoadInformation();
     
+    void writeAlbumImage(string);
+    vector<string> getAlbumImages();
+    
     //開発用
     void changeSaveFile(string file);
     

@@ -44,6 +44,7 @@ void SqliteDAO::initializeTables(){
     create_sql += "CREATE TABLE BG_LAYER( SAVE_NO int primary key, BG_PATH text, BGM_PATH text, SE_PATH text );";
 //    create_sql += "CREATE TABLE PORTRAIT_LAYER( SAVE_NO int primary key );";
     create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, ID text, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
+    create_sql += "CREATE TABLE ALBUM(IMAGE_PATH string primary key);";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ){
@@ -324,6 +325,45 @@ vector<SqliteDAO::LoadInformation> SqliteDAO::getLoadInformation(){
 
 void SqliteDAO::changeSaveFile(string file){
     init(file);
+}
+
+void SqliteDAO::writeAlbumImage(string filepath){
+    string create_sql = "";
+    create_sql += "INSERT INTO ALBUM(\""+ filepath +"\");";
+    
+    auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
+    if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);
+    
+}
+
+vector<string> SqliteDAO::getAlbumImages(){
+    vector<string> ret;
+    string query = "";
+    query += "SELECT * FROM ALBUM;";
+    
+    // データの抽出
+    // ステートメントの用意
+    sqlite3_stmt *pStmt = NULL;
+    auto err = sqlite3_prepare_v2(db, query.c_str(), -1, &pStmt, NULL);
+    
+    if(err != SQLITE_OK){
+        /* TODO:エラー処理 */
+    }else{
+        // データの抽出
+        int i = 0;
+        while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
+            ret[i] = string((char*)sqlite3_column_text(pStmt, 0));
+            i++;
+        }
+        if(err != SQLITE_DONE){
+            /* TODO: エラー処理 */
+        }
+    }
+    
+    // ステートメントの解放
+    sqlite3_finalize(pStmt);
+    
+    return ret;
 }
 
 NS_NV_END
