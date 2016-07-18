@@ -214,3 +214,6 @@ void GameTextLabel::setOnParagraphEndsCallback(std::function<void(void)> callbac
     this->callback_para = callback;
 }
 
+std::string GameTextLabel::getFullLabelText(){
+    return this->fullLabelText;
+}

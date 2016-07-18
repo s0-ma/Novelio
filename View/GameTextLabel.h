@@ -126,7 +126,8 @@ class GameTextLabel : public cocos2d::Label/*, public GameLabelProtocol*/
          */
         /* ----------------------------------------------------------------------------*/
         void setOnParagraphEndsCallback(std::function<void(void)> callback);
-
+    
+        std::string getFullLabelText();
 
     private:
         float interval = 0.01;

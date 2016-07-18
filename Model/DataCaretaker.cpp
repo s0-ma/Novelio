@@ -7,7 +7,7 @@
 //
 
 #include "DataCaretaker.h"
-
+#include "GameManager.h"
 #include "GameModel.h"
 #include "DataAccessObject.h"
 
@@ -65,7 +65,8 @@ void CareTaker::storeMemento(int key){
     
     string p = "save"+to_string(key);
     model->saveThumbnail(p);
-    dao->writeLoadIndex(key, p , "test.");
+    string comment = GameManager::getInstance()->getTextLayer()->getGameTextLabelText();
+    dao->writeLoadIndex(key, p , comment);
 };
 
 bool CareTaker::loadMemento(int key){

@@ -73,6 +73,8 @@ public:
     void pauseText();
     void showAllText();
     
+    string getGameTextLabelText();
+    
     Sprite* getTextBox();
     
 private:

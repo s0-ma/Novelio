@@ -211,6 +211,10 @@ void TextLayer::onParaEnds(){
     //        CCLOG("onParaEnds");
 };
 
+
+string TextLayer::getGameTextLabelText(){
+    return this->textLabel->getFullLabelText();
+}
 Sprite* TextLayer::getTextBox(){
     return textBox;
 };
