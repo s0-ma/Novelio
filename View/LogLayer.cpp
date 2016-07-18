@@ -44,7 +44,11 @@ bool LogLayer::init(){
     //log text
     vector<string> log_data = GameModel::getInstance()->logLayerModel->getLog();
     string log = "";
-    for (int i=log_data.size() - maxLogLine ; i<log_data.size(); i++){
+    int log_start_index = 0;
+    if(log_data.size() > maxLogLine){
+        log_start_index = log_data.size() - maxLogLine;
+    }
+    for (int i = log_start_index; i<log_data.size(); i++){
         log += log_data[i] + "\n";
     }
     
