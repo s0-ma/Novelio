@@ -167,8 +167,12 @@ void TextLayer::showNoText(){
 void TextLayer::startText(){
     if(GameModel::getInstance()->getScenarioMode() != GameModel::SKIP){
         this->state = SHOWING;
-        textLabel->setInterval(1./textSpeed);
-        textLabel->run();
+        if(textSpeed == 0){
+            textLabel->showAll();
+        }else{
+            textLabel->setInterval(1./textSpeed);
+            textLabel->run();
+        }
     }else{
         textLabel->showAll();
     }
