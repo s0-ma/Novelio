@@ -30,7 +30,7 @@
 #include "../View/Portrait.h"
 #include "../View/Shake.h"
 
-#include "EventScene.hpp"
+#include "../View/EventScene.hpp"
 
 NS_NV_BEGIN
 
