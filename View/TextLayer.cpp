@@ -1,4 +1,4 @@
-//
+﻿//
 //  TextLayer.cpp
 //  Novelium
 //

@@ -1,4 +1,4 @@
-//
+﻿//
 //  DataCaretaker.cpp
 //  Novelio
 //

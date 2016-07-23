@@ -1,4 +1,4 @@
-//
+﻿//
 //  NovelScript.cpp
 //  Novelium
 //

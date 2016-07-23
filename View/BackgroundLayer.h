@@ -1,4 +1,4 @@
-//
+﻿//
 //  BackgroundLayer.h
 //  Novelium
 //
@@ -23,7 +23,7 @@ class BackgroundLayer : public cocos2d::Layer, create_func<BackgroundLayer>
 {
     public:
         bool init();
-        using create_func::create;
+        using create_func<BackgroundLayer>::create;
         void onEnter();
 
     private:

@@ -1,4 +1,4 @@
-//
+﻿//
 //  GameLabelProtocol.h
 //  Novelio
 //

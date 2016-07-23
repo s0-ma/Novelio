@@ -1,6 +1,6 @@
-#include "novelio.hpp"
+﻿#include "novelio.hpp"
 #include "cocos2d.h"
-#include "CCProtectedNode.h"
+//#include "CCProtectedNode.h"
 #include "Novelio.h"
 #include "NovelScript.h"
 #include "CommandExecutor.h"

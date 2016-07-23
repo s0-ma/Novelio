@@ -1,4 +1,4 @@
-//
+﻿//
 //  GameManager.cpp
 //  Novelium
 //

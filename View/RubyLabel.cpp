@@ -1,4 +1,4 @@
-//
+﻿//
 //  RubyLabel.cpp
 //  Novelio
 //

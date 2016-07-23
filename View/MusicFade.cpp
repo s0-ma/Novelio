@@ -1,4 +1,4 @@
-#include "MusicFade.h"
+﻿#include "MusicFade.h"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;

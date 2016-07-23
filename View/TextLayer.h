@@ -1,4 +1,4 @@
-//
+﻿//
 //  TextLayer.h
 //  Novelium
 //
@@ -40,7 +40,7 @@ class TextLayer : public cocos2d::Layer, create_func<TextLayer>
 {
 public:
     bool init();
-    using create_func::create;
+    using create_func<TextLayer>::create;
     
     enum TextLayerState{INIT, SHOWING, STOP, COMPLETED} state;
     

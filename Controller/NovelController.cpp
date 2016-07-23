@@ -1,4 +1,4 @@
-//
+﻿//
 //  NovelController.cpp
 //  Novelium
 //
@@ -203,7 +203,7 @@ void NovelController::onParagraphEnds(){
  *  @param str <#str description#>
  *
  *  @return <#return value description#>
- *  @todo 行頭に¥nでクラッシュ。
+ *  @todo 行頭に\nでクラッシュ。
  */
 string NovelController::_preProcessText(string str){
     //改行文字の処理

@@ -1,4 +1,4 @@
-//
+﻿//
 //  DataAccessObject.h
 //  Novelio
 //

@@ -1,4 +1,4 @@
-//
+﻿//
 //  GameTextLabel.cpp
 //  Novelium
 //

@@ -1,4 +1,4 @@
-//
+﻿//
 //  Portrait.h
 //  Novelio
 //

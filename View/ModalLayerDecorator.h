@@ -1,4 +1,4 @@
-//
+﻿//
 //  ModalLayerDecorator.h
 //  Novelio
 //

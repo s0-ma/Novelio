@@ -1,4 +1,4 @@
-//
+﻿//
 //  CommandExecutor.cpp
 //  Novelium
 //
@@ -340,7 +340,8 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
             ActionInterval* action;
             //先頭に"_"が付く場合は特殊ケースとして扱い、明示的に指定しないと消せないようにする。
             if(it->first.find("_") == 0){
-                action = Sequence::create(CallFunc::create([](){return true;}), NULL);
+                //action = Sequence::create(CallFunc::create([](){return true;}), NULL);
+				action = Sequence::create(CallFunc::create([](){}), NULL);
             }else{
                 action = FadeOut::create(fade_sec);
             }
@@ -578,7 +579,7 @@ void ScriptCommand::execNextLine(){
         }else{ //NORMAL
             NovelController::getInstance()->_execNextLine();
         }
-        return true;
+        //return true;
         
     };
     execInstantCommand(action);

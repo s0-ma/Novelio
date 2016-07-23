@@ -1,4 +1,4 @@
-//
+﻿//
 //  Novelio.h
 //  Novelio
 //

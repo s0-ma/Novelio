@@ -1,4 +1,4 @@
-//
+﻿//
 //  EventScene.hpp
 //  Novelio
 //

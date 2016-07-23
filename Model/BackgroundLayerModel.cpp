@@ -1,4 +1,4 @@
-//
+﻿//
 //  BackgroundLayerModel.cpp
 //  Novelio
 //

@@ -1,4 +1,4 @@
-//
+﻿//
 //  Memento.cpp
 //  Novelio
 //
