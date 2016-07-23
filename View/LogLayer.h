@@ -20,11 +20,15 @@ public:
     using create_func::create;
     void setBackground(string path);
     Label* label;
+    Label* nameLabel;
     void showLog();
 private:
     static int maxLogLine;//画面表示するログ行数の最大値
     cocos2d::extension::ScrollView* scrollView;
     void setContentSize();
+    
+    string shapeLog(vector<string> log_orig, int start, int end);
+    string shapeLogName(vector<string> log_orig, int start, int end);
 };
 
 NS_NV_END
