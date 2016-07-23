@@ -29,7 +29,7 @@ private:
     void setContentSize();
     void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     
-    
+    void hideLogLayer();
     string shapeLog(vector<string> log_orig, int start, int end);
     string shapeLogName(vector<string> log_orig, int start, int end);
 };

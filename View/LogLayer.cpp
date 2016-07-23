@@ -89,9 +89,7 @@ bool LogLayer::init(){
     auto backBtn = MenuItemImage::create("nvRes/system/button_log_back.png",
                                          "nvRes/system/button_log_back_on.png",
                                          [=](Ref* sender){
-                                             GameManager::getInstance()->getUILayer()->setVisible(true);
-                                             GameManager::getInstance()->getTextLayer()->setVisible(true);
-                                             this->removeFromParent();
+                                             hideLogLayer();
                                              
                                          });
     backBtn->setPosition(Vec2(400,-250));
@@ -117,9 +115,7 @@ void LogLayer::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event *even
         auto offset = scrollView->getContentOffset();
         if(offset.y == 0){
             // 閉じる
-            GameManager::getInstance()->getUILayer()->setVisible(true);
-            GameManager::getInstance()->getUILayer()->addKeyEventListener();
-            this->removeFromParent();
+            hideLogLayer();
         }else{
             scrollView->setContentOffset(offset + offsetShiftPx);
         }
@@ -163,6 +159,12 @@ void LogLayer::showLog(){
     
 }
 
+void LogLayer::hideLogLayer(){
+    GameManager::getInstance()->getUILayer()->setVisible(true);
+    GameManager::getInstance()->getTextLayer()->setVisible(true);
+    GameManager::getInstance()->getUILayer()->addKeyEventListener();
+    this->removeFromParent();
+}
 string LogLayer::shapeLog(vector<string> log_data, int start, int end){
     string ret = "";
     for (int i = start; i<end; i++){
