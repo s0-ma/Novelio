@@ -32,6 +32,7 @@ public:
     //    private:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
+    void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
 
     function<bool(void)> func_isWaitingClick = [](){return false;};
