@@ -14,6 +14,7 @@
 #include "../Model/GameModel.h"
 #include "RubyLabel.h"
 #include "ModalLayerDecorator.h"
+#include "Split.h"
 
 NS_NV_BEGIN
 
@@ -50,25 +51,36 @@ bool LogLayer::init(){
     
     //log text
     vector<string> log_data = GameModel::getInstance()->logLayerModel->getLog();
-    string log = "";
     int log_start_index = 0;
     if(log_data.size() > maxLogLine){
         log_start_index = log_data.size() - maxLogLine;
     }
-    for (int i = log_start_index; i<log_data.size(); i++){
-        log += log_data[i] + "\n";
-    }
+    
     
     //label
-    label = Label::createWithTTF("", "res/fonts/ipamp.ttf", 25);
+    label = Label::createWithTTF("", "nvRes/fonts/ipamp.ttf", 25);
+    string log = shapeLog(log_data, log_start_index, log_data.size());
     label->setString(log);
     label->setLineHeight(35.0);//行間の設定
-    label->setWidth(size.width * 0.9);//左右に5%のマージンをつける
+    label->setWidth(size.width * 0.65);//左右に5%のマージンをつける
     label->setColor(Color3B::BLACK);
 
-
+    label->setPosition(Vec2(0,0));
     base->addChild(label);
 
+    //namelabel
+    nameLabel = Label::createWithTTF("", "nvRes/fonts/ipamp.ttf", 25);
+    string name = shapeLogName(log_data, log_start_index, log_data.size());
+    nameLabel->setString(name);
+    nameLabel->setHorizontalAlignment(TextHAlignment::RIGHT);
+    nameLabel->setLineHeight(35.0);//行間の設定
+    nameLabel->setWidth(size.width * 0.1);//左右に5%のマージンをつける
+    nameLabel->setColor(Color3B::BLACK);
+
+    label->setPosition(Vec2(0,0));
+    base->addChild(nameLabel);
+    
+    
     scrollView->setContainer(base);
     
     this->setContentSize();
@@ -78,6 +90,7 @@ bool LogLayer::init(){
                                          "nvRes/system/button_log_back_on.png",
                                          [=](Ref* sender){
                                              GameManager::getInstance()->getUILayer()->setVisible(true);
+                                             GameManager::getInstance()->getTextLayer()->setVisible(true);
                                              this->removeFromParent();
                                              
                                          });
@@ -124,17 +137,24 @@ void LogLayer::setBackground(string path){
 void LogLayer::setContentSize(){
     auto size = Director::getInstance()->getVisibleSize();
     //画面端のマージンを、画面全体の5%に設定
-    auto startx = size.width * 0.05;
-    auto starty = size.height * 0.05;
+    auto startx = size.width * 0.20;
+    auto starty = size.height * 0.00;
+    
+    auto name_startx = size.width * 0.05;
+    
     //ラベルが画面サイズより大きい場合
     if(label->getContentSize().height > size.height){
         label->setPosition(PointFromBottomLeft(startx, starty));
         label->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-        scrollView->setContentSize(label->getContentSize());
+        nameLabel->setPosition(PointFromBottomLeft(name_startx, starty));
+        nameLabel->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+        scrollView->setContentSize(Size(size.width, nameLabel->getContentSize().height));
     //ラベルが画面サイズより小さい場合
     }else{
         label->setPosition(PointFromTopLeft(startx, -starty));
         label->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+        nameLabel->setPosition(PointFromTopLeft(name_startx, -starty));
+        nameLabel->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
         scrollView->setContentSize(size);
     }
 }
@@ -143,4 +163,69 @@ void LogLayer::showLog(){
     
 }
 
+string LogLayer::shapeLog(vector<string> log_data, int start, int end){
+    string ret = "";
+    for (int i = start; i<end; i++){
+        //ret += ":" + log_data[i];
+        string tmp = "";
+        if(log_data[i].find("%") == 0){
+            tmp = split(log_data[i], ' ')[1];
+        }else{
+            tmp = log_data[i];
+        }
+        
+        ret += tmp;
+    }
+    
+    return ret;
+}
+
+string LogLayer::shapeLogName(vector<string> log_data, int start, int end){
+    string currentSpeaker;
+    bool isSpeaking = false;
+    
+    string ret = "";
+    
+    auto dummy = Label::createWithTTF("", "nvRes/fonts/ipamp.ttf", 25);
+    auto size = Director::getInstance()->getVisibleSize();
+    dummy->setWidth(size.width * 0.65);//左右に5%のマージンをつける
+    dummy->setLineHeight(35.0);//行間の設定
+    
+    for (int i = start; i<end; i++){
+        //発話中
+        if(isSpeaking){
+            if(log_data[i].find("%") == 0){
+                currentSpeaker = "";
+                dummy->setString(split(log_data[i], ' ')[1]);
+            }else{
+                currentSpeaker = "";
+                dummy->setString(log_data[i]);
+            }
+        }else{
+            if(log_data[i].find("%") == 0){
+                isSpeaking = true;
+                currentSpeaker = split(log_data[i].substr(1), ' ')[0];
+                dummy->setString(split(log_data[i], ' ')[1]);
+            }else{
+                currentSpeaker = "";
+                dummy->setString(log_data[i]);
+            }
+        }
+        
+        //発話終了
+        if(log_data[i].find("」") != -1){
+            isSpeaking = false;
+        }
+        
+        
+        
+        ret += currentSpeaker;
+        
+        for(int j=0; j<dummy->getStringNumLines(); j++){
+           ret += "\n";
+        }
+    }
+    
+    return ret;
+}
 NS_NV_END

@@ -20,6 +20,7 @@ public:
     using create_func::create;
     void setBackground(string path);
     Label* label;
+    Label* nameLabel;
     void showLog();
 
 private:
@@ -28,6 +29,9 @@ private:
     void setContentSize();
     void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     
+    
+    string shapeLog(vector<string> log_orig, int start, int end);
+    string shapeLogName(vector<string> log_orig, int start, int end);
 };
 
 NS_NV_END

@@ -156,7 +156,7 @@ void NovelController::_execNextLine(){
         //文章表示
         string _text = _preProcessText(line->getVal());
         //ログに追加
-        GameModel::getInstance()->logLayerModel->appendLog(_text);
+        GameModel::getInstance()->logLayerModel->appendLog(_text+"\n");
         
         //名前表示部分の分離
             if(_text.substr(0,1) == "%"){
@@ -174,6 +174,7 @@ void NovelController::_execNextLine(){
         tLayer->setName();
         //TODO テキスト直後のコマンドに関しても、CLICK/SYNC/NEXTの動作を実装すること。
         if(line->getNextLineType() != NovelioScriptLine::TEXT){
+            GameModel::getInstance()->logLayerModel->appendLog("\n");
             tLayer->startText();
         }else{
             _execNextLine();
