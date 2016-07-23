@@ -16,11 +16,14 @@ NS_NV_BEGIN
 
 class UILayer : public cocos2d::LayerColor, create_func<UILayer>
 {
-//private:
+private:
 //    cocos2d::Layer* autoBtnPopup;
 //    cocos2d::Layer* systemBtnPopup;
 //    cocos2d::MenuItemImage* autoBtn;
 //    cocos2d::MenuItemImage* systemBtn;
+    
+protected:
+    EventListenerKeyboard* keyListener;
     
     
 public:
@@ -33,6 +36,8 @@ public:
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
     void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    void addKeyEventListener();
+    void removeKeyEventListner();
 
 
     function<bool(void)> func_isWaitingClick = [](){return false;};

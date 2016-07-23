@@ -21,10 +21,13 @@ public:
     void setBackground(string path);
     Label* label;
     void showLog();
+
 private:
     static int maxLogLine;//画面表示するログ行数の最大値
     cocos2d::extension::ScrollView* scrollView;
     void setContentSize();
+    void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    
 };
 
 NS_NV_END

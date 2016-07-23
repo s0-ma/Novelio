@@ -34,7 +34,7 @@ bool UILayer::init(){
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
     //キーボードイベントのリスナー
-    auto keyListener = EventListenerKeyboard::create();
+    keyListener = EventListenerKeyboard::create();
     keyListener->onKeyPressed = CC_CALLBACK_2(UILayer::onKeyPressed, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyListener, this);
     
@@ -58,6 +58,15 @@ void UILayer::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event *event
        keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW){
         NovelController::getInstance()->onDisplayTouched();
     }
+}
+
+void UILayer::addKeyEventListener(){
+    keyListener = EventListenerKeyboard::create();
+    keyListener->onKeyPressed = CC_CALLBACK_2(UILayer::onKeyPressed, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyListener, this);
+}
+void UILayer::removeKeyEventListner(){
+    this->getEventDispatcher()->removeEventListener(keyListener);
 }
 
 bool UILayer::isWaitingClick(){

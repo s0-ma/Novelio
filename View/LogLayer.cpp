@@ -24,6 +24,13 @@ bool LogLayer::init(){
         return false;
     }
     
+    
+    //キーボードイベントのリスナー
+    auto keyListener = EventListenerKeyboard::create();
+    keyListener->onKeyPressed = CC_CALLBACK_2(LogLayer::onKeyPressed, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyListener, this);
+    
+    
     //
     GameManager::getInstance()->setLogLayer(this);
     ModalLayerDecorator::makeModal(this);
@@ -83,6 +90,29 @@ bool LogLayer::init(){
     return true;
     
 }
+
+void LogLayer::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event *event){
+    Vec2 offsetShiftPx = Vec2(0, 50);
+    if(keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW||
+       keyCode == EventKeyboard::KeyCode::KEY_KP_UP){
+        auto offset = scrollView->getContentOffset();
+        scrollView->setContentOffset(offset - offsetShiftPx);
+    }
+    
+    if(keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW||
+       keyCode == EventKeyboard::KeyCode::KEY_KP_DOWN){
+        auto offset = scrollView->getContentOffset();
+        if(offset.y == 0){
+            // 閉じる
+            GameManager::getInstance()->getUILayer()->setVisible(true);
+            GameManager::getInstance()->getUILayer()->addKeyEventListener();
+            this->removeFromParent();
+        }else{
+            scrollView->setContentOffset(offset + offsetShiftPx);
+        }
+    }
+}
+
 
 void LogLayer::setBackground(string path){
     auto background = Sprite::create(path);
