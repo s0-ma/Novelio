@@ -597,6 +597,7 @@ void ScriptCommand::callRegisteredFunction(){
 
 void ScriptCommand::eventCGON(string filename){
     auto scene = EventScene::create(filename, false);
+    setFileToAlbum(filename);
     Director::getInstance()->pushScene(scene);
 }
 
