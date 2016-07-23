@@ -31,6 +31,7 @@
 #include "../View/Shake.h"
 
 #include "../View/EventScene.hpp"
+#include "../View/EndingScene.hpp"
 
 NS_NV_BEGIN
 
@@ -596,10 +597,15 @@ void ScriptCommand::callRegisteredFunction(){
 }
 
 void ScriptCommand::eventCGON(string filename){
-    auto scene = EventScene::create(filename);
+    auto scene = EventScene::create(filename, false);
+    setFileToAlbum(filename);
     Director::getInstance()->pushScene(scene);
 }
 
+void ScriptCommand::toEnding(string filename){
+    auto scene = EndingScene::create(filename);
+    Director::getInstance()->replaceScene(scene);
+}
 void ScriptCommand::setFileToAlbum(string filename){
     CareTaker::getInstance()->saveAlbumImage(filename);
 }

@@ -157,6 +157,7 @@ public:
     static void execNextLine();
     
     static void eventCGON(string filename);
+    static void toEnding(string filename);
     static void setFileToAlbum(string filename);
 
     //その他

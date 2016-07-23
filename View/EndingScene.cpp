@@ -1,19 +1,19 @@
 //
-//  EventScene.cpp
+//  EndingScene.cpp
 //  Novelio
 //
-//  Created by Tatsuya Soma on 2016/07/18.
+//  Created by yokonami
 //
 //
 
-#include "EventScene.hpp"
+#include "EndingScene.hpp"
 #include <iostream>
 #include <iomanip>
 
-EventScene* EventScene::create(string filename, bool waitClick){
-    EventScene* pRet = new (std::nothrow) EventScene();
+EndingScene* EndingScene::create(string filename){
+    EndingScene* pRet = new (std::nothrow) EndingScene();
     
-    if(pRet && pRet->init(filename, waitClick)){
+    if(pRet && pRet->init(filename)){
         pRet->autorelease();
         return pRet;
     }
@@ -22,7 +22,7 @@ EventScene* EventScene::create(string filename, bool waitClick){
     return nullptr;
 }
 
-bool EventScene::init(string filename, bool waitClick){
+bool EndingScene::init(string filename){
     if(!Scene::init()){
         return false;
     }
@@ -33,8 +33,6 @@ bool EventScene::init(string filename, bool waitClick){
     gif->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
     gif->setOpacity(0);
     
-    this->waitClick = waitClick;
-    
     this->addChild(gif);
 
 
@@ -42,26 +40,22 @@ bool EventScene::init(string filename, bool waitClick){
     return true;
 }
 
-void EventScene::onEnterTransitionDidFinish(){
+void EndingScene::onEnterTransitionDidFinish(){
     Scene::onEnterTransitionDidFinish();
     
     gif->runAction(Sequence::create(
                                     FadeIn::create(5),
                                     CallFunc::create([this](){
-        if(!(waitClick)){
-            Director::getInstance()->popScene();
-        }else{
             // タッチで閉じるためのリスナーを作成
             auto listener = cocos2d::EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(true);
-            listener->onTouchBegan = [this](cocos2d::Touch *touch,cocos2d::Event*event)->bool{
-                Director::getInstance()->popScene();
+            listener->onTouchBegan = [this](cocos2d::Touch *touch,cocos2d::Event* event)->bool{
+                GameManager::getInstance()->onExitScript();
                 return true;
             };
             auto dip = this->getEventDispatcher();
             dip->addEventListenerWithSceneGraphPriority(listener, this);
             dip->setPriority(listener, -1);
-        }
     }),
                                     NULL));
 }

@@ -44,7 +44,7 @@ void SqliteDAO::initializeTables(){
     create_sql += "CREATE TABLE BG_LAYER( SAVE_NO int primary key, BG_PATH text, BGM_PATH text, SE_PATH text );";
 //    create_sql += "CREATE TABLE PORTRAIT_LAYER( SAVE_NO int primary key );";
     create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, ID text, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
-    create_sql += "CREATE TABLE ALBUM(IMAGE_PATH string primary key);";
+    create_sql += "CREATE TABLE ALBUM(IMAGE_PATH text primary key);";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ){
@@ -351,10 +351,8 @@ vector<string> SqliteDAO::getAlbumImages(){
         /* TODO:エラー処理 */
     }else{
         // データの抽出
-        int i = 0;
         while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
-            ret[i] = string((char*)sqlite3_column_text(pStmt, 0));
-            i++;
+            ret.push_back(string((char*)sqlite3_column_text(pStmt, 0)));
         }
         if(err != SQLITE_DONE){
             /* TODO: エラー処理 */
