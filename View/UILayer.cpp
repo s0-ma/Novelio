@@ -56,7 +56,13 @@ void UILayer::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event *event
        keyCode == EventKeyboard::KeyCode::KEY_KP_ENTER ||
        keyCode == EventKeyboard::KeyCode::KEY_KP_DOWN ||
        keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW){
-        NovelController::getInstance()->onDisplayTouched();
+        if(GameModel::getInstance()->getScenarioMode() == GameModel::NORMAL){
+            // ノーマルモードの場合、クリックと同じ動き
+            NovelController::getInstance()->onDisplayTouched();
+        }else{
+            
+            ViewFunctions::setNormalMode();
+        }
     }
 }
 
