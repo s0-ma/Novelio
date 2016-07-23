@@ -42,7 +42,6 @@ void EventScene::onEnterTransitionDidFinish(){
     
     gif->runAction(Sequence::create(
                                     FadeIn::create(5),
-                                    FadeOut::create(3),
                                     CallFunc::create([](){
         Director::getInstance()->popScene();
     }),
