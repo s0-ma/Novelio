@@ -147,6 +147,10 @@ void NovelController::_execNextLine(){
 //        SqliteDAO::getInstance()->writeMemento(key++, GameModel::getInstance()->createMemento());
         auto model = GameModel::getInstance()->textLayerModel;
         auto tLayer = GameManager::getInstance()->getTextLayer();
+        // 名前欄のクリア
+        setNameToModel("");
+        tLayer->setName();
+        // テキストのクリア
         model->setText("");
         tLayer->showNoText();
         _execNextLine();
