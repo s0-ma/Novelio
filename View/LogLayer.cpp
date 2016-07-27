@@ -113,7 +113,7 @@ void LogLayer::onKeyPressed(EventKeyboard::KeyCode keyCode, cocos2d::Event *even
     if(keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW||
        keyCode == EventKeyboard::KeyCode::KEY_KP_DOWN){
         auto offset = scrollView->getContentOffset();
-        if(offset.y == 0){
+        if(offset.y > 0){
             // 閉じる
             hideLogLayer();
         }else{
