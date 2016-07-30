@@ -493,6 +493,10 @@ void ScriptCommand::fadeOut(float t_sec){
 //Audio
 void ScriptCommand::playBGM(string path, bool loop /*= true*/){
     auto action = [path, loop](){
+
+        // fadeOutBGM での interrupt 処理を行う
+        NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+        
         static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setBGMPath(path);
         NMDAudioEngine::getInstance()->setBackgroundMusicVolume(float(GameModel::getInstance()->getBgmVolume())/256);
         NMDAudioEngine::getInstance()->playBackgroundMusic(path.c_str(), loop);
@@ -508,7 +512,10 @@ void ScriptCommand::fadeoutBGM(float time){
     auto action = MusicFade::create(time, 0, false);
     
     auto interrupt = [subject](){
-        NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+        // @memo onDisplayTouched で interrupt されてしまうと、fadeOutBGMはほぼ意味を成さなくなってしまう
+        //       （ノベルゲーはほとんど常にクリックしながらプレイするため
+        //       interrupt の処理はなくし、代わりに、次の playBGMで下記の処理を行う
+        //NMDAudioEngine::getInstance()->pauseBackgroundMusic();
     };
     
     execIntervalCommand(key, subject, action, interrupt);
