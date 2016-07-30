@@ -5,6 +5,9 @@
 //  Created by Tatsuya Soma on 2016/01/13.
 //
 //
+#include <locale>
+#include <codecvt>
+#include <string>
 
 #include "DataCaretaker.h"
 #include "GameManager.h"
@@ -65,7 +68,18 @@ void CareTaker::storeMemento(int key){
     
     string p = "save"+to_string(key);
     model->saveThumbnail(p);
-    string comment = GameManager::getInstance()->getTextLayer()->getGameTextLabelText();
+    string text = GameManager::getInstance()->getTextLayer()->getGameTextLabelText();
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    wstring wtext = converter.from_bytes(text);
+    wstring wComment = L"";
+    
+    int maxCommentLength = 30;
+    if(wtext.size() > maxCommentLength){
+        wComment = wtext.substr(0, maxCommentLength);
+    }else{
+        wComment = wtext;
+    }
+    string comment = converter.to_bytes(wComment);
     dao->writeLoadIndex(key, p , comment);
 };
 
