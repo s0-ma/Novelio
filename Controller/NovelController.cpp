@@ -229,6 +229,10 @@ NovelScript* NovelController::getScript(){
     return script;
 };
 
+void NovelController::setScript(NovelScript *script){
+    this->script = script;
+}
+
 void NovelController::loadScript(NovelScript *script){
     this->script = script;
     GameModel::getInstance()->setScript(script);

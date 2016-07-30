@@ -52,6 +52,7 @@ public:
     NovelScript* getScript();
     
     void loadScript(NovelScript* script);
+    void setScript(NovelScript* script);
     void immediateExecute(NovelScript*);
     void _execNextLine();
     

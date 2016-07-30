@@ -10,6 +10,7 @@
 #include "GameManager.h"
 #include "BackgroundLayer.h"
 #include "DataCaretaker.h"
+#include "NovelController.h"
 
 //#include "GlobalData.h"
 //#include "LocalData.h"
@@ -202,8 +203,12 @@ void GameModel::setMemento(Memento* memento){
         this->sentence = memento->getSentence();
     }
     if(this->line != memento->getLine()){
-        this->line = memento->getLine();
+        // @memo -1しないと、セーブした行の次の行が表示されるため。副作用があるかもしれない
+        this->line = memento->getLine() - 1;
     }
+    
+    auto script = NovelScript::create(this->filename, NovelScript::NOVELIO);
+    NovelController::getInstance()->setScript(script);
     
     auto bg = memento->getBackground();
     this->backgroundLayerModel->setBackgroundImagePath(bg);
