@@ -1,4 +1,4 @@
-//
+﻿//
 //  ScriptParser.cpp
 //  Novelium
 //
@@ -86,7 +86,7 @@ string ScriptParser::getNextLetter(){
 }
 
 bool ScriptParser::isspace(string str){
-    if(str == " " or str == "\n" or str == "\t"){
+    if(str == " " || str == "\n" || str == "\t"){
         return true;
     }else{
         return false;
@@ -144,7 +144,7 @@ string ScriptParser::getNextScriptToken(){
     //アルファベット単語
     if(isalpha(lastLetter.c_str()[0])){
         idStr = lastLetter;
-        while (isalnum((lastLetter = getNextLetter()).c_str()[0]) or lastLetter == "_" ){
+        while (isalnum((lastLetter = getNextLetter()).c_str()[0]) || lastLetter == "_" ){
             idStr += lastLetter;
         }
         

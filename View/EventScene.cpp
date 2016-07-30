@@ -1,4 +1,4 @@
-//
+﻿//
 //  EventScene.cpp
 //  Novelio
 //

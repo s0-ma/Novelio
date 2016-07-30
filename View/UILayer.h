@@ -1,4 +1,4 @@
-//
+﻿//
 //  UILayer.h
 //  Novelium
 //
@@ -28,7 +28,7 @@ protected:
     
 public:
     bool init();
-    using create_func::create;
+    using create_func<UILayer>::create;
     bool isWaitingClick();
     void unWait();
     void unsetAutoMode();

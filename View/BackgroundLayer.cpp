@@ -1,4 +1,4 @@
-//
+﻿//
 //  BackgroundLayer.cpp
 //  Novelium
 //

@@ -1,4 +1,4 @@
-//
+﻿//
 //  GameModel.cpp
 //  Novelium
 //

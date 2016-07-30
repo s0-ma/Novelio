@@ -1,4 +1,4 @@
-//
+﻿//
 //  NMDAudioEngine.h
 //  nmd
 //

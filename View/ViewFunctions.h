@@ -1,4 +1,4 @@
-//
+﻿//
 //  ViewFunctions.h
 //  Novelio
 //

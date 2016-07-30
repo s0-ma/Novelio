@@ -1,4 +1,4 @@
-//
+﻿//
 //  LetterAnimationLabel.h
 //  Novelio
 //

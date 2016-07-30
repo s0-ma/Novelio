@@ -1,4 +1,4 @@
-//
+﻿//
 //  PortraitLayer.h
 //  Novelium
 //
@@ -20,7 +20,7 @@ class PortraitLayer : public cocos2d::Layer, create_func<PortraitLayer>
 {
 public:
     bool init();
-    using create_func::create;
+    using create_func<PortraitLayer>::create;
 
 private:
     std::map<std::string, Portrait*> portraits;

@@ -1,4 +1,4 @@
-//
+﻿//
 //  LetterAnimationLabel.cpp
 //  Novelio
 //
@@ -107,7 +107,7 @@ void AnimationLabel::setTexts(std::vector<std::string> texts){
 };
 
 bool AnimationLabel::isRunning(void){
-    
+	return true;
 };
 
 void AnimationLabel::setOnEndsCallback(std::function<void(void)> callback){

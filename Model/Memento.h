@@ -1,4 +1,4 @@
-//
+﻿//
 //  Memento.h
 //  Novelio
 //

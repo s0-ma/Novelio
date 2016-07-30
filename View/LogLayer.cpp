@@ -1,4 +1,4 @@
-//
+﻿//
 //  LogLayer.cpp
 //  Novelio
 //

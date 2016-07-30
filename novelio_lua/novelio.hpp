@@ -1,4 +1,4 @@
-#include "base/ccConfig.h"
+﻿#include "base/ccConfig.h"
 #ifndef __novelio_h__
 #define __novelio_h__
 

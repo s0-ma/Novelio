@@ -1,4 +1,4 @@
-// This code is originally from http://www.fuguelike.com/music-fader-for-cocos2dx/
+﻿// This code is originally from http://www.fuguelike.com/music-fader-for-cocos2dx/
 // but altered to make it work with Cocos2d-x 3.x
 
 #ifndef __MusicFade__

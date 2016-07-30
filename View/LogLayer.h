@@ -1,4 +1,4 @@
-//
+﻿//
 //  LogLayer.h
 //  Novelio
 //
@@ -17,7 +17,7 @@ class LogLayer : public cocos2d::Layer, create_func<LogLayer>
 {
 public:
     bool init();
-    using create_func::create;
+    using create_func<LogLayer>::create;
     void setBackground(string path);
     Label* label;
     Label* nameLabel;

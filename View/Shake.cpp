@@ -1,4 +1,4 @@
-//
+﻿//
 //  Shake.cpp
 //  Novelio
 //

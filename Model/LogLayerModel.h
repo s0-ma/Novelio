@@ -1,4 +1,4 @@
-//
+﻿//
 //  LogLayerModel.h
 //  Novelio
 //
