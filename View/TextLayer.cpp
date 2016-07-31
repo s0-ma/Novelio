@@ -40,7 +40,7 @@ void TextLayer::initializeLayer(){
     nameFontSize = 25;
     
     textFontPath = "nvRes/fonts/ipamp.ttf";
-    textFontSize = 30;
+    textFontSize = 25;
     
     name="";
     
@@ -61,7 +61,7 @@ void TextLayer::initializeLayer(){
     textLabel->setVerticalAlignment(cocos2d::TextVAlignment::TOP);
     textLabel->setHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
 //    setTextSpeed(20);
-    setLineHeight(textFontSize);
+    setLineHeight(textFontSize * 1.3);
     this->addChild(textLabel,20);
     
     //textBox
