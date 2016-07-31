@@ -611,6 +611,9 @@ void ScriptCommand::eventCGON(string filename){
 }
 
 void ScriptCommand::toEnding(string filename){
+    if(GameModel::getInstance()->getScenarioMode() != GameModel::NORMAL){
+        ViewFunctions::setNormalMode();
+    }
     auto scene = EndingScene::create(filename);
     Director::getInstance()->replaceScene(scene);
 }
