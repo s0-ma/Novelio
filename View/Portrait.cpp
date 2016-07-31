@@ -147,9 +147,9 @@ bool Portrait::init(string basePath, string facePath, int x, int y){
     p->setPosition(0,0);
     p->setScaleY(-1);
     p->visit();
-    
+    Sprite* f;
     if(facePath != ""){
-        auto f = Sprite::create(facePath);
+        f = Sprite::create(facePath);
         f->retain();
         f->setScaleY(-1);
         f->setAnchorPoint(Vec2(0,1));
@@ -157,6 +157,11 @@ bool Portrait::init(string basePath, string facePath, int x, int y){
         f->visit();
     }
     rt->end();
+    rt->release();
+    p->release();
+    if(facePath != ""){
+        f->release();
+    }
     
     initWithTexture(rt->getSprite()->getTexture());
     
