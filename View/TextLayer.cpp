@@ -189,6 +189,15 @@ void TextLayer::onTextEnds(){
     if(gm->getScenarioMode() == GameModel::AUTO){
         auto action = Sequence::create(DelayTime::create(textWaitTime),
                                        CallFunc::create([](){
+                                            //テキスト表示中なら残りを表示
+                                            auto tLayer = GameManager::getInstance()->getTextLayer();
+                                            if(tLayer->state == nv::TextLayer::SHOWING){
+                                                tLayer->showAllText();
+                                                return;
+                                            }else if(tLayer->state == nv::TextLayer::STOP){
+                                                tLayer->startText();
+                                                return;
+                                            }
                                             NovelController::getInstance()->_execNextLine();
                                         }),
                                        NULL);
