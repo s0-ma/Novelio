@@ -532,6 +532,7 @@ void ScriptCommand::stopBGM(){
 void ScriptCommand::playSE(string path, bool loop /*= false*/){
     auto action = [path, loop](){
         static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setSEPath(path);
+        NMDAudioEngine::getInstance()->setEffectsVolume(float(GameModel::getInstance()->getSeVolume())/256);
         NMDAudioEngine::getInstance()->playEffect(path.c_str(), loop);
     };
     
