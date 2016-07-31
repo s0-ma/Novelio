@@ -68,9 +68,16 @@ void ScriptCommand::execInstantCommand(function<void(void)> action){
         if(nextLineType == NovelioScriptLine::LUA_SYNC || nextLineType == NovelioScriptLine::LUA_NEXT){
             NovelController::getInstance()->_execNextLine();
         }
+    }else if(gmodel->getScenarioMode() == GameModel::AUTO){
+        auto tLayer = GameManager::getInstance()->getTextLayer();
+        if(tLayer->state == nv::TextLayer::SHOWING || tLayer->state == nv::TextLayer::STOP){
+        }else{
+            NovelController::getInstance()->_execNextLine();
+        }
     }else{
 //        if(!GameModel::getInstance()->isAnyCmdWorking()){
             NovelController::getInstance()->_execNextLine();
+
 //        }
     }
 
@@ -96,7 +103,11 @@ void ScriptCommand::execIntervalCommand(string key,
         }else{
             if(scenarioMode == GameModel::AUTO){
                 if(!GameModel::getInstance()->isAnyCmdWorking()){
-                    NovelController::getInstance()->_execNextLine();
+                    auto tLayer = GameManager::getInstance()->getTextLayer();
+                    if(tLayer->state == nv::TextLayer::SHOWING || tLayer->state == nv::TextLayer::STOP){
+                    }else{
+                        NovelController::getInstance()->_execNextLine();
+                    }
                 }
             }else if(scenarioMode != GameModel::NORMAL){
                 NovelController::getInstance()->_execNextLine();
