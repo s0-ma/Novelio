@@ -120,6 +120,9 @@ void NovelController::_execNextLine(){
     GameModel::getInstance()->goNextLine();
     
     auto n = GameModel::getInstance()->getLine();
+    if(n >= script->lines.size()){
+        return;
+    }
     auto line = script->lines.at(n);
 
 //    CCLOG("**%d** %d ,%s",n, line->getLineType(), line->getVal().c_str());
