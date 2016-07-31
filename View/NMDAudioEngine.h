@@ -13,17 +13,29 @@
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 #include "MusicFade.h"
+#include "Novelio.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include "AudioEngine.h"
+USING_NS_CC;
+using namespace experimental;
+#endif
 
 class NMDAudioEngine{
     
 private:
     static NMDAudioEngine* instance;
     // To make NMDAudioEngine as a singleton{
-    NMDAudioEngine(void){}
+    NMDAudioEngine(void) : bgm_playing(false), bgm_id(-1) {}
     NMDAudioEngine(const NMDAudioEngine& other){}
     NMDAudioEngine& operator=(const NMDAudioEngine& other);
     // }
-    
+	bool bgm_playing;
+	int bgm_id;
+	vector<int> se_id;
+	void seFinishCallBack(int id, string){
+		se_id.erase(remove(se_id.begin(), se_id.end(), id), se_id.end());
+	};
+
 public:
     // To make NMDAudioEngine as a singleton{
     ~NMDAudioEngine(){}
@@ -82,8 +94,14 @@ public:
         return CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume();
     }
 
-    void setBackgroundMusicVolume(float volume) {
+	void setBackgroundMusicVolume(float volume) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		if (bgm_id != -1 && bgm_playing){
+			AudioEngine::setVolume(bgm_id, volume);
+		}
+#else
         CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(volume);
+#endif
     }
 
     float getEffectsVolume() {
@@ -91,12 +109,26 @@ public:
     }
 
     void setEffectsVolume(float volume) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		for_each(se_id.begin(), se_id.end(), [=](int id){
+			AudioEngine::setVolume(id, volume);
+		});
+#else
         CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(volume);
+#endif
     }
 
     // for sound effects
     unsigned int playEffect(const char* pszFilePath, bool bLoop) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		float vol = nv::GameModel::getInstance()->getSeVolume() / 256.0;
+		int id = AudioEngine::play2d(pszFilePath, bLoop, vol);
+		se_id.push_back(id);
+		AudioEngine::setFinishCallback(id, CC_CALLBACK_2(NMDAudioEngine::seFinishCallBack, this));
+		return 0;
+#else
         return CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(pszFilePath, bLoop);
+#endif
     }
 
     unsigned int playEffect(const char* pszFilePath) {
@@ -124,7 +156,14 @@ public:
     }
 
     void stopAllEffects() {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+		for_each(se_id.begin(), se_id.end(), [](int id){
+			AudioEngine::stop(id);
+		});
+		se_id.clear();
+#else
         CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
+#endif
     }
     
     void preloadEffect(const char* pszFilePath) {
