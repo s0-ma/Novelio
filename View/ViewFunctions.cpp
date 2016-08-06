@@ -40,6 +40,8 @@ void ViewFunctions::setNormalMode(){
         GameModel::getInstance()->setScenarioMode(GameModel::NORMAL);
         //Autoボタンの表示を元に戻す
         GameManager::getInstance()->getUILayer()->unsetAutoMode();
+        //Skipモードを解除した時にUILayerが残ってしまい黒画面となる事があったので、UILayerを透明にする処理
+        GameManager::getInstance()->getUILayer()->setOpacity(0);
 }
 void ViewFunctions::setAutoModeSpeed(double t_sec){
     GameManager::getInstance()->getTextLayer()->setTextWaitTime(t_sec);

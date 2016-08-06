@@ -73,6 +73,11 @@ bool NovelController::onDisplayTouched(void){
             return true;
         }
         
+        // @memo バグ回避
+        //　　　　 skipモードからの復帰時にUILayerのopacityが255で残る場合があるため、
+        //　　　　 実行中のコマンドがない場合はUILayerのopacityを0にする
+        GameManager::getInstance()->getUILayer()->setOpacity(0);
+        
         //テキスト表示中なら残りを表示
         auto tLayer = GameManager::getInstance()->getTextLayer();
         if(tLayer->state == nv::TextLayer::SHOWING){
