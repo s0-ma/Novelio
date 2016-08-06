@@ -119,8 +119,8 @@ NovelScript* NovelScript::createNovelio(std::string filename){
 bool NovelScript::initWithNovelioFile(string filename){
     this->filename = filename;
     
-    string filePath = FileUtils::getInstance()->fullPathForFilename(filename);
-    ifstream ifs(filePath.c_str());
+    //string filePath = FileUtils::getInstance()->fullPathForFilename(filename);
+    ifstream ifs(filename.c_str());
     
     std::string str;
     if (ifs.fail()){

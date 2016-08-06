@@ -47,8 +47,8 @@ std::string ScriptParser::Novelio(std::string string){
 
 void ScriptParser::mainLoop(string string){
     
-    std::string filePath = FileUtils::getInstance()->fullPathForFilename(string);
-    ifs.open(filePath.c_str());
+    //std::string filePath = FileUtils::getInstance()->fullPathForFilename(string);
+    ifs.open(string.c_str());
     
     if (ifs.fail()){
         CCLOG("Fail to open script file: %s", string.c_str());
