@@ -507,7 +507,10 @@ void ScriptCommand::playBGM(string path, bool loop /*= true*/){
     auto action = [path, loop](){
 
         // fadeOutBGM での interrupt 処理を行う
-        NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+        //NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+        // fadeoutBGMをInstantコマンドにしたため、次のplayでMusicFadeを停止
+        // （停止しておかないと、playしたBGMが直前のfadeoutに巻き込まれて聞こえなくなる）
+        GameManager::getInstance()->getBackgroundLayer()->stopActionByTag(11);
         
         static_cast<BackgroundLayerModel*>(GameModel::getInstance()->backgroundLayerModel)->setBGMPath(path);
         NMDAudioEngine::getInstance()->setBackgroundMusicVolume(float(GameModel::getInstance()->getBgmVolume())/256);
@@ -523,15 +526,26 @@ void ScriptCommand::fadeoutBGM(float time){
     
     auto action = MusicFade::create(time, 0, false);
     
-    auto interrupt = [subject](){
-        // @memo onDisplayTouched で interrupt されてしまうと、fadeOutBGMはほぼ意味を成さなくなってしまう
-        //       （ノベルゲーはほとんど常にクリックしながらプレイするため
-        //       interrupt の処理はなくし、代わりに、次の playBGMで下記の処理を行う
-        //NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+    // 次のplayBGMで停止させるためのタグ
+    action->setTag(11);
+    
+    auto func = [=](){
+        subject->runAction(action);
     };
     
-    execIntervalCommand(key, subject, action, interrupt);
+    //auto interrupt = [subject](){
+        // @memo onDisplayTouched で interrupt されてしまうと、fadeOutBGMはほぼ意味を成さなくなってしまう
+        //       （ノベルゲーはほとんど常にクリックしながらプレイするため
+        //       interrupt の処理はなくし、代わりに、次の playBGMで
+        //NMDAudioEngine::getInstance()->pauseBackgroundMusic();
+    //};
     
+    // @memo 上記対応によりstopRunningCommandで停止されると、fade処理自体が停止しBGMが止まらなくなった
+    // 　　　　fadeoutBGMはそもそも終了を待つ必要が無い（次の行に-でコマンドを書いて終了待ちしたいことがない）
+    //　　　　コマンドなので、Instantコマンドとして扱うように変更
+    //execIntervalCommand(key, subject, action, interrupt);
+    
+    execInstantCommand(func);
 }
 void ScriptCommand::stopBGM(){
     auto action = [](){
