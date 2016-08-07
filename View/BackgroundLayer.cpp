@@ -42,8 +42,8 @@ void BackgroundLayer::onEnter(){
     gm->getBackgroundLayer()->setBackgroundImage();
     
     // @memo eventCGONからの戻りで、直前に再生したSEが再生されるバグがあったためコメントアウト
-    //auto bgm_path = GameModel::getInstance()->backgroundLayerModel->getBGMPath();
-    //NMDAudioEngine::getInstance()->playBackgroundMusic(bgm_path.c_str());
+    auto bgm_path = GameModel::getInstance()->backgroundLayerModel->getBGMPath();
+    NMDAudioEngine::getInstance()->playBackgroundMusic(bgm_path.c_str());
     //auto se_path = GameModel::getInstance()->backgroundLayerModel->getSEPath();
     //NMDAudioEngine::getInstance()->playEffect(se_path.c_str());
 }
