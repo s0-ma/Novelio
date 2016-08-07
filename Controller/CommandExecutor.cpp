@@ -328,7 +328,9 @@ void ScriptCommand::hidePortrait(string id, int fade_sec/* = 0*/){
     
 }
 void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
-    //画面上で消してから、
+
+    
+    //画面上で消す
     if(fade_sec == 0){
         auto action = [](){
             auto pLayer = GameManager::getInstance()->getPortraitLayer();
@@ -341,7 +343,21 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
                     pLayer->cutoutPortrait(it->first);
                 }
             }
+            
+            //モデル側に反映
+            auto &portraits_model = GameModel::getInstance()->portraitLayerModel->portraits;
+            map<string, PortraitModel>::iterator it2 = portraits_model.begin();
+            while(it2 != portraits_model.end()){
+                if(it2->first.find("_") == 0){
+                    it2++;
+                }else{
+                    portraits_model.erase(it2++);
+                }
+            }
         };
+        
+
+        
         execInstantCommand(action);
     }else{
         auto portraits = GameModel::getInstance()->portraitLayerModel->portraits;
@@ -360,21 +376,26 @@ void ScriptCommand::hideAllPortrait(float fade_sec /*= 1*/){
             auto interrupt = [subject](){
                 subject->removeFromParent();
             };
+            
+            // @todo actionの中でモデルに反映しないといけない。
+            // 使っていないので、動かないがこのままとする
+            
+            //モデル側に反映
+            auto &portraits = GameModel::getInstance()->portraitLayerModel->portraits;
+            map<string, PortraitModel>::iterator it = portraits.begin();
+            while(it != portraits.end()){
+                if(it->first.find("_") == 0){
+                    it++;
+                }else{
+                    portraits.erase(it++);
+                }
+            }
+            
             execIntervalCommand(key, subject, action, interrupt);
         }
         
     }
-    
-    //モデル側に反映
-    auto &portraits = GameModel::getInstance()->portraitLayerModel->portraits;
-    map<string, PortraitModel>::iterator it = portraits.begin();
-    while(it != portraits.end()){
-        if(it->first.find("_") == 0){
-            it++;
-        }else{
-            portraits.erase(it++);
-        }
-    }
+
     
 
 }
