@@ -25,3 +25,7 @@ void LogLayerModel::clearLog(void){
     this->log.clear();
 };
 
+void LogLayerModel::setLog(vector<string> logs){
+    this->log = logs;
+};
+

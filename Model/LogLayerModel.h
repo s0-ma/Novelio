@@ -18,6 +18,7 @@ public:
     vector<string> getLog();
     void appendLog(std::string text);
     void clearLog(void);
+    void setLog(vector<string> logs);
 
 private:
     vector<string> log;

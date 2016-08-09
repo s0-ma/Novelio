@@ -102,4 +102,15 @@ vector<string> CareTaker::getAlbumImages(){
     auto dao = SqliteDAO::getInstance();
     return dao->getAlbumImages();
 }
+
+void CareTaker::saveLog(int saveNo, vector<string> logs){
+    auto dao = SqliteDAO::getInstance();
+    dao->writeLog(saveNo, logs);
+}
+
+vector<string> CareTaker::getLog(int saveNo){
+    auto dao = SqliteDAO::getInstance();
+    return dao->getLog(saveNo);
+}
+
 NS_NV_END

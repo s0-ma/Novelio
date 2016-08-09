@@ -51,6 +51,10 @@ public:
     void writeAlbumImage(string);
     vector<string> getAlbumImages();
     
+    //テキストログ
+    void writeLog(int saveNo, std::vector<string> logs);
+    vector<string> getLog(int saveNo);
+    
     //開発用
     void changeSaveFile(string file);
     

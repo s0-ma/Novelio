@@ -45,6 +45,8 @@ void SqliteDAO::initializeTables(){
 //    create_sql += "CREATE TABLE PORTRAIT_LAYER( SAVE_NO int primary key );";
     create_sql += "CREATE TABLE PORTRAITS( SAVE_NO int, ID text, BASE_PATH text, FACE_ID text, FACE_PATH text, X int, Y int, EMO_ID text, EMO_X int, EMO_Y int);";
     create_sql += "CREATE TABLE ALBUM(IMAGE_PATH text primary key);";
+    //ログ
+    create_sql += "CREATE TABLE LOG( SAVE_NO int, LINE int, TEXT text);";
     
     auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
     if( status != SQLITE_OK ){
@@ -365,4 +367,49 @@ vector<string> SqliteDAO::getAlbumImages(){
     return ret;
 }
 
+void SqliteDAO::writeLog(int saveNo, std::vector<string> logs){
+    if(logs.size() > 0){
+        string create_sql = "";
+        //既存のログを全消去
+        create_sql += "DELETE FROM LOG WHERE SAVE_NO = " + to_string(saveNo) + ";";
+        
+        //ログの追加
+        for (int i=0; i<logs.size()-2; i++){
+            create_sql += "INSERT INTO LOG VALUES (" + to_string(saveNo) + ", " + to_string(i) + ", \""+ logs[i] + "\");";
+            
+        }
+        
+        auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
+        if( status != SQLITE_OK ) CCLOG("insert/replace failed : %s", errorMessage);
+    }
+    
+}
+
+vector<string> SqliteDAO::getLog(int saveNo){
+    vector<string> ret;
+    string query = "";
+    query += "SELECT * FROM LOG WHERE SAVE_NO="+to_string(saveNo)+" ORDER BY LINE;";
+    
+    // データの抽出
+    // ステートメントの用意
+    sqlite3_stmt *pStmt = NULL;
+    auto err = sqlite3_prepare_v2(db, query.c_str(), -1, &pStmt, NULL);
+    
+    if(err != SQLITE_OK){
+        /* TODO:エラー処理 */
+    }else{
+        // データの抽出
+        while(SQLITE_ROW == (err = sqlite3_step(pStmt)) ){
+            ret.push_back(string((char*)sqlite3_column_text(pStmt, 2)));
+        }
+        if(err != SQLITE_DONE){
+            /* TODO: エラー処理 */
+        }
+    }
+    
+    // ステートメントの解放
+    sqlite3_finalize(pStmt);
+    
+    return ret;
+}
 NS_NV_END

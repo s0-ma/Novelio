@@ -39,6 +39,9 @@ public:
     
     void saveAlbumImage(string filepath);
     vector<string> getAlbumImages();
+    
+    void saveLog(int saveNo, vector<string>);
+    vector<string> getLog(int saveNo);
 };
 
 NS_NV_END
