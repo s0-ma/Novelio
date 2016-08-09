@@ -43,7 +43,7 @@
 /* ----------------------------------------------------------------------------*/
 #define SAVEDIR ".tenclaps"
 
-#define TEXT_SPEED_SCALE_FACTOR 6.
+#define TEXT_SPEED_SCALE_FACTOR 1.5
 
 #pragma execution_character_set("utf-8")
 USING_NS_CC;
