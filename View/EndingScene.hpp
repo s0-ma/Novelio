@@ -24,6 +24,7 @@ public:
 private:
     bool init(string filename);
     void onEnterTransitionDidFinish();
+    void onEnter();
 };
 
 

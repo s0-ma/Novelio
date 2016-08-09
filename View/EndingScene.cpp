@@ -35,9 +35,14 @@ bool EndingScene::init(string filename){
     
     this->addChild(gif);
 
-
-
     return true;
+}
+
+void EndingScene::onEnter(){
+    Scene::onEnter();
+    
+    NMDAudioEngine::getInstance()->fadeBackgroundMusic(1.0, 0);
+    
 }
 
 void EndingScene::onEnterTransitionDidFinish(){
