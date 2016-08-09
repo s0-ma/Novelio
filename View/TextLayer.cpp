@@ -170,7 +170,7 @@ void TextLayer::startText(){
         if(textSpeed == 0){
             textLabel->showAll();
         }else{
-            textLabel->setInterval(1./textSpeed);
+            textLabel->setInterval(TEXT_SPEED_SCALE_FACTOR/textSpeed);
             textLabel->run();
         }
     }else{
