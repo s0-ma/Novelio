@@ -46,7 +46,8 @@ void EventScene::onEnterTransitionDidFinish(){
     Scene::onEnterTransitionDidFinish();
     
     gif->runAction(Sequence::create(
-                                    FadeIn::create(5),
+                                    FadeIn::create(4),
+                                    DelayTime::create(2),
                                     CallFunc::create([this](){
         //戻った際のBGM再生抑止
         GameManager::getInstance()->getBackgroundLayer()->disableOnEnterTentatively();
