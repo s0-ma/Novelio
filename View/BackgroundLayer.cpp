@@ -31,12 +31,19 @@ bool BackgroundLayer::init()
     
     this->setCascadeOpacityEnabled(true);
     
+    this->flg_disableOnEnterTentatively = false;
+    
     return true;
 }
 
 void BackgroundLayer::onEnter(){
     
     Layer::onEnter();
+    
+    if(flg_disableOnEnterTentatively){
+        flg_disableOnEnterTentatively = false;
+        return;
+    }
     
     auto gm = GameManager::getInstance();
     gm->getBackgroundLayer()->setBackgroundImage();
@@ -46,6 +53,10 @@ void BackgroundLayer::onEnter(){
     NMDAudioEngine::getInstance()->playBackgroundMusic(bgm_path.c_str());
     //auto se_path = GameModel::getInstance()->backgroundLayerModel->getSEPath();
     //NMDAudioEngine::getInstance()->playEffect(se_path.c_str());
+}
+
+void BackgroundLayer::disableOnEnterTentatively(){
+    this->flg_disableOnEnterTentatively = true;
 }
 
 void BackgroundLayer::setBackgroundImage(){

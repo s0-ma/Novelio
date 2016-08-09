@@ -48,6 +48,9 @@ void EventScene::onEnterTransitionDidFinish(){
     gif->runAction(Sequence::create(
                                     FadeIn::create(5),
                                     CallFunc::create([this](){
+        //戻った際のBGM再生抑止
+        GameManager::getInstance()->getBackgroundLayer()->disableOnEnterTentatively();
+        
         if(!(waitClick)){
             Director::getInstance()->popScene();
         }else{

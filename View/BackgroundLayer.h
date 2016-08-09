@@ -37,6 +37,8 @@ class BackgroundLayer : public cocos2d::Layer, create_func<BackgroundLayer>
          *  @brief クロスフェードやスライドインに使うための後面バッファ
          */
         cocos2d::Sprite* backSprite;
+    
+        bool flg_disableOnEnterTentatively;
 
     public:
         /**
@@ -63,6 +65,8 @@ class BackgroundLayer : public cocos2d::Layer, create_func<BackgroundLayer>
          *  背景をパンする
          */
         void Pan();
+    
+        void disableOnEnterTentatively();
 
 
 };
