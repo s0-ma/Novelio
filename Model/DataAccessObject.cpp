@@ -368,15 +368,22 @@ vector<string> SqliteDAO::getAlbumImages(){
 }
 
 void SqliteDAO::writeLog(int saveNo, std::vector<string> logs){
+    CCLOG("Number of lines to save = %d", (int)logs.size());
+    int max_save_lines = 200;
     if(logs.size() > 0){
         string create_sql = "";
         //既存のログを全消去
         create_sql += "DELETE FROM LOG WHERE SAVE_NO = " + to_string(saveNo) + ";";
         
         //ログの追加
-        for (int i=0; i<logs.size()-2; i++){
-            create_sql += "INSERT INTO LOG VALUES (" + to_string(saveNo) + ", " + to_string(i) + ", \""+ logs[i] + "\");";
-            
+        int start = 0;
+        if((int)logs.size()-2 >= max_save_lines){
+            start = logs.size()-max_save_lines-2;
+        }
+        int line = 0;
+        for (int i=start; i<logs.size()-2; i++){
+            create_sql += "INSERT INTO LOG VALUES (" + to_string(saveNo) + ", " + to_string(line) + ", \""+ logs[i] + "\");";
+            line++;
         }
         
         auto status = sqlite3_exec(db, create_sql.c_str(), NULL, NULL, &errorMessage );
