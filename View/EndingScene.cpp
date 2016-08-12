@@ -41,7 +41,7 @@ bool EndingScene::init(string filename){
 void EndingScene::onEnter(){
     Scene::onEnter();
     
-    NMDAudioEngine::getInstance()->fadeBackgroundMusic(1.0, 0);
+//    NMDAudioEngine::getInstance()->fadeBackgroundMusic(1.0, 0);
     
 }
 
