@@ -10,6 +10,20 @@
 #include <iostream>
 #include <iomanip>
 
+EventScene* EventScene::create(string filename, bool waitClick, bool isFromOutsideOfNovelio){
+    EventScene* pRet = new (std::nothrow) EventScene();
+    
+    if(pRet && pRet->init(filename, waitClick)){
+        pRet->isFromOutsideOfNovelio = isFromOutsideOfNovelio;
+        pRet->autorelease();
+        return pRet;
+    }
+    
+    CC_SAFE_DELETE(pRet);
+    return nullptr;
+}
+
+
 EventScene* EventScene::create(string filename, bool waitClick){
     EventScene* pRet = new (std::nothrow) EventScene();
     
@@ -50,7 +64,9 @@ void EventScene::onEnterTransitionDidFinish(){
                                     DelayTime::create(2),
                                     CallFunc::create([this](){
         //戻った際のBGM再生抑止
-        GameManager::getInstance()->getBackgroundLayer()->disableOnEnterTentatively();
+        if(! isFromOutsideOfNovelio){
+            GameManager::getInstance()->getBackgroundLayer()->disableOnEnterTentatively();
+        }
         
         if(!(waitClick)){
             Director::getInstance()->popScene();
