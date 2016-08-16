@@ -18,6 +18,7 @@ USING_NS_NV;
 class EventScene : public Scene{
     
 public:
+    static EventScene* create(string filename, bool waitClick, bool isFromOutsideOfNovelio);
     static EventScene* create(string filename, bool waitClick);
     Sprite* gif;
     
@@ -25,6 +26,7 @@ private:
     bool init(string filename, bool waitClick);
     void onEnterTransitionDidFinish();
     bool waitClick;
+    bool isFromOutsideOfNovelio = false;
 };
 
 
