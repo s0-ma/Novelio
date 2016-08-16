@@ -143,7 +143,8 @@ void GameModel::saveThumbnail(string filename){
 Sprite* GameModel::getThumbnail(string filename){
     auto path = FileUtils::getInstance()->getWritablePath();
     
-    auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
+    //auto fullpath = FileUtils::getInstance()->fullPathForFilename(path + SAVEDIR + "/"+ filename + ".png");
+	auto fullpath = path + SAVEDIR + "/" + filename + ".png";
     Director::getInstance()->getTextureCache()->removeTextureForKey(fullpath);
     
     auto ret =  Sprite::create(path + SAVEDIR + "/"+ filename + ".png");
