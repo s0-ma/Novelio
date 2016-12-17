@@ -86,13 +86,13 @@ bool LogLayer::init(){
     this->setContentSize();
 
     //前面
-    auto backBtn = MenuItemImage::create("nvRes/system/button_log_back.png",
-                                         "nvRes/system/button_log_back_on.png",
+    auto backBtn = MenuItemImage::create("nvRes/iPhone_UI_png/config_back.png",
+                                         "nvRes/iPhone_UI_png/config_back.png",
                                          [=](Ref* sender){
                                              hideLogLayer();
                                              
                                          });
-    backBtn->setPosition(Vec2(400,-250));
+    backBtn->setPosition(Vec2(380,-230));
     
     auto menu = Menu::create(backBtn, NULL);
     addChild(menu, 30);
