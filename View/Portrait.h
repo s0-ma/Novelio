@@ -18,84 +18,84 @@ NS_NV_BEGIN
  *  Portrait用の表情フェードインアクション
  */
 class PortraitFaceFade : public ActionInterval{
-    public:
-        //    PortraitFaceFade();
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief create function.
-         *
-         * @param d time in sec
-         * @param path path for face.
-         * @param x x position
-         * @param y y position
-         *
-         * @return 
-         */
-        /* ----------------------------------------------------------------------------*/
-        static PortraitFaceFade* create(float d, string path="", int x=0, int y=0);
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         *
-         * @param d
-         * @param path
-         * @param x
-         * @param y
-         *
-         * @return 
-         */
-        /* ----------------------------------------------------------------------------*/
-        bool initWithDuration(float d, string path, int x, int y);
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         *
-         * @return 
-         */
-        /* ----------------------------------------------------------------------------*/
-        virtual PortraitFaceFade* clone() const override;  // pure virtual
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         *
-         * @return 
-         */
-        /* ----------------------------------------------------------------------------*/
-        virtual PortraitFaceFade* reverse() const override;  // pure virtual
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         *
-         * @param pTarget
-         */
-        /* ----------------------------------------------------------------------------*/
-        virtual void startWithTarget(cocos2d::Node *pTarget);
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         *
-         * @param time
-         */
-        /* ----------------------------------------------------------------------------*/
-        virtual void update(float time);
-
-        /* --------------------------------------------------------------------------*/
-        /**
-         * @brief 
-         */
-        /* ----------------------------------------------------------------------------*/
-        virtual void stop(void);
-
-    protected:
-        Sprite* _newFace;
-        string _newFacePath;
-        int _x, _y;
+public:
+    //    PortraitFaceFade();
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief create function.
+     *
+     * @param d time in sec
+     * @param path path for face.
+     * @param x x position
+     * @param y y position
+     *
+     * @return
+     */
+    /* ----------------------------------------------------------------------------*/
+    static PortraitFaceFade* create(float d, string path="", int x=0, int y=0);
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     *
+     * @param d
+     * @param path
+     * @param x
+     * @param y
+     *
+     * @return
+     */
+    /* ----------------------------------------------------------------------------*/
+    bool initWithDuration(float d, string path, int x, int y);
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     *
+     * @return
+     */
+    /* ----------------------------------------------------------------------------*/
+    virtual PortraitFaceFade* clone() const override;  // pure virtual
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     *
+     * @return
+     */
+    /* ----------------------------------------------------------------------------*/
+    virtual PortraitFaceFade* reverse() const override;  // pure virtual
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     *
+     * @param pTarget
+     */
+    /* ----------------------------------------------------------------------------*/
+    virtual void startWithTarget(cocos2d::Node *pTarget);
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     *
+     * @param time
+     */
+    /* ----------------------------------------------------------------------------*/
+    virtual void update(float time);
+    
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @brief
+     */
+    /* ----------------------------------------------------------------------------*/
+    virtual void stop(void);
+    
+protected:
+    Sprite* _newFace;
+    string _newFacePath;
+    int faceX, faceY;
 };
 
 /**
@@ -168,7 +168,7 @@ class Portrait : public Sprite
          *
          *  @param facePath <#facePath description#>
          */
-        void changeFace(std::string facePath);
+        void changeFace(std::string facePath, int x=0, int y=0);
 
         /**
          *  エモティコンを追加する。アニメーションの場合はrunActionで。
