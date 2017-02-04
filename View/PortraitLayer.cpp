@@ -24,6 +24,32 @@ bool PortraitLayer::init(){
 
     
     this->setCascadeOpacityEnabled(true);
+    
+#ifdef TASOMACHI
+    //COVER LAYER
+    auto w =  Director::getInstance()->getWinSize().width;
+    auto h =  Director::getInstance()->getWinSize().height;
+    
+    auto cover_down = Sprite::create();
+    cover_down->setTextureRect(Rect(0,0,w,(h-576)/2) );
+    cover_down->setColor(Color3B(128, 128, 128));
+    cover_down->setOpacity(1);
+    cover_down->setPosition(PointFromCenter(0,-h/2 + (h-576)/2/2));
+    auto cover_up = Sprite::create();
+    cover_up->setTextureRect(Rect(0,0,w,(h-576)/2) );
+    cover_up->setColor(Color3B(128, 128, 128));
+    cover_up->setOpacity(1);
+    cover_up->setPosition(PointFromCenter(0,h/2 - (h-576)/2/2));
+    
+    BlendFunc blend;
+    blend.src = GL_SRC_ALPHA;
+    blend.dst = GL_ZERO;
+    
+    cover_down->setBlendFunc(blend);
+    cover_up->setBlendFunc(blend);
+    this->addChild(cover_down, 100);
+    this->addChild(cover_up, 100);
+#endif
 
     return true;
 }

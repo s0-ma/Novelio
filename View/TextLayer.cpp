@@ -70,6 +70,8 @@ void TextLayer::initializeLayer(){
     
     setTextPosition(nv::PointFromCenter(-450, -150));
     setTextWidth(900);
+    
+#ifdef TASOMACHI
 
     //COVER LAYER
     auto w =  Director::getInstance()->getWinSize().width;
@@ -94,6 +96,8 @@ void TextLayer::initializeLayer(){
     cover_up->setBlendFunc(blend);
     this->addChild(cover_down);
     this->addChild(cover_up);
+    
+#endif
     
 
 }
