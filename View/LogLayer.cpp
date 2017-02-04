@@ -42,7 +42,13 @@ bool LogLayer::init(){
 
     //scroll view
     auto size = Director::getInstance()->getVisibleSize();
+#ifdef TASOMACHI
+    scrollView = cocos2d::extension::ScrollView::create(Size(1024, 576));
+    scrollView->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    scrollView->setPosition(PointFromCenter(-512, -288));
+#else
     scrollView = cocos2d::extension::ScrollView::create(size);
+#endif
     scrollView->setDirection(cocos2d::extension::ScrollView::Direction::VERTICAL);
     scrollView->setBounceable(true);
     addChild(scrollView, 20);
