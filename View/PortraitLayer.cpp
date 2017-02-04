@@ -71,7 +71,7 @@ void PortraitLayer::addPortrait(string id){
 void PortraitLayer::setPortraitPosition(std::string id){
     auto x = GameModel::getInstance()->portraitLayerModel->portraits[id].x;
     auto y = GameModel::getInstance()->portraitLayerModel->portraits[id].y;
-    portraits[id]->setPosition(x, y);
+    portraits[id]->setPosition(PointFromCenter(x-512, y-288));
 };
 
 void PortraitLayer::movePortrait(std::string id, int t_sec){

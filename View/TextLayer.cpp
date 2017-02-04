@@ -71,6 +71,21 @@ void TextLayer::initializeLayer(){
     setTextPosition(nv::PointFromCenter(-450, -150));
     setTextWidth(900);
 
+    //COVER LAYER
+    auto w =  Director::getInstance()->getWinSize().width;
+    auto h =  Director::getInstance()->getWinSize().height;
+    
+    auto cover = Sprite::create();
+    cover->setTextureRect(Rect(0,0,w,(h-576)/2) );
+    cover->setColor(Color3B(128, 128, 128));
+    cover->setOpacity(1);
+    cover->setPosition(PointFromCenter(0,-h/2 + (h-576)/2/2));
+    BlendFunc blend;
+    blend.src = GL_SRC_ALPHA;
+    blend.dst = GL_ZERO;
+    cover->setBlendFunc(blend);
+    this->addChild(cover);
+    
 
 }
 
