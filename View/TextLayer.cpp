@@ -127,10 +127,13 @@ void TextLayer::setName(){
 };
 
 
-void TextLayer::setTextboxImage(std::string path){
+void TextLayer::setTextboxImage(std::string path, Point position){
+    if(textBox != nullptr){
+        textBox->removeFromParent();
+    }
     textBox = Sprite::create(path);
     textBox->setAnchorPoint(cocos2d::Point(0.5,0.5));
-    textBox->setPosition(nv::PointFromCenter(0,0));
+    textBox->setPosition(position);
     this->addChild(textBox,0);
 };
 

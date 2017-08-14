@@ -46,7 +46,7 @@ public:
     
     void initializeLayer();
     
-    void setTextboxImage(std::string path);
+    void setTextboxImage(std::string path, Point position=nv::PointFromCenter(0,0));
     
     void setNameLabelPosition(cocos2d::Point position);
     void setNameLabelFont(std::string path);
